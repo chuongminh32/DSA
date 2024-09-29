@@ -346,6 +346,47 @@ void Inds_CIT07()
 	cout << "Danh sách có " << TongSoPhanTuKhaoSat_CIT07 << " phần tử \n";
 }
 
+// 5. Thêm phần tử vào vị trí đã chọn
+void ThemPT_CIT07()
+{
+	cout << "Nhập thông tin phần tử mới:\n";
+	BKPHMC_CIT07 newBook;
+	NhapNoiDungPhanTu_CIT07(TongSoPhanTuKhaoSat_CIT07, newBook);
+	int vitri;
+	cout << "Nhập vị trí cần thêm phần tử: ";
+	cin >> vitri;
+	ThemPhanTu_CIT07(newBook, vitri);
+}
+
+// 6. Tìm sách theo tên
+void TimSach_CIT07()
+{
+	string title;
+	cout << "Nhập tên sách cần tìm: ";
+	cin.ignore(); // Clear newline
+	getline(cin, title);
+	TimSachTheoTenSach_CIT07(title);
+}
+
+// 7. In sách cùng loại
+void DanhSachCungLoai_CIT07()
+{
+	string typeBook;
+	cout << "Nhập loại sách cần in: ";
+	cin.ignore(); // Clear newline
+	getline(cin, typeBook);
+	InSachCungLoai_CIT07(typeBook);
+}
+
+// 8. Cập nhật thuộc tính cho sách
+void CapNhat_CIT07()
+{
+	string codeBook;
+	cout << "\nNhập mã sách để UPDATE: ";
+	cin >> codeBook;
+	CapNhatThuocTinh_CIT07(codeBook);
+}
+
 /**********************************************/
 // CHƯƠNG TRÌNH CHÍNH XỬ LÝ TRÊN DS ĐẶC : Sách
 /**********************************************/
@@ -411,13 +452,7 @@ int main()
 			break;
 		case '2':
 		{
-			cout << "Nhập thông tin phần tử mới:\n";
-			BKPHMC_CIT07 newBook;
-			NhapNoiDungPhanTu_CIT07(TongSoPhanTuKhaoSat_CIT07, newBook);
-			int vitri;
-			cout << "Nhập vị trí cần thêm phần tử: ";
-			cin >> vitri;
-			ThemPhanTu_CIT07(newBook, vitri);
+			ThemPT_CIT07();
 			break;
 		}
 		case '3':
@@ -437,28 +472,17 @@ int main()
 			break;
 		case '8':
 		{
-			string title;
-			cout << "Nhập tên sách cần tìm: ";
-			cin.ignore(); // Clear newline
-			getline(cin, title);
-			TimSachTheoTenSach_CIT07(title);
+			TimSach_CIT07();
 			break;
 		}
 		case '9':
 		{
-			string typeBook;
-			cout << "Nhập loại sách cần in: ";
-			cin.ignore(); // Clear newline
-			getline(cin, typeBook);
-			InSachCungLoai_CIT07(typeBook);
+			DanhSachCungLoai_CIT07();
 			break;
 		}
 		case '0':
 		{
-			string codeBook;
-			cout << "\nNhập mã sách để UPDATE: ";
-			cin >> codeBook;
-			CapNhatThuocTinh_CIT07(codeBook);
+			CapNhat_CIT07();
 			break;
 		}
 		case 'q':
