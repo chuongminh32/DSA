@@ -27,21 +27,21 @@ struct BKPHMC_CIT07 // cấu trúc 1 quyển sách trong danh sách thư viện
     int So_Lan_Muon_Sach_CIT07; // số lần mượn sách
 };
 
-struct Node
+struct Node_CIT07
 {
     BKPHMC_CIT07 data;
-    Node *next;
+    Node_CIT07 *next;
 
     // constructor
-    Node(BKPHMC_CIT07 newData)
+    Node_CIT07(BKPHMC_CIT07 newData)
     {
         data = newData;
         next = nullptr;
     }
 };
 
-Node *head_CIT07 = nullptr;        // đầu danh sách
-Node *tail_CIT07 = nullptr;        // cuối danh sách
+Node_CIT07 *head_CIT07 = nullptr;        // đầu danh sách
+Node_CIT07 *tail_CIT07 = nullptr;        // cuối danh sách
 int TongSoPhanTuKhaoSat_CIT07 = 0; // số lượng phần tử (thực có) trong danh sách
 
 /*************************************************************/
@@ -75,7 +75,7 @@ bool KiemTraRong_CIT07()
 // 4.1 Thêm phần tử mới vào cuối danh sách (Create)
 bool ThemPhanTuVaoCuoi_CIT07(BKPHMC_CIT07 books_CIT07)
 {
-    Node *newBook = new Node(books_CIT07);
+    Node_CIT07 *newBook = new Node_CIT07(books_CIT07);
 
     if (KiemTraRong_CIT07())
     {
@@ -91,10 +91,9 @@ bool ThemPhanTuVaoCuoi_CIT07(BKPHMC_CIT07 books_CIT07)
     return true;
 }
 
-// 4.2 Thêm phần tử vào đầu danh sách
 bool ThemPhanTuVaoDau_CIT07(BKPHMC_CIT07 books_CIT07)
 {
-    Node *newBook = new Node(books_CIT07);
+    Node_CIT07 *newBook = new Node_CIT07(books_CIT07); // cap phat vung nho cho phan tu moi 
 
     if (KiemTraRong_CIT07())
     {
@@ -116,7 +115,7 @@ bool XoaMotPhanTu_CIT07(int ViTri_CIT07)
     if (ViTri_CIT07 < 0 || ViTri_CIT07 >= TongSoPhanTuKhaoSat_CIT07 || KiemTraRong_CIT07())
         return false;
 
-    Node *temp = head_CIT07;
+    Node_CIT07 *temp = head_CIT07;
 
     if (ViTri_CIT07 == 0) // Nếu xóa phần tử đầu tiên
     {
@@ -131,8 +130,8 @@ bool XoaMotPhanTu_CIT07(int ViTri_CIT07)
         {
             temp = temp->next; // D i chuyển đến phần tử trước phần tử cần xóa
         }
-        // temp : node ke truoc phan tu can xoa
-        Node *toDelete = temp->next; // Lưu phần tử cần xóa
+        // temp : node_CIT07 ke truoc phan tu can xoa
+        Node_CIT07 *toDelete = temp->next; // Lưu phần tử cần xóa
         temp->next = toDelete->next; // Bỏ qua phần tử cần xóa
         if (toDelete == tail_CIT07)  // Nếu xóa phần tử cuối cùng
             tail_CIT07 = temp;       // Cập nhật lại tail
@@ -145,21 +144,21 @@ bool XoaMotPhanTu_CIT07(int ViTri_CIT07)
 // 6. Thêm một phần tử tại vị trí i
 bool ThemMotPT_CIT07(BKPHMC_CIT07 newBook_CIT07, int ViTri_CIT07)
 {
-    Node *newNodeBook = new Node(newBook_CIT07);
+    Node_CIT07 *newNode_CIT07Book = new Node_CIT07(newBook_CIT07);
 
     // Danh sách rỗng
     if (KiemTraRong_CIT07())
     {
         if (ViTri_CIT07 == 0) // Nếu vị trí là 0, thêm vào đầu
         {
-            head_CIT07 = newNodeBook;
-            tail_CIT07 = newNodeBook; // Nếu là phần tử đầu tiên thì head và tail cùng trỏ đến phần tử này
+            head_CIT07 = newNode_CIT07Book;
+            tail_CIT07 = newNode_CIT07Book; // Nếu là phần tử đầu tiên thì head và tail cùng trỏ đến phần tử này
             return true;
         }
         else // Nếu vị trí không hợp lệ
         {
             cout << "Vi tri khong hop le!" << endl;
-            delete newNodeBook; // Giải phóng bộ nhớ
+            delete newNode_CIT07Book; // Giải phóng bộ nhớ
             return false;
         }
     }
@@ -171,7 +170,7 @@ bool ThemMotPT_CIT07(BKPHMC_CIT07 newBook_CIT07, int ViTri_CIT07)
         return true;
     }
 
-    Node *tmp = head_CIT07;
+    Node_CIT07 *tmp = head_CIT07;
     // Duyệt danh sách đến vị trí trước vị trí cần thêm
     for (int i = 0; i < ViTri_CIT07 - 1 && tmp->next != nullptr; i++)
     {
@@ -187,8 +186,8 @@ bool ThemMotPT_CIT07(BKPHMC_CIT07 newBook_CIT07, int ViTri_CIT07)
     else
     {
         // them vao vi tri bat ki
-        newNodeBook->next = tmp->next;
-        tmp->next = newNodeBook;
+        newNode_CIT07Book->next = tmp->next;
+        tmp->next = newNode_CIT07Book;
         return true;
     }
 }
@@ -198,9 +197,9 @@ void CapNhatThuocTinh_CIT07(string &code_book)
 {
     // Lấy phần tử
     bool found = false;
-    Node *tempBook = nullptr;
+    Node_CIT07 *tempBook = nullptr;
 
-    Node *temp = head_CIT07;
+    Node_CIT07 *temp = head_CIT07;
     while (temp != nullptr)
     {
         if (temp->data.Ma_Sach_CIT07 == code_book)
@@ -275,14 +274,14 @@ void CapNhatThuocTinh_CIT07(string &code_book)
 // 8. Sắp xếp danh sách theo số lần mượn sách (So_Lan_Muon_Sach_CIT07)
 void SapXepDSTheoSoLanMuonSach_CIT07()
 {
-    for (Node *i = head_CIT07; i != nullptr; i = i->next)
+    for (Node_CIT07 *i = head_CIT07; i != nullptr; i = i->next)
     {
-        for (Node *j = head_CIT07; j->next != nullptr; j = j->next)
+        for (Node_CIT07 *j = head_CIT07; j->next != nullptr; j = j->next)
         {
             if (j->data.So_Lan_Muon_Sach_CIT07 > j->next->data.So_Lan_Muon_Sach_CIT07) // Sắp xếp tăng dần
             {
                 // Hoán đổi nếu phần tử hiện tại lớn hơn phần tử tiếp theo
-                Node temp = *j;
+                Node_CIT07 temp = *j;
                 *j = *j->next;
                 *j->next = temp; // Phần tử tiếp theo cũng cần hoán đổi
             }
@@ -296,7 +295,7 @@ void TimSach_CIT07Sach_CIT07(const string &title)
 {
     bool found = false;
     cout << "\nSách tìm thấy:\n";
-    Node *temp = head_CIT07;
+    Node_CIT07 *temp = head_CIT07;
     for (int i = 0; temp != nullptr; i++, temp = temp->next)
     {
         if (temp->data.Ten_Sach_CIT07.find(title) != string::npos) // Tìm kiếm theo tên
@@ -323,7 +322,7 @@ void DanhSachCungLoai(string &typeBook)
     bool isSuccess = false;
     int cnt = 0;
 
-    for (Node *i = head_CIT07; i != nullptr; i = i->next)
+    for (Node_CIT07 *i = head_CIT07; i != nullptr; i = i->next)
     {
         // Kiểm tra xem mã sách có chứa loại sách được tìm kiếm không
         if (i->data.Loai_Sach_CIT07 == typeBook)
@@ -434,7 +433,7 @@ void ThemPhanTu_CIT07()
 void XuatDS_CIT07()
 {
     cout << "DANH SÁCH SÁCH HIỆN CÓ:\n";
-    Node *temp = head_CIT07;
+    Node_CIT07 *temp = head_CIT07;
     int count = 0;
     while (temp != nullptr)
     {
