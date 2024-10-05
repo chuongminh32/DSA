@@ -7,13 +7,14 @@
 /******************************/
 
 using namespace std;
-#include <iostream> // thư viện object(input/ output stream)
-#include <conio.h>  // console input and output
-#include <stdio.h>  // standard input output
-#include <string>   // chuỗi ký tự
-#include <cstring>  // các hàm xử lý chuỗi
-#include <cctype>   // ký tự
-#include <vector>
+#include <iostream> // Thư viện cho các luồng vào/ra, sử dụng các đối tượng như cin, cout
+#include <conio.h>  // Thư viện cho nhập/xuất từ bàn phím trong console, bao gồm hàm như getch()
+#include <stdio.h>  // Thư viện chuẩn cho nhập/xuất, các hàm như printf, scanf
+#include <string>   // Thư viện cho xử lý chuỗi ký tự kiểu string trong C++
+#include <cstring>  // Thư viện cung cấp các hàm xử lý chuỗi kiểu C như strcpy, strlen, strcmp
+#include <cctype>   // Thư viện cho các hàm xử lý ký tự, như isdigit, isalpha, tolower, toupper
+#include <vector>   // Thư viện cho cấu trúc dữ liệu vector, một mảng động với khả năng tự động thay đổi kích thước
+
 
 /******************************/
 /**KHAI BAO DANH SACH LIEN KET*/
