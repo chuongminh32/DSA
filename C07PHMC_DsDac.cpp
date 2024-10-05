@@ -5,15 +5,12 @@
 /******************************/
 /**KHAI BAO THU VIEN SU DUNG */
 /******************************/
-
 using namespace std;
-#include <iostream> // Thư viện cho các luồng vào/ra, sử dụng các đối tượng như cin, cout
-#include <conio.h>  // Thư viện cho nhập/xuất từ bàn phím trong console, bao gồm hàm như getch()
-#include <stdio.h>  // Thư viện chuẩn cho nhập/xuất, các hàm như printf, scanf
+#include <iostream> // Thư viện cho các luồng vào/ra
+#include <conio.h>  // Thư viện cho nhập/xuất từ bàn phím trong consol
 #include <string>   // Thư viện cho xử lý chuỗi ký tự kiểu string trong C++
-#include <cstring>  // Thư viện cung cấp các hàm xử lý chuỗi kiểu C như strcpy, strlen, strcmp
-#include <cctype>   // Thư viện cho các hàm xử lý ký tự, như isdigit, isalpha, tolower, toupper
-#include <vector>   // Thư viện cho cấu trúc dữ liệu vector, một mảng động với khả năng tự động thay đổi kích thước
+#include <cctype>   // Thư viện cho các hàm xử lý ký tự
+#include <vector>   // Thư viện cho cấu trúc dữ liệu vector
 
 
 /******************************/
