@@ -1,3 +1,4 @@
+
 /*************************************/
 // CAU TRUC DAT TEN: TenThuocTinh_CIT07
 /************************************/
@@ -11,7 +12,6 @@ using namespace std;
 #include <string>   // Thư viện cho xử lý chuỗi ký tự kiểu string trong C++
 #include <cctype>   // Thư viện cho các hàm xử lý ký tự
 #include <vector>   // Thư viện cho cấu trúc dữ liệu vector
-
 
 /******************************/
 /**KHAI BAO DANH SACH LIEN KET*/
@@ -27,19 +27,18 @@ struct BKPHMC_CIT07 // cấu trúc 1 quyển sách trong danh sách thư viện
 
 struct Node_CIT07
 {
-    BKPHMC_CIT07 data;
-    Node_CIT07 *next;
+    BKPHMC_CIT07 data_CIT07;
+    Node_CIT07 *next_CIT07;
 
     // constructor
-    Node_CIT07(BKPHMC_CIT07 newData)
+    Node_CIT07(BKPHMC_CIT07 newData_CIT07)
     {
-        data = newData;
-        next = nullptr;
+        data_CIT07 = newData_CIT07;
+        next_CIT07 = nullptr;
     }
 };
 
-Node_CIT07 *head_CIT07 = nullptr;        // đầu danh sách
-Node_CIT07 *tail_CIT07 = nullptr;        // cuối danh sách
+Node_CIT07 *head_CIT07 = nullptr;  // đầu danh sách
 int TongSoPhanTuKhaoSat_CIT07 = 0; // số lượng phần tử (thực có) trong danh sách
 
 /*************************************************************/
@@ -50,7 +49,6 @@ int TongSoPhanTuKhaoSat_CIT07 = 0; // số lượng phần tử (thực có) tro
 void KhoiTao_CIT07()
 {
     head_CIT07 = nullptr;
-    tail_CIT07 = nullptr;
     TongSoPhanTuKhaoSat_CIT07 = 0;
 }
 
@@ -78,12 +76,15 @@ bool ThemPhanTuVaoCuoi_CIT07(BKPHMC_CIT07 books_CIT07)
     if (KiemTraRong_CIT07())
     {
         head_CIT07 = newBook; // Nếu danh sách rỗng, phần tử mới trở thành đầu danh sách
-        tail_CIT07 = newBook; // Phần tử mới cũng là cuối danh sách
     }
     else
     {
-        tail_CIT07->next = newBook; // Gán phần tử mới vào cuối danh sách
-        tail_CIT07 = newBook;       // Cập nhật lại tail
+        Node_CIT07 *i = head_CIT07;
+        while (i->next_CIT07 != nullptr)
+        {
+            i = i->next_CIT07; // Duyệt qua danh sách đến phần tử cuối cùng
+        }
+        i->next_CIT07 = newBook; // Gán phần tử mới vào cuối danh sách
     }
     TongSoPhanTuKhaoSat_CIT07++;
     return true;
@@ -91,16 +92,15 @@ bool ThemPhanTuVaoCuoi_CIT07(BKPHMC_CIT07 books_CIT07)
 
 bool ThemPhanTuVaoDau_CIT07(BKPHMC_CIT07 books_CIT07)
 {
-    Node_CIT07 *newBook = new Node_CIT07(books_CIT07); // cap phat vung nho cho phan tu moi 
+    Node_CIT07 *newBook = new Node_CIT07(books_CIT07); // cap phat vung nho cho phan tu moi
 
     if (KiemTraRong_CIT07())
     {
         head_CIT07 = newBook;
-        tail_CIT07 = newBook;
     }
     else
     {
-        newBook->next = head_CIT07;
+        newBook->next_CIT07 = head_CIT07;
         head_CIT07 = newBook;
     }
     TongSoPhanTuKhaoSat_CIT07++;
@@ -110,34 +110,37 @@ bool ThemPhanTuVaoDau_CIT07(BKPHMC_CIT07 books_CIT07)
 // 5. Xóa một phần tử tại vị trí i (Delete)
 bool XoaMotPhanTu_CIT07(int ViTri_CIT07)
 {
+    // Kiểm tra điều kiện không hợp lệ
     if (ViTri_CIT07 < 0 || ViTri_CIT07 >= TongSoPhanTuKhaoSat_CIT07 || KiemTraRong_CIT07())
         return false;
 
-    Node_CIT07 *temp = head_CIT07;
+    Node_CIT07 *deleteNode_CIT07 = head_CIT07; // Khởi tạo node cần xóa
 
-    if (ViTri_CIT07 == 0) // Nếu xóa phần tử đầu tiên
+    // Nếu xóa phần tử đầu tiên
+    if (ViTri_CIT07 == 0) 
     {
-        head_CIT07 = temp->next;   // Đưa đầu danh sách đến phần tử tiếp theo
-        if (head_CIT07 == nullptr) // Nếu danh sách trở nên rỗng
-            tail_CIT07 = nullptr;  // Cập nhật tail thành null
-        delete temp;               // Giải phóng bộ nhớ
+        head_CIT07 = deleteNode_CIT07->next_CIT07; // Đưa đầu danh sách đến phần tử tiếp theo
     }
     else
     {
-        for (int i = 0; i < ViTri_CIT07 - 1; i++)
+        Node_CIT07 *tmp = head_CIT07;
+        // Duyệt đến phần tử trước phần tử cần xóa
+        for (int i = 0; i < ViTri_CIT07 - 1; i++) 
         {
-            temp = temp->next; // D i chuyển đến phần tử trước phần tử cần xóa
+            tmp = tmp->next_CIT07; 
         }
-        // temp : node_CIT07 ke truoc phan tu can xoa
-        Node_CIT07 *toDelete = temp->next; // Lưu phần tử cần xóa
-        temp->next = toDelete->next; // Bỏ qua phần tử cần xóa
-        if (toDelete == tail_CIT07)  // Nếu xóa phần tử cuối cùng
-            tail_CIT07 = temp;       // Cập nhật lại tail
-        delete toDelete;             // Giải phóng bộ nhớ
+        // Cập nhật con trỏ để bỏ qua phần tử cần xóa
+        deleteNode_CIT07 = tmp->next_CIT07;
+        tmp->next_CIT07 = deleteNode_CIT07->next_CIT07; // Kết nối phần tử trước với phần tử sau
     }
-    TongSoPhanTuKhaoSat_CIT07--;
-    return true;
+
+    delete deleteNode_CIT07; // Giải phóng bộ nhớ
+    TongSoPhanTuKhaoSat_CIT07--; // Giảm số lượng phần tử
+
+    return true; // Trả về true nếu xóa thành công
 }
+
+
 
 // 6. Thêm một phần tử tại vị trí i
 bool ThemMotPT_CIT07(BKPHMC_CIT07 newBook_CIT07, int ViTri_CIT07)
@@ -150,7 +153,7 @@ bool ThemMotPT_CIT07(BKPHMC_CIT07 newBook_CIT07, int ViTri_CIT07)
         if (ViTri_CIT07 == 0) // Nếu vị trí là 0, thêm vào đầu
         {
             head_CIT07 = newNode_CIT07Book;
-            tail_CIT07 = newNode_CIT07Book; // Nếu là phần tử đầu tiên thì head và tail cùng trỏ đến phần tử này
+            TongSoPhanTuKhaoSat_CIT07++; // Cập nhật số lượng phần tử
             return true;
         }
         else // Nếu vị trí không hợp lệ
@@ -164,52 +167,65 @@ bool ThemMotPT_CIT07(BKPHMC_CIT07 newBook_CIT07, int ViTri_CIT07)
     // Nếu thêm vào đầu
     if (ViTri_CIT07 == 0)
     {
-        ThemPhanTuVaoDau_CIT07(newBook_CIT07);
+        newNode_CIT07Book->next_CIT07 = head_CIT07; // Cập nhật con trỏ
+        head_CIT07 = newNode_CIT07Book; // Cập nhật head
+        TongSoPhanTuKhaoSat_CIT07++; // Cập nhật số lượng phần tử
         return true;
     }
 
     Node_CIT07 *tmp = head_CIT07;
     // Duyệt danh sách đến vị trí trước vị trí cần thêm
-    for (int i = 0; i < ViTri_CIT07 - 1 && tmp->next != nullptr; i++)
+    for (int i = 0; i < ViTri_CIT07 - 1 && tmp->next_CIT07 != nullptr; i++)
     {
-        tmp = tmp->next;
+        tmp = tmp->next_CIT07;
     }
 
-    // Nếu tmp đã đến cuối danh sách, thêm vào cuối
-    if (tmp->next == nullptr)
+    // Nếu tmp đã đến cuối danh sách
+    if (tmp->next_CIT07 == nullptr && ViTri_CIT07 == TongSoPhanTuKhaoSat_CIT07) 
     {
-        ThemPhanTuVaoCuoi_CIT07(newBook_CIT07);
+        // Thêm vào cuối
+        tmp->next_CIT07 = newNode_CIT07Book; 
+        TongSoPhanTuKhaoSat_CIT07++; // Cập nhật số lượng phần tử
+        return true;
+    }
+    else if (ViTri_CIT07 < TongSoPhanTuKhaoSat_CIT07)
+    {
+        // Thêm vào vị trí bất kỳ
+        newNode_CIT07Book->next_CIT07 = tmp->next_CIT07;
+        tmp->next_CIT07 = newNode_CIT07Book;
+        TongSoPhanTuKhaoSat_CIT07++; // Cập nhật số lượng phần tử
         return true;
     }
     else
     {
-        // them vao vi tri bat ki
-        newNode_CIT07Book->next = tmp->next;
-        tmp->next = newNode_CIT07Book;
-        return true;
+        // Vị trí không hợp lệ
+        cout << "Vi tri khong hop le!" << endl;
+        delete newNode_CIT07Book; // Giải phóng bộ nhớ
+        return false;
     }
 }
+
 
 // 7. Cập nhật thuộc tính cho phần tử (Update)
 void CapNhatThuocTinh_CIT07(string &code_book)
 {
     // Lấy phần tử
-    bool found = false;
-    Node_CIT07 *tempBook = nullptr;
+    bool found_CIT07 = false; // đánh dấu tìm thấy sách
+    Node_CIT07 *tempBook_CIT07 = nullptr;
 
     Node_CIT07 *temp = head_CIT07;
     while (temp != nullptr)
     {
-        if (temp->data.Ma_Sach_CIT07 == code_book)
+        if (temp->data_CIT07.Ma_Sach_CIT07 == code_book)
         {
-            tempBook = temp;
-            found = true;
+            tempBook_CIT07 = temp;
+            found_CIT07 = true;
             break;
         }
-        temp = temp->next;
+        temp = temp->next_CIT07;
     }
 
-    if (!found)
+    if (!found_CIT07)
     {
         cout << "Không tìm thấy sách có mã '" << code_book << "'!" << endl;
         return; // Trở về nếu không tìm thấy
@@ -236,7 +252,7 @@ void CapNhatThuocTinh_CIT07(string &code_book)
                 cout << "Nhập tên mới cho sách: ";
                 cin.ignore();          //
                 getline(cin, newName); // Use getline to allow spaces in the name
-                tempBook->data.Ten_Sach_CIT07 = newName;
+                tempBook_CIT07->data_CIT07.Ten_Sach_CIT07 = newName;
                 cout << "Đã cập nhật thông tin sách thành công!" << endl;
                 break;
             }
@@ -246,7 +262,7 @@ void CapNhatThuocTinh_CIT07(string &code_book)
                 cout << "Nhập loại mới cho sách: ";
                 cin.ignore();          // Clear input buffer
                 getline(cin, newType); // Use getline to allow spaces in the type
-                tempBook->data.Loai_Sach_CIT07 = newType;
+                tempBook_CIT07->data_CIT07.Loai_Sach_CIT07 = newType;
                 cout << "Đã cập nhật thông tin sách thành công!" << endl;
                 break;
             }
@@ -255,7 +271,7 @@ void CapNhatThuocTinh_CIT07(string &code_book)
                 int newCnt;
                 cout << "Nhập số lần mượn sách mới cho sách: ";
                 cin >> newCnt;
-                tempBook->data.So_Lan_Muon_Sach_CIT07 = newCnt;
+                tempBook_CIT07->data_CIT07.So_Lan_Muon_Sach_CIT07 = newCnt;
                 cout << "Đã cập nhật thông tin sách thành công!" << endl;
                 break;
             }
@@ -269,45 +285,133 @@ void CapNhatThuocTinh_CIT07(string &code_book)
     }
 }
 
-// 8. Sắp xếp danh sách theo số lần mượn sách (So_Lan_Muon_Sach_CIT07)
+// 8.1 Sắp xếp danh sách theo số lần mượn sách (So_Lan_Muon_Sach_CIT07) - BB
 void SapXepDSTheoSoLanMuonSach_CIT07()
 {
-    for (Node_CIT07 *i = head_CIT07; i != nullptr; i = i->next)
+    for (Node_CIT07 *i = head_CIT07; i != nullptr; i = i->next_CIT07)
     {
-        for (Node_CIT07 *j = head_CIT07; j->next != nullptr; j = j->next)
+        for (Node_CIT07 *j = head_CIT07; j->next_CIT07 != nullptr; j = j->next_CIT07)
         {
-            if (j->data.So_Lan_Muon_Sach_CIT07 > j->next->data.So_Lan_Muon_Sach_CIT07) // Sắp xếp tăng dần
+            if (j->data_CIT07.So_Lan_Muon_Sach_CIT07 > j->next_CIT07->data_CIT07.So_Lan_Muon_Sach_CIT07) // Sắp xếp tăng dần
             {
                 // Hoán đổi nếu phần tử hiện tại lớn hơn phần tử tiếp theo
                 Node_CIT07 temp = *j;
-                *j = *j->next;
-                *j->next = temp; // Phần tử tiếp theo cũng cần hoán đổi
+                *j = *j->next_CIT07;
+                *j->next_CIT07 = temp; // Phần tử tiếp theo cũng cần hoán đổi
             }
         }
     }
     cout << "Danh sách đã được sắp xếp theo số lần mượn sách.\n";
 }
 
+// 8.2 Sắp xếp danh sách theo số lần mượn sách (So_Lan_Muon_Sach_CIT07) - Quiksort
+
+void Partition(Node_CIT07* head, Node_CIT07* end, Node_CIT07** newHead, Node_CIT07** newEnd)
+{
+    Node_CIT07* pivot = end; // Chọn phần tử cuối làm pivot
+    Node_CIT07* prev = nullptr;
+    Node_CIT07* curr = head;
+    Node_CIT07* tail = pivot; // Thiết lập tail cho danh sách
+
+    // Duyệt qua danh sách và phân loại các phần tử
+    while (curr != pivot)
+    {
+        if (curr->data_CIT07.So_Lan_Muon_Sach_CIT07 < pivot->data_CIT07.So_Lan_Muon_Sach_CIT07)
+        {
+            if (*newHead == nullptr)
+                *newHead = curr; // Thiết lập phần đầu cho danh sách mới
+
+            prev = curr; // Cập nhật prev
+            curr = curr->next_CIT07;
+        }
+        else
+        {
+            // Di chuyển phần tử ra ngoài
+            if (prev)
+                prev->next_CIT07 = curr->next_CIT07;
+            Node_CIT07* temp = curr; // Lưu giữ phần tử cần di chuyển
+            curr = curr->next_CIT07; // Di chuyển curr
+            temp->next_CIT07 = nullptr; // Cắt đứt liên kết
+            tail->next_CIT07 = temp; // Thêm phần tử vào cuối danh sách
+            tail = temp; // Cập nhật tail
+        }
+    }
+
+    if (*newHead == nullptr)
+        *newHead = pivot; // Nếu không có phần tử nhỏ hơn pivot
+    *newEnd = tail; // Cập nhật newEnd
+}
+
+Node_CIT07* QuickSortRec(Node_CIT07* head, Node_CIT07* end)
+{
+    if (!head || head == end)
+        return head;
+
+    Node_CIT07* newHead = nullptr;
+    Node_CIT07* newEnd = nullptr;
+
+    // Phân vùng danh sách
+    Partition(head, end, &newHead, &newEnd);
+
+    // Nếu head không phải là pivot
+    if (newHead != end)
+    {
+        // Sắp xếp phần bên trái
+        Node_CIT07* temp = newHead;
+        while (temp->next_CIT07 != end)
+            temp = temp->next_CIT07;
+
+        temp->next_CIT07 = nullptr; // Cắt danh sách ở phần cuối
+        newHead = QuickSortRec(newHead, temp); // Gọi đệ quy cho phần bên trái
+
+        // Kết nối với pivot
+        temp = newHead;
+        while (temp->next_CIT07)
+            temp = temp->next_CIT07;
+
+        temp->next_CIT07 = end; // Kết nối pivot với danh sách đã sắp xếp
+    }
+
+    // Sắp xếp phần bên phải
+    newEnd->next_CIT07 = QuickSortRec(end->next_CIT07, newEnd);
+
+    return newHead; // Trả về đầu danh sách đã sắp xếp
+}
+
+void SapXepDSTheoSoLanMuonSach_CIT07()
+{
+    // Tìm phần tử cuối cùng của danh sách
+    Node_CIT07* last = head_CIT07;
+    while (last && last->next_CIT07 != nullptr)
+    {
+        last = last->next_CIT07;
+    }
+
+    // Gọi hàm QuickSort
+    head_CIT07 = QuickSortRec(head_CIT07, last);
+    cout << "Danh sách đã được sắp xếp theo số lần mượn sách.\n";
+}
+
 // 9. Tìm sách theo tên
 void TimSach_CIT07Sach_CIT07(const string &title)
 {
-    bool found = false;
+    bool found_CIT07 = false;
     cout << "\nSách tìm thấy:\n";
     Node_CIT07 *temp = head_CIT07;
-    for (int i = 0; temp != nullptr; i++, temp = temp->next)
+    for (int i = 0; temp != nullptr; i++, temp = temp->next_CIT07)
     {
-        if (temp->data.Ten_Sach_CIT07.find(title) != string::npos) // Tìm kiếm theo tên
+        if (temp->data_CIT07.Ten_Sach_CIT07.find(title) != string::npos) // Tìm kiếm theo tên
         {
             cout << "Phần tử " << i + 1 << ":\n";
-            cout << "Mã sách: " << temp->data.Ma_Sach_CIT07 << "\n";
-            cout << "Tên sách: " << temp->data.Ten_Sach_CIT07 << "\n";
-            cout << "Loại sách: " << temp->data.Loai_Sach_CIT07 << "\n";
-            cout << "Số lần mượn sách: " << temp->data.So_Lan_Muon_Sach_CIT07 << "\n";
+            cout << "Mã sách: " << temp->data_CIT07.Ma_Sach_CIT07 << "\n";
+            cout << "Tên sách: " << temp->data_CIT07.Ten_Sach_CIT07 << "\n";
+            cout << "Loại sách: " << temp->data_CIT07.Loai_Sach_CIT07 << "\n";
+            cout << "Số lần mượn sách: " << temp->data_CIT07.So_Lan_Muon_Sach_CIT07 << "\n";
             cout << "\n";
-            found = true;
+            found_CIT07 = true;
         }
     }
-    if (!found)
+    if (!found_CIT07)
     {
         cout << "Không tìm thấy sách nào với tên '" << title << "'!" << endl;
     }
@@ -320,12 +424,12 @@ void DanhSachCungLoai(string &typeBook)
     bool isSuccess = false;
     int cnt = 0;
 
-    for (Node_CIT07 *i = head_CIT07; i != nullptr; i = i->next)
+    for (Node_CIT07 *i = head_CIT07; i != nullptr; i = i->next_CIT07)
     {
         // Kiểm tra xem mã sách có chứa loại sách được tìm kiếm không
-        if (i->data.Loai_Sach_CIT07 == typeBook)
+        if (i->data_CIT07.Loai_Sach_CIT07 == typeBook)
         {
-            books.push_back(i->data);
+            books.push_back(i->data_CIT07);
             cnt++;
             isSuccess = true;
         }
@@ -436,12 +540,12 @@ void XuatDS_CIT07()
     while (temp != nullptr)
     {
         cout << "Phần tử " << ++count << ":\n";
-        cout << "Mã sách: " << temp->data.Ma_Sach_CIT07 << "\n";
-        cout << "Tên sách: " << temp->data.Ten_Sach_CIT07 << "\n";
-        cout << "Loại sách: " << temp->data.Loai_Sach_CIT07 << "\n";
-        cout << "Số lần mượn sách: " << temp->data.So_Lan_Muon_Sach_CIT07 << "\n";
+        cout << "Mã sách: " << temp->data_CIT07.Ma_Sach_CIT07 << "\n";
+        cout << "Tên sách: " << temp->data_CIT07.Ten_Sach_CIT07 << "\n";
+        cout << "Loại sách: " << temp->data_CIT07.Loai_Sach_CIT07 << "\n";
+        cout << "Số lần mượn sách: " << temp->data_CIT07.So_Lan_Muon_Sach_CIT07 << "\n";
         cout << "\n";
-        temp = temp->next; // Di chuyển đến phần tử tiếp theo
+        temp = temp->next_CIT07; // Di chuyển đến phần tử tiếp theo
     }
 }
 
@@ -484,7 +588,7 @@ int main()
     int LuaChon;
     while (true)
     {
-        cout << "CHƯƠNG TRÌNH QUẢN LÝ THƯ VIỆN\n";
+        cout << "CHƯƠNG TRÌNH QUẢN LÝ THƯ VIỆN [DSLK]\n";
         cout << "1. Thêm sách\n";
         cout << "2. Cập nhật thông tin sách\n";
         cout << "3. Xóa sách ở vị trí đã chọn\n";

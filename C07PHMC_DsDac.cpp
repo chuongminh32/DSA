@@ -7,11 +7,10 @@
 /******************************/
 using namespace std;
 #include <iostream> // Thư viện cho các luồng vào/ra
-#include <conio.h>  // Thư viện cho nhập/xuất từ bàn phím trong consol
-#include <string>   // Thư viện cho xử lý chuỗi ký tự kiểu string trong C++
-#include <cctype>   // Thư viện cho các hàm xử lý ký tự
-#include <vector>   // Thư viện cho cấu trúc dữ liệu vector
-
+#include <conio.h>	// Thư viện cho nhập/xuất từ bàn phím trong consol
+#include <string>	// Thư viện cho xử lý chuỗi ký tự kiểu string trong C++
+#include <cctype>	// Thư viện cho các hàm xử lý ký tự
+#include <vector>	// Thư viện cho cấu trúc dữ liệu vector
 
 /******************************/
 /**KHAI BAO DANH SACH DAC */
@@ -428,7 +427,7 @@ int main()
 	char LuaChon;
 	while (true)
 	{
-		cout << "\nDANH SÁCH ĐẶC\n";
+		cout << "\nCHƯƠNG TRÌNH QUẢN LÝ THƯ VIỆN [DANH SÁCH ĐẶC]\n";
 		cout << "1. In danh sách\n";
 		cout << "2. Thêm một phần tử vào vị trí đã chọn\n";
 		cout << "3. Xóa phần tử ở vị trí đã chọn\n";
