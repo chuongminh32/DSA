@@ -66,7 +66,7 @@ bool KiemTraRong_CIT07()
 }
 
 /*************************************************/
-// CÁC PHÉP TOÁN XỬ LÝ TRÊN DANH SÁCH ĐẶC: SÁCH //
+// CÁC PHÉP TOÁN XỬ LÝ TRÊN DANH SÁCH LIÊN KẾT: SÁCH //
 /***********************************************/
 
 // 4.1 Thêm phần tử mới vào cuối danh sách (Create)
@@ -497,21 +497,6 @@ void InSachCungLoai_CIT07()
 /********************************************/
 /**CHƯƠNG TRÌNH CHÍNH VÀ MENU ĐIỀU KHIỂN*/
 /********************************************/
-#include <iostream>
-#include <limits> // Thêm thư viện limits
-using namespace std;
-
-// Giả sử có các hàm đã định nghĩa trước đó
-void KhoiTao_CIT07();
-void Nhapds_CIT07();
-void CapNhat_CIT07();
-void XoaPhanTu_CIT07();
-void ThemPhanTu_CIT07();
-void SapXepDSTheoSoLanMuonSach_CIT07();
-void TimSach_CIT07();
-void XuatDS_CIT07();
-void InSachCungLoai_CIT07();
-
 int main()
 {
     KhoiTao_CIT07();
