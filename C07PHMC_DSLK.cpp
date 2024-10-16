@@ -494,6 +494,14 @@ void InSachCungLoai_CIT07()
     DanhSachCungLoai(type);
 }
 
+// 9. Cập nhật thuộc tính cho sách
+void CapNhatThuocTinhSach_CIT07() {
+    string code;
+    cout << "Nhập mã sách: ";
+    getline(cin, code);
+    CapNhatThuocTinh_CIT07(code);
+}
+
 /********************************************/
 /**CHƯƠNG TRÌNH CHÍNH VÀ MENU ĐIỀU KHIỂN*/
 /********************************************/
@@ -514,6 +522,7 @@ int main()
         cout << "6. Tìm sách theo tên\n";
         cout << "7. Xuất danh sách sách\n";
         cout << "8. Xuất danh sách cùng loại sách\n";
+        cout << "9. Cập nhật lại thuộc tính mới cho sách\n";
         cout << "0. Thoát\n";
         cout << "_______________________________________\n";
         cout << "Nhập lựa chọn: ";
@@ -548,6 +557,9 @@ int main()
             break;
         case '8':
             InSachCungLoai_CIT07();
+            break;
+        case '9':
+            CapNhatThuocTinhSach_CIT07();
             break;
         case '0':
             cout << "Tạm biệt!\n";
