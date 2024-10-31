@@ -291,18 +291,27 @@ void NhapNoiDungPhanTu_CIT07(int i, BKPHMC_CIT07 &books_CIT07)
 	cin >> books_CIT07.So_Lan_Muon_Sach_CIT07;
 	cin.ignore(); // Loại bỏ ký tự newline sau khi nhập số lần mượn sách
 }
-
 // 2. Nhập danh sách
 void Nhapds_CIT07()
 {
-	int nPhanTu_CIT07;
+	int soLuongPhanTu;
 	cout << "Nhập số lượng phần tử: ";
-	cin >> nPhanTu_CIT07;
+	cin >> soLuongPhanTu;
+
+	// Kiểm tra nếu số lượng phần tử vượt quá giới hạn
+	if (soLuongPhanTu > PhanTuToiDa_CIT07)
+	{
+		cout << "Số lượng phần tử vượt quá giới hạn cho phép (" << PhanTuToiDa_CIT07 << ").\n";
+		return;
+	}
+
+	TongSoPhanTuKhaoSat_CIT07 = 0; // Đặt lại số lượng phần tử hiện tại
 
 	BKPHMC_CIT07 books_CIT07;
-	for (int i = 0; i < nPhanTu_CIT07; i++)
+	for (int i = 0; i < soLuongPhanTu; i++)
 	{
 		NhapNoiDungPhanTu_CIT07(i, books_CIT07);
+		// tang T
 		ThemPhanTuVaoCuoi_CIT07(books_CIT07);
 	}
 
