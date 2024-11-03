@@ -48,11 +48,9 @@ bool KiemTraDay_CIT07()
 	return (TongSoPhanTuKhaoSat_CIT07 == PhanTuToiDa_CIT07);
 }
 
-
 /*************************************************/
 // CÁC PHÉP TOÁN XỬ LÝ TRÊN DANH SÁCH ĐẶC: SÁCH //
 /***********************************************/
-
 
 // 5. Nhập danh sách sách
 void Nhapds_CIT07()
@@ -60,7 +58,8 @@ void Nhapds_CIT07()
 	cout << "Nhập số phần tử trong danh sách: ";
 	cin >> TongSoPhanTuKhaoSat_CIT07;
 
-	for (int i=0; i<TongSoPhanTuKhaoSat_CIT07; i++) {
+	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07; i++)
+	{
 		cout << "Nhập thông tin phần tử thứ " << i + 1 << ":\n";
 
 		cout << "Nhập mã sách: ";
@@ -76,12 +75,12 @@ void Nhapds_CIT07()
 		cout << "Nhập số lần mượn sách: ";
 		cin >> BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07;
 		cin.ignore(); // Loại bỏ ký tự newline sau khi nhập số lần mượn sách
-
 	}
 }
 
-// 6. In danh sách sách 
-void Inds_CIT07() {
+// 6. In danh sách sách
+void Inds_CIT07()
+{
 	cout << "\n_____________________________________\n";
 	cout << "\nDANH SÁCH CÁC PHẦN TỬ TRONG DANH SÁCH:\n";
 	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07; i++)
@@ -104,8 +103,8 @@ void HoanDoi_CIT07(BKPHMC_CIT07 &a, BKPHMC_CIT07 &b)
 	b = temp;
 }
 
-
-// [1] Sắp xếp danh sách theo số lần mượn sách (So_Lan_Muon_Sach_CIT07) bằng Interchange Sort 
+// CÁC GIẢI THUẬT SẮP XẾP TRÊN DANH SÁCH ĐẶC: SÁCH  - SẮP XẾP THEO SỐ LẦN MƯỢN SÁCH
+// [1] Interchange Sort
 void InterchangeSort_CIT07()
 {
 	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07 - 1; i++)
@@ -121,7 +120,7 @@ void InterchangeSort_CIT07()
 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp InterchangeSort:";
 }
 
-// [2] Sắp xếp danh sách theo số lần mượn sách (So_Lan_Muon_Sach_CIT07) bằng Buble Sort 
+// [2] Buble Sort
 void BubleSort_CIT07()
 {
 	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07; i++)
@@ -137,11 +136,11 @@ void BubleSort_CIT07()
 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp BubleSort:";
 }
 
-// [3] Sắp xếp danh sách theo số lần mượn sách (So_Lan_Muon_Sach_CIT07) bằng Straight Selection Sort 
+// [3] Straight Selection Sort
 void StraightSlectionSort_CIT07()
 {
 	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07 - 1; i++)
-	{	
+	{
 		int min_pos = i;
 		for (int j = i + 1; j < TongSoPhanTuKhaoSat_CIT07; j++)
 		{
@@ -158,31 +157,31 @@ void StraightSlectionSort_CIT07()
 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp StraightSlectioSort:";
 }
 
-// [4] Sắp xếp danh sách theo số lần mượn sách (So_Lan_Muon_Sach_CIT07) bằng Straight Insertion Sort 
+// [4] Straight Insertion Sort
 void StraightInsertionSort_CIT07()
 {
 	for (int i = 1; i < TongSoPhanTuKhaoSat_CIT07; i++)
 	{
 		BKPHMC_CIT07 x = BOOKS_CIT07[i]; // phần tử cần chèn (key)
-		int j = i - 1; // vị trí phần tử trước key
+		int j = i - 1;					 // vị trí phần tử trước key
 		while (j >= 0 && BOOKS_CIT07[j].So_Lan_Muon_Sach_CIT07 > x.So_Lan_Muon_Sach_CIT07)
 		{
 			BOOKS_CIT07[j + 1] = BOOKS_CIT07[j]; // dịch chuyển phần tử lớn hơn key 1 vị trí
-			j--; // giảm vị trí để xét tiếp
+			j--;								 // giảm vị trí để xét tiếp
 		}
 		BOOKS_CIT07[j + 1] = x; // chèn key vào vị trí thích hợp
 	}
 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp StraightInsertinSort:";
 }
 
-// [5] Sắp xếp danh sách theo số lần mượn sách (So_Lan_Muon_Sach_CIT07) bằng Binary Insertion Sort
+// [5] Binary Insertion Sort
 void BinaryInsertionSort_CIT07()
 {
 	for (int i = 1; i < TongSoPhanTuKhaoSat_CIT07; i++)
 	{
 		BKPHMC_CIT07 x = BOOKS_CIT07[i]; // phần tử cần chèn (key)
-		int left = 0; // vị trí bắt đầu của dãy con cần xét
-		int right = i - 1; // vị trí cuối của dãy con cần xét
+		int left = 0;					 // vị trí bắt đầu của dãy con cần xét
+		int right = i - 1;				 // vị trí cuối của dãy con cần xét
 		while (left <= right)
 		{
 			int mid = (left + right) / 2; // vị trí giữa của dãy con cần xét
@@ -204,7 +203,7 @@ void BinaryInsertionSort_CIT07()
 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp BinaryInsertionSort:";
 }
 
-// [6] Bubble Sort with flag 
+// [6] Bubble Sort with flag
 void BubbleSortWithFlag_CIT07()
 {
 	bool flag = true;
@@ -227,40 +226,40 @@ void BubbleSortWithFlag_CIT07()
 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp BubbleSortWithFag:";
 }
 
-// // [7] Shaker Sort 
+// // [7] Shaker Sort
 // void ShakerSort_CIT07()
 // {
 // 	int left = 0; // vị trí bắt đầu
 // 	int right = TongSoPhanTuKhaoSat_CIT07 - 1; // vị trí cuối
 // 	int k = 0; // vị trí cuối của phần tử đã sắp xếp
-// 	while (left < right) 
+// 	while (left < right)
 // 	{
 // 		// đẩy phần tử lớn nhất về cuối -> cập nhật vị trí cuối
 // 		for (int i = left; i < right; i++)
 // 		{
 // 			if (BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07 > BOOKS_CIT07[i + 1].So_Lan_Muon_Sach_CIT07)
 // 			{
-// 				HoanDoi_CIT07(BOOKS_CIT07[i], BOOKS_CIT07[i + 1]); 
+// 				HoanDoi_CIT07(BOOKS_CIT07[i], BOOKS_CIT07[i + 1]);
 // 				k = i; // cập nhật vị trí cuối của phần tử đã sắp xếp
 // 			}
 // 		}
 // 		right = k; // cập nhật vị trí cuối
 
 // 		// đẩy phần tử nhỏ nhất về đầu -> cập nhật vị trí bắt đầu
-// 		for (int i = right; i > left; i--) 
-// 		{ 
+// 		for (int i = right; i > left; i--)
+// 		{
 // 			if (BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07 < BOOKS_CIT07[i - 1].So_Lan_Muon_Sach_CIT07)
 // 			{
 // 				HoanDoi_CIT07(BOOKS_CIT07[i], BOOKS_CIT07[i - 1]);
 // 				k = i; // cập nhật vị trí cuối của phần tử đã sắp xếp
 // 			}
 // 		}
-// 		left = k; // cập nhật vị trí bắt đầu 
+// 		left = k; // cập nhật vị trí bắt đầu
 // 	}
 // 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp ShakerSort:";
 // }
-// [8] Heap Sort
 
+// [8] Heap Sort
 // void Heapify_CIT07(BKPHMC_CIT07 a[], int n, int i)
 // {
 // 	int largest = i; // khởi tạo largest là root
@@ -288,7 +287,6 @@ void BubbleSortWithFlag_CIT07()
 // 		Heapify_CIT07(a, n, largest);
 // 	}
 // }
-
 
 // // [9] Shell Sort
 // void ShellSort_CIT07()
@@ -322,7 +320,7 @@ void BubbleSortWithFlag_CIT07()
 // [7] Quik Sort
 void QuikSort_CIT07(BKPHMC_CIT07 a[], int left, int right)
 {
-	int i = left, j = right; // khởi tạo i, j
+	int i = left, j = right;								  // khởi tạo i, j
 	int pivot = a[(left + right) / 2].So_Lan_Muon_Sach_CIT07; // chọn pivot
 
 	// phân hoạch mảng
@@ -338,8 +336,8 @@ void QuikSort_CIT07(BKPHMC_CIT07 a[], int left, int right)
 		}
 		if (i <= j)
 		{
-			HoanDoi_CIT07(a[i], a[j]); 
-			i++; 
+			HoanDoi_CIT07(a[i], a[j]);
+			i++;
 			j--;
 		}
 	}
@@ -360,8 +358,8 @@ void StraightMergeSort_CIT07(BKPHMC_CIT07 a[], int left, int right)
 {
 	if (left < right)
 	{
-		int mid = left + (right - left) / 2; // tìm điểm chia (luôn nằm giữa left và right)
-		StraightMergeSort_CIT07(a, left, mid); // sắp xếp nửa trái
+		int mid = left + (right - left) / 2;		// tìm điểm chia (luôn nằm giữa left và right)
+		StraightMergeSort_CIT07(a, left, mid);		// sắp xếp nửa trái
 		StraightMergeSort_CIT07(a, mid + 1, right); // sắp xếp nửa phải
 		// gộp 2 nửa đã sắp xếp
 		int i = left, j = mid + 1, k = 0;
@@ -392,7 +390,7 @@ void StraightMergeSort_CIT07(BKPHMC_CIT07 a[], int left, int right)
 	}
 }
 
-// // [12] Natural Merge Sort 
+// // [12] Natural Merge Sort
 // void NaturalMergeSort_CIT07()
 // {
 // 	int left = 0; // vị trí bắt đầu của mảng con
@@ -417,7 +415,7 @@ void StraightMergeSort_CIT07(BKPHMC_CIT07 a[], int left, int right)
 // 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp NaturalMergeSor:";
 // }
 
-// [9] Counting Sort 
+// [9] Counting Sort
 void CountingSort_CIT07()
 {
 	int max = BOOKS_CIT07[0].So_Lan_Muon_Sach_CIT07;
@@ -428,7 +426,7 @@ void CountingSort_CIT07()
 			max = BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07; // tìm phần tử lớn nhất
 		}
 	}
-	int count[max + 1]; // mảng đếm
+	int count[max + 1];								// mảng đếm
 	BKPHMC_CIT07 output[TongSoPhanTuKhaoSat_CIT07]; // mảng kết quả
 	for (int i = 0; i <= max; i++)
 	{
@@ -445,7 +443,7 @@ void CountingSort_CIT07()
 	for (int i = TongSoPhanTuKhaoSat_CIT07 - 1; i >= 0; i--)
 	{
 		output[count[BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07] - 1] = BOOKS_CIT07[i]; // xếp phần tử vào mảng kết quả
-		count[BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07]--; // giảm số lần xuất hiện
+		count[BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07]--;							   // giảm số lần xuất hiện
 	}
 	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07; i++)
 	{
@@ -454,7 +452,7 @@ void CountingSort_CIT07()
 	cout << "Danh sách đã được sắp theo số lần mượn sách bằng pp Counting Sort.\n";
 }
 
-// [0] Distribution Sort 
+// [0] Distribution Sort
 void DistributionSort_CIT07()
 {
 	int max = BOOKS_CIT07[0].So_Lan_Muon_Sach_CIT07;
@@ -465,7 +463,7 @@ void DistributionSort_CIT07()
 			max = BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07; // tìm phần tử lớn nhất
 		}
 	}
-	int count[max + 1]; // mảng đếm
+	int count[max + 1];								// mảng đếm
 	BKPHMC_CIT07 output[TongSoPhanTuKhaoSat_CIT07]; // mảng kết quả
 	for (int i = 0; i <= max; i++)
 	{
@@ -482,7 +480,7 @@ void DistributionSort_CIT07()
 	for (int i = TongSoPhanTuKhaoSat_CIT07 - 1; i >= 0; i--)
 	{
 		output[count[BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07] - 1] = BOOKS_CIT07[i]; // xếp phần tử vào mảng kết quả
-		count[BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07]--; // giảm số lần xuất hiện
+		count[BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07]--;							   // giảm số lần xuất hiện
 	}
 	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07; i++)
 	{
@@ -491,7 +489,7 @@ void DistributionSort_CIT07()
 	cout << "Danh sách đã được sắp theo số lần mượn sách bằng pp Distribution Sort.\n";
 }
 
-// // [15] Radix Sort 
+// // [15] Radix Sort
 // void RadixSort_CIT07()
 // {
 // 	int max = BOOKS_CIT07[0].So_Lan_Muon_Sach_CIT07;
@@ -528,7 +526,7 @@ void DistributionSort_CIT07()
 // }
 
 /**********************************************/
-// CHƯƠNG TRÌNH CHÍNH 
+// CHƯƠNG TRÌNH CHÍNH
 /**********************************************/
 
 int main()
@@ -585,69 +583,70 @@ int main()
 		cout << "Nhập lựa chọn của bạn: ";
 		cin >> LuaChon;
 
-		switch (LuaChon) {
-			case '1':
-			    cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				InterchangeSort_CIT07();
-				Inds_CIT07();
-				break;
-			case '2':
-				cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				BubleSort_CIT07();
-				Inds_CIT07();
-				break;
-			case '3':
-				cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				StraightSlectionSort_CIT07();
-				Inds_CIT07();
-				break;
-			case '4':
-				cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				StraightInsertionSort_CIT07();
-				Inds_CIT07();
-				break;
-			case '5':
-				cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				BinaryInsertionSort_CIT07();
-				Inds_CIT07();
-				break;
-			case '6':
-				cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				BubbleSortWithFlag_CIT07();
-				Inds_CIT07();
-				break;
-			case '7':
-				cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				QuikSort_CIT07(BOOKS_CIT07, 0, TongSoPhanTuKhaoSat_CIT07 - 1);
-				cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp StraightMergeSort:";
-				Inds_CIT07();
-				break;
-			case '8':
-				cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				StraightMergeSort_CIT07(BOOKS_CIT07, 0, TongSoPhanTuKhaoSat_CIT07 - 1);
-				cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp StraightMergeSort:";
-				Inds_CIT07();
-				break;
-			case '9':
-				cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				CountingSort_CIT07();
-				Inds_CIT07();
-				break;
-			case '0':
-				cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
-				Inds_CIT07();
-				DistributionSort_CIT07();
-				Inds_CIT07();
-				break;			
+		switch (LuaChon)
+		{
+		case '1':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			InterchangeSort_CIT07();
+			Inds_CIT07();
+			break;
+		case '2':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			BubleSort_CIT07();
+			Inds_CIT07();
+			break;
+		case '3':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			StraightSlectionSort_CIT07();
+			Inds_CIT07();
+			break;
+		case '4':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			StraightInsertionSort_CIT07();
+			Inds_CIT07();
+			break;
+		case '5':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			BinaryInsertionSort_CIT07();
+			Inds_CIT07();
+			break;
+		case '6':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			BubbleSortWithFlag_CIT07();
+			Inds_CIT07();
+			break;
+		case '7':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			QuikSort_CIT07(BOOKS_CIT07, 0, TongSoPhanTuKhaoSat_CIT07 - 1);
+			cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp StraightMergeSort:";
+			Inds_CIT07();
+			break;
+		case '8':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			StraightMergeSort_CIT07(BOOKS_CIT07, 0, TongSoPhanTuKhaoSat_CIT07 - 1);
+			cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp StraightMergeSort:";
+			Inds_CIT07();
+			break;
+		case '9':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			CountingSort_CIT07();
+			Inds_CIT07();
+			break;
+		case '0':
+			cout << "Danh sách trước khi sắp xếp theo số lần mượn sách:";
+			Inds_CIT07();
+			DistributionSort_CIT07();
+			Inds_CIT07();
+			break;
 		}
 	}
 }
