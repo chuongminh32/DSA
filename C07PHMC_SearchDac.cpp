@@ -79,7 +79,19 @@ void Nhapds_CIT07()
 	}
 }
 
-// 6. In danh sách sách
+// 6. In thông tin sách
+void InPT_CIT07(BKPHMC_CIT07 sach_CIT07, int vitri_CIT07)
+{
+	    cout << "\nTHÔNG TIN SÁCH TÌM ĐƯỢC:\n";
+		cout << "Phần tử " << vitri_CIT07 + 1 << ":\n";
+		cout << "Mã sách: " << sach_CIT07.Ma_Sach_CIT07 << "\n";
+		cout << "Tên sách: " << sach_CIT07.Ten_Sach_CIT07 << "\n";
+		cout << "Loại sách: " << sach_CIT07.Loai_Sach_CIT07 << "\n";
+		cout << "Số lần mượn sách: " << sach_CIT07.So_Lan_Muon_Sach_CIT07 << "\n";
+		cout << "\n";
+}
+
+// 6.2 in danh sách phần tử 
 void Inds_CIT07()
 {
 	cout << "\n_____________________________________\n";
@@ -305,13 +317,15 @@ int main()
 		cout << "Nhập lựa chọn của bạn: ";
 		cin >> LuaChon;
 
+		string x;
+		int result;
+
 		switch (LuaChon)
 		{
 		case '1':
 			cout << "Nhập mã sách cần tìm: ";
-			string x;
 			cin >> x;
-			int result = TimKiemTuyenTinh_CIT07(x);
+			result = TimKiemTuyenTinh_CIT07(x);
 			if (result == -1)
 			{
 				cout << "Không tìm thấy mã sách " << x << " trong danh sách\n";
@@ -319,13 +333,13 @@ int main()
 			else
 			{
 				cout << "Tìm thấy mã sách " << x << " tại vị trí " << result << "\n";
+				InPT_CIT07(BOOKS_CIT07[result], result);
 			}
 			break;
 		case '2':
 			cout << "Nhập mã sách cần tìm: ";
-			string x;
 			cin >> x;
-			int result = TimKiemNhiPhan_CIT07(x);
+			result = TimKiemNhiPhan_CIT07(x);
 			if (result == -1)
 			{
 				cout << "Không tìm thấy mã sách " << x << " trong danh sách\n";
@@ -333,13 +347,13 @@ int main()
 			else
 			{
 				cout << "Tìm thấy mã sách " << x << " tại vị trí " << result << "\n";
+				InPT_CIT07(BOOKS_CIT07[result], result);
 			}
 			break;
 		case '3':
 			cout << "Nhập mã sách cần tìm: ";
-			string x;
 			cin >> x;
-			int result = TimKiemNoiSuy_CIT07(x);
+			result = TimKiemNoiSuy_CIT07(x);
 			if (result == -1)
 			{
 				cout << "Không tìm thấy mã sách " << x << " trong danh sách\n";
@@ -347,13 +361,13 @@ int main()
 			else
 			{
 				cout << "Tìm thấy mã sách " << x << " tại vị trí " << result << "\n";
+				InPT_CIT07(BOOKS_CIT07[result], result);
 			}
 			break;
 		case '4':
 			cout << "Nhập mã sách cần tìm: ";
-			string x;
 			cin >> x;
-			int result = TimKiemNhay_CIT07(x);
+			result = TimKiemNhay_CIT07(x);
 			if (result == -1)
 			{
 				cout << "Không tìm thấy mã sách " << x << " trong danh sách\n";
@@ -361,13 +375,13 @@ int main()
 			else
 			{
 				cout << "Tìm thấy mã sách " << x << " tại vị trí " << result << "\n";
+				InPT_CIT07(BOOKS_CIT07[result], result);
 			}
 			break;
 		case '5':
 			cout << "Nhập mã sách cần tìm: ";
-			string x;
 			cin >> x;
-			int result = TimKiemExponential_CIT07(x);
+			result = TimKiemExponential_CIT07(x);
 			if (result == -1)
 			{
 				cout << "Không tìm thấy mã sách " << x << " trong danh sách\n";
@@ -375,13 +389,13 @@ int main()
 			else
 			{
 				cout << "Tìm thấy mã sách " << x << " tại vị trí " << result << "\n";
+				InPT_CIT07(BOOKS_CIT07[result], result);
 			}
 			break;
 		case '6':
 			cout << "Nhập mã sách cần tìm: ";
-			string x;
 			cin >> x;
-			int result = TimKiemFibonacci_CIT07(x);
+			result = TimKiemFibonacci_CIT07(x);
 			if (result == -1)
 			{
 				cout << "Không tìm thấy mã sách " << x << " trong danh sách\n";
@@ -389,6 +403,7 @@ int main()
 			else
 			{
 				cout << "Tìm thấy mã sách " << x << " tại vị trí " << result << "\n";
+				InPT_CIT07(BOOKS_CIT07[result], result);
 			}
 			break;
 		case 'q':
