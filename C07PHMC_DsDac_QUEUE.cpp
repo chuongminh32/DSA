@@ -43,7 +43,7 @@ bool KiemTraRong_CIT07()
 // 3. Kiểm tra đầy
 bool KiemTraDay_CIT07()
 {
-    return (SoPTKhaoSat_CIT07 == PhanTuToiDa_CIT07 - 1);
+    return (SoPTKhaoSat_CIT07 == PhanTuToiDa_CIT07);
 }
 
 /*************************************************/
@@ -51,7 +51,7 @@ bool KiemTraDay_CIT07()
 /***********************************************/
 
 // 4. Thêm phần tử mới vào cuối hàng đợi  (Enqueue)
-bool Enqueue_CIT07(BKPHMC_CIT07 book_QUEUE_CIT07)
+bool Push_CIT07(BKPHMC_CIT07 book_QUEUE_CIT07)
 {
     if (KiemTraDay_CIT07())
     {
@@ -60,13 +60,13 @@ bool Enqueue_CIT07(BKPHMC_CIT07 book_QUEUE_CIT07)
     }
     else
     {
-        BOOKS_QUEUE_CIT07[++SoPTKhaoSat_CIT07] = book_QUEUE_CIT07;
+        BOOKS_QUEUE_CIT07[SoPTKhaoSat_CIT07++] = book_QUEUE_CIT07;
         return true;
     }
 }
 
 // 5. Lấy và Xóa phần tử ở đầu hàng đợi sách (PeekAndPOP)
-BKPHMC_CIT07 PeekAndPop_CIT07()
+BKPHMC_CIT07 Pop_CIT07()
 {
     if (KiemTraRong_CIT07())
     {
@@ -89,7 +89,7 @@ BKPHMC_CIT07 PeekAndPop_CIT07()
 }
 
 // 6. Xem phần tử ở đầu mà không xóa
-BKPHMC_CIT07 OnlyPeek_CIT07()
+BKPHMC_CIT07 layPTDau_CIT07()
 {
     if (KiemTraRong_CIT07()) // Kiểm tra xem hàng đợi có rỗng không
     {
@@ -105,7 +105,7 @@ BKPHMC_CIT07 OnlyPeek_CIT07()
 }
 
 // 7. Truy cập phần tử cuối cùng (back())
-BKPHMC_CIT07 Back_CIT07()
+BKPHMC_CIT07 layPTCuoi_CIT07()
 {
     if (KiemTraRong_CIT07())
     {
@@ -187,7 +187,7 @@ void NapNhieuPT_QUEUE_CIT07()
             BKPHMC_CIT07 books_QUEUE_CIT07; // Khai báo biến mới cho mỗi phần tử
             cout << "Nhập phần tử thứ " << i + 1 << ":" << endl;
             NhapNoiDungPT_CIT07(books_QUEUE_CIT07);
-            if (!Enqueue_CIT07(books_QUEUE_CIT07)) // Gọi Push sau khi đã nhập dữ liệu
+            if (!Push_CIT07(books_QUEUE_CIT07)) // Gọi Push sau khi đã nhập dữ liệu
             {
                 cout << "Không thể thêm phần tử vào QUEUE! QUEUE đã đầy.\n";
                 break;
@@ -195,7 +195,7 @@ void NapNhieuPT_QUEUE_CIT07()
         }
     }
 
-    cout << "Tổng số phần tử trong Hàng đợi: " << SoPTKhaoSat_CIT07 + 1 << " \n"; // Thêm 1 vì SoPTKhaoSat_CIT07 bắt đầu từ -1
+    cout << "Tổng số phần tử trong Hàng đợi: " << SoPTKhaoSat_CIT07 << " \n";
 }
 
 // 2.2 Nạp thêm 1 phần tử vào QUEUE
@@ -203,7 +203,7 @@ void Push_QUEUE_CIT07()
 {
     BKPHMC_CIT07 newBook_CIT07;
     NhapNoiDungPT_CIT07(newBook_CIT07);
-    Enqueue_CIT07(newBook_CIT07);
+    Push_CIT07(newBook_CIT07);
 }
 
 // 2.3 Lấy nhiều phần tử ra khỏi QUEUE
@@ -216,7 +216,7 @@ void LayNhieuPT_QUEUE_CIT07()
     cout << "Các phần tử lấy được" << endl;
     for (int i = 0; i < cnt_CIT07; i++)
     {
-        BKPHMC_CIT07 temp_book = PeekAndPop_CIT07(); // Lấy phần tử ở đầu hàng đợi
+        BKPHMC_CIT07 temp_book = Pop_CIT07(); // Lấy phần tử ở đầu hàng đợi
         if (temp_book.Ma_Sach_CIT07 == "-1")
         {
             cout << "Không còn phần tử nào để lấy.\n";
@@ -245,7 +245,7 @@ void Dequeue_QUEUE_CIT07()
         {
         case '1':
         {
-            BKPHMC_CIT07 temp_book_CIT07 = OnlyPeek_CIT07();
+            BKPHMC_CIT07 temp_book_CIT07 = layPTDau_CIT07();
             if (temp_book_CIT07.Ma_Sach_CIT07 != "-1")
             {
                 cout << "Lấy thành công phần tử khỏi Queue:\n ";
@@ -255,7 +255,7 @@ void Dequeue_QUEUE_CIT07()
         }
         case '2':
         {
-            BKPHMC_CIT07 temp_book_CIT07 = PeekAndPop_CIT07();
+            BKPHMC_CIT07 temp_book_CIT07 = Pop_CIT07();
             if (temp_book_CIT07.Ma_Sach_CIT07 != "-1")
             {
                 cout << "Lấy thành công phần tử khỏi Queue:\n ";

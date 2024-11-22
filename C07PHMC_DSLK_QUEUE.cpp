@@ -1,10 +1,5 @@
-/*************************************/
-// CAU TRUC DAT TEN: TenThuocTinh_CIT07
-/************************************/
-
-#include <iostream> // Thư viện cho các luồng vào/ra
-#include <conio.h>  // Thư viện cho nhập/xuất từ bàn phím trong consol
-#include <string>   // Thư viện cho xử lý chuỗi ký tự kiểu string trong C++
+#include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -12,165 +7,140 @@ using namespace std;
 /**KHAI BAO DANH SACH LIEN KET QUEUE */
 /******************************/
 
-struct BKPHMC_CIT07 // Cấu trúc 1 quyển sách trong danh sách thư viện
+struct BKPHMC_CIT07 // Cấu trúc 1 quyển sách trong Hàng đợi thư viện
 {
     string Ten_Sach_CIT07;      // Tên sách
     string Ma_Sach_CIT07;       // Mã sách
     string Loai_Sach_CIT07;     // Loại sách
     int So_Lan_Muon_Sach_CIT07; // Số lần mượn sách
+    BKPHMC_CIT07* next;         // Con trỏ tới phần tử tiếp theo
 };
 
-struct Node_CIT07
+struct Queue_CIT07
 {
-    BKPHMC_CIT07 data_CIT07;
-    Node_CIT07 *next_CIT07;
-
-    // constructor
-    Node_CIT07(BKPHMC_CIT07 newData)
-    {
-        data_CIT07 = newData;
-        next_CIT07 = nullptr;
-    }
+    BKPHMC_CIT07* front; // Con trỏ tới phần tử đầu tiên
+    BKPHMC_CIT07* rear;  // Con trỏ tới phần tử cuối cùng
 };
-
-Node_CIT07 *FRONT_CIT07, *REAR_CIT07; // con trỏ quản lí toàn bộ QUEUE: đầu(front) và cuối(rear)
-
-/***************************************************************/
-/**CÁC PHÉP THAO TÁC (TOÁN) CƠ BẢN TRÊN QUEUE DSLK: ***********/
-/*************************************************************/
 
 // 1. Khởi tạo
-void KhoiTao_CIT07()
+void KhoiTao_CIT07(Queue_CIT07 &queue)
 {
-    FRONT_CIT07 = NULL;
-    REAR_CIT07 = NULL;
+    queue.front = nullptr;
+    queue.rear = nullptr;
 }
 
 // 2. Kiểm tra rỗng
-bool KiemTraRong_CIT07()
+bool KiemTraRong_CIT07(Queue_CIT07 &queue)
 {
-    return (FRONT_CIT07 == NULL);
+    return (queue.front == nullptr);
 }
 
-/*************************************************/
-// CÁC PHÉP THAO TÁC CƠ BẢN TRÊN QUEUE DÙNG DSLK: ****/
-/***********************************************/
-
-// 3. Thêm phần tử mới vào hàng đợi  (Enqueue)
-void Push_CIT07(BKPHMC_CIT07 Newbook_CIT07)
+// 3. Thêm phần tử mới vào cuối hàng đợi (Enqueue)
+void Push_CIT07(Queue_CIT07 &queue, BKPHMC_CIT07* book_QUEUE_CIT07)
 {
-    Node_CIT07 *newBook = new Node_CIT07(Newbook_CIT07); // Khởi tạo phần tử mới
-    newBook->next_CIT07 = NULL;                          // Phần tử mới trỏ tới NULL vì nó sẽ là phần tử cuối
-
-    if (KiemTraRong_CIT07()) // Nếu hàng đợi trống, cả FRONT_CIT07 và REAR_CIT07 đều sẽ trỏ tới phần tử mới
+    if (queue.rear == nullptr)
     {
-        FRONT_CIT07 = REAR_CIT07 = newBook;
-    }
-    else // Nếu không trống, thêm phần tử mới vào cuối
-    {
-        REAR_CIT07->next_CIT07 = newBook; // Phần tử cuối hiện tại trỏ đến phần tử mới
-        REAR_CIT07 = newBook;             // Cập nhật con trỏ rear để nó trỏ đến phần tử mới
-    }
-}
-
-// 4. Xóa phần tử ở đầu hàng đợi sách
-bool Pop_CIT07()
-{
-    if (KiemTraRong_CIT07()) // Kiểm tra nếu hàng đợi rỗng
-    {
-        cout << "QUEUE rỗng, không còn phần tử nào để xóa!\n";
-        return false;
+        queue.front = queue.rear = book_QUEUE_CIT07;
     }
     else
     {
-        Node_CIT07 *deleteBook = FRONT_CIT07;  // Lưu lại phần tử đầu để xóa
-        FRONT_CIT07 = FRONT_CIT07->next_CIT07; // Cập nhật phần tử đầu mới
+        queue.rear->next = book_QUEUE_CIT07;
+        queue.rear = book_QUEUE_CIT07;
+    }
+}
 
-        if (FRONT_CIT07 == NULL) // Nếu hàng đợi trống sau khi xóa, đặt REAR_CIT07 về NULL
+// 4. Lấy và Xóa phần tử ở đầu hàng đợi sách (Dequeue)
+BKPHMC_CIT07* Pop_CIT07(Queue_CIT07 &queue)
+{
+    if (KiemTraRong_CIT07(queue))
+    {
+        cout << "Hàng đợi rỗng !" << endl;
+        return nullptr;
+    }
+    else
+    {
+        BKPHMC_CIT07* temp = queue.front;
+        queue.front = queue.front->next;
+        if (queue.front == nullptr)
         {
-            REAR_CIT07 = NULL;
+            queue.rear = nullptr;
         }
-
-        delete deleteBook; // Xóa phần tử đầu cũ
-        return true;
+        return temp;
     }
 }
 
-// 5. Lấy một phần tử ở đầu hàng đợi không xóa (Dequeue)
-BKPHMC_CIT07 FRONT_Element_CIT07()
+// 5. Xem phần tử ở đầu mà không xóa
+BKPHMC_CIT07* layPTDau_CIT07(Queue_CIT07 &queue)
 {
-    if (KiemTraRong_CIT07()) // Kiểm tra xem hàng đợi có rỗng không
+    if (KiemTraRong_CIT07(queue))
     {
-        cout << "Danh sách rỗng!" << endl;
-        BKPHMC_CIT07 PT_Rong;
-        PT_Rong.Ma_Sach_CIT07 = "-1"; // Đánh dấu phần tử rỗng
-        return PT_Rong;               // Trả về phần tử rỗng
+        cout << "Hàng đợi rỗng !" << endl;
+        return nullptr;
     }
     else
     {
-        return FRONT_CIT07->data_CIT07; // Trả về phần tử ở đỉnh mà không xóa
+        return queue.front;
     }
 }
 
-// 6. Hàm để lấy và xóa phần tử ở đầu hàng đợi
-BKPHMC_CIT07 PopAndGetFRONT_CIT07()
+// 6. Truy cập phần tử cuối cùng (back())
+BKPHMC_CIT07* layPTCuoi_CIT07(Queue_CIT07 &queue)
 {
-
-    BKPHMC_CIT07 PTCanLay_CIT07 = FRONT_Element_CIT07(); // Lấy dữ liệu phần tử đầu
-    Pop_CIT07();                                         // xóa phần tử đầu hàng đợi
-    return PTCanLay_CIT07;                               // Trả về phần tử đã lấy
+    if (KiemTraRong_CIT07(queue))
+    {
+        cout << "Hàng đợi rỗng !" << endl;
+        return nullptr;
+    }
+    else
+    {
+        return queue.rear;
+    }
 }
 
-/****************************************************************************/
-// CÁC HÀM THỰC NGHIỆM CÁC THAO TÁC XỬ LÝ TRÊN QUEUE DANH SÁCH LIÊN KẾT: Sách
-/****************************************************************************/
-
-// 0. In nội dung cho 1 phần tử
-void InNoiDung_CIT07(BKPHMC_CIT07 book_CIT07)
+// 7. In nội dung một phần tử
+void InNoiDung_CIT07(BKPHMC_CIT07* book_CIT07)
 {
-    cout << "Mã sách: " << book_CIT07.Ma_Sach_CIT07 << "\n";
-    cout << "Tên sách: " << book_CIT07.Ten_Sach_CIT07 << "\n";
-    cout << "Loại sách: " << book_CIT07.Loai_Sach_CIT07 << "\n";
-    cout << "Số lần mượn sách: " << book_CIT07.So_Lan_Muon_Sach_CIT07 << "\n";
-    cout << "\n";
+    if (book_CIT07 != nullptr)
+    {
+        cout << "Mã sách: " << book_CIT07->Ma_Sach_CIT07 << "\n";
+        cout << "Tên sách: " << book_CIT07->Ten_Sach_CIT07 << "\n";
+        cout << "Loại sách: " << book_CIT07->Loai_Sach_CIT07 << "\n";
+        cout << "Số lần mượn sách: " << book_CIT07->So_Lan_Muon_Sach_CIT07 << "\n";
+        cout << "\n";
+    }
 }
 
-// 1. Nhập nội dung 1 phần tử
-void NhapNoiDungPT_CIT07(BKPHMC_CIT07 &books_QUEUE_CIT07)
+// 8. Nhập nội dung một phần tử
+void NhapNoiDungPT_CIT07(BKPHMC_CIT07* book_CIT07)
 {
-    cout << "\n_____________________________________\n";
-
-    cin.ignore(); // ignore ở đây sau khi nhập số, để xóa ký tự xuống dòng
-
     cout << "Nhập mã sách: ";
-    getline(cin, books_QUEUE_CIT07.Ma_Sach_CIT07); // Không cần ignore ở đây
+    cin >> book_CIT07->Ma_Sach_CIT07;
+    cin.ignore(); // Loại bỏ ký tự newline sau khi nhập mã sách
 
     cout << "Nhập tên sách: ";
-    getline(cin, books_QUEUE_CIT07.Ten_Sach_CIT07);
+    getline(cin, book_CIT07->Ten_Sach_CIT07); // Nhập cả dòng
 
     cout << "Nhập loại sách: ";
-    getline(cin, books_QUEUE_CIT07.Loai_Sach_CIT07);
+    getline(cin, book_CIT07->Loai_Sach_CIT07); // Nhập cả dòng
 
     cout << "Nhập số lần mượn sách: ";
-    cin >> books_QUEUE_CIT07.So_Lan_Muon_Sach_CIT07;
+    cin >> book_CIT07->So_Lan_Muon_Sach_CIT07;
     cout << endl;
-    cout << "\n_____________________________________\n";
+    cin.ignore(); // Loại bỏ ký tự newline sau khi nhập số lần mượn sách
+
+    book_CIT07->next = nullptr; // Khởi tạo con trỏ next là nullptr
 }
 
-// 2. Nạp nhiều phần tử vào QUEUE
-void NapNhieuPT_QUEUE_CIT07()
+// 9. Nạp nhiều phần tử vào QUEUE
+void NapNhieuPT_QUEUE_CIT07(Queue_CIT07 &queue)
 {
-    cout << "\n_____________________________________\n";
-
     while (1)
     {
         int nPhanTu_CIT07;
         string input;
-        cout << "Nhập số lượng phần tử cần nạp vào QUEUE [q - Exit]: ";
-
+        cout << "Nhập số lượng phần tử cần nạp vào QUEUE [press q - Exit]: ";
         cin >> input;
-        if (input == "q")
-            return;
+        if (input == "q") return;
 
         bool isValidNum = true;
 
@@ -182,7 +152,7 @@ void NapNhieuPT_QUEUE_CIT07()
                 break;
             }
         }
-        if (!isValidNum)
+        if(!isValidNum)
         {
             cout << "Vui lòng nhập đúng định dạng số ! \n ";
             continue;
@@ -192,28 +162,25 @@ void NapNhieuPT_QUEUE_CIT07()
 
         for (int i = 0; i < nPhanTu_CIT07; i++)
         {
-            BKPHMC_CIT07 books_QUEUE_CIT07; // Khai báo biến mới cho mỗi phần tử
+            BKPHMC_CIT07* books_QUEUE_CIT07 = new BKPHMC_CIT07; // Khai báo biến mới cho mỗi phần tử
             cout << "Nhập phần tử thứ " << i + 1 << ":" << endl;
             NhapNoiDungPT_CIT07(books_QUEUE_CIT07);
-            Push_CIT07(books_QUEUE_CIT07);
+            Push_CIT07(queue, books_QUEUE_CIT07); // Gọi Push sau khi đã nhập dữ liệu
         }
     }
-    cout << "\n_____________________________________\n";
 }
 
-// 2.2 Nạp thêm 1 phần tử vào QUEUE
-void Push_QUEUE_CIT07()
+// 10. Nạp thêm một phần tử vào QUEUE
+void Push_QUEUE_CIT07(Queue_CIT07 &queue)
 {
-    BKPHMC_CIT07 newBook_CIT07;
+    BKPHMC_CIT07* newBook_CIT07 = new BKPHMC_CIT07;
     NhapNoiDungPT_CIT07(newBook_CIT07);
-    Push_CIT07(newBook_CIT07);
+    Push_CIT07(queue, newBook_CIT07);
 }
 
-// 2.3 Lấy nhiều phần tử ra khỏi QUEUE
-void LayNhieuPT_QUEUE_CIT07()
+// 11. Lấy nhiều phần tử ra khỏi QUEUE
+void LayNhieuPT_QUEUE_CIT07(Queue_CIT07 &queue)
 {
-    cout << "\n_____________________________________\n";
-
     int cnt_CIT07;
     cout << "Bạn muốn lấy bao nhiêu phần tử ra khỏi QUEUE? : ";
     cin >> cnt_CIT07;
@@ -221,28 +188,27 @@ void LayNhieuPT_QUEUE_CIT07()
     cout << "Các phần tử lấy được" << endl;
     for (int i = 0; i < cnt_CIT07; i++)
     {
-        BKPHMC_CIT07 temp_book_CIT07 = FRONT_Element_CIT07(); // Lấy phần tử ở đỉnh
-        if (temp_book_CIT07.Ma_Sach_CIT07 == "-1")
+        BKPHMC_CIT07* temp_book = Pop_CIT07(queue); // Lấy phần tử ở đầu hàng đợi
+        if (temp_book == nullptr)
         {
             cout << "Không còn phần tử nào để lấy.\n";
             break;
         }
         else
         {
-            InNoiDung_CIT07(temp_book_CIT07);
-            Pop_CIT07(); // Xóa phần tử đã lấy ra khỏi QUEUE
+            cout << "Phần tử " << i + 1 << ":\n";
+            InNoiDung_CIT07(temp_book);
+            delete temp_book; // Giải phóng bộ nhớ
         }
     }
-    cout << "\n_____________________________________\n";
 }
 
-// 3. Lấy một phần tử khỏi QUEUE
-void Top_QUEUE_CIT07()
+// 12. Lấy một phần tử khỏi QUEUE (dequeue)
+void Dequeue_QUEUE_CIT07(Queue_CIT07 &queue)
 {
     while (1)
     {
         char choose;
-        cout << "\n_____________________________________\n";
         cout << "1. Chỉ lấy ra phần tử.\n";
         cout << "2. Lấy ra phần tử và xóa nó.\n";
         cout << "e. Thoát.\n";
@@ -252,21 +218,22 @@ void Top_QUEUE_CIT07()
         {
         case '1':
         {
-            BKPHMC_CIT07 temp_book_CIT07 = FRONT_Element_CIT07();
-            if (temp_book_CIT07.Ma_Sach_CIT07 != "-1")
+            BKPHMC_CIT07* temp_book_CIT07 = layPTDau_CIT07(queue);
+            if (temp_book_CIT07 != nullptr)
             {
-                cout << "Lấy thành công phần tử khỏi QUEUE:\n ";
+                cout << "Lấy thành công phần tử khỏi Queue:\n ";
                 InNoiDung_CIT07(temp_book_CIT07);
             }
             break;
         }
         case '2':
         {
-            BKPHMC_CIT07 temp_book_CIT07 = PopAndGetFRONT_CIT07();
-            if (temp_book_CIT07.Ma_Sach_CIT07 != "-1")
+            BKPHMC_CIT07* temp_book_CIT07 = Pop_CIT07(queue);
+            if (temp_book_CIT07 != nullptr)
             {
-                cout << "Lấy thành công phần tử khỏi QUEUE:\n ";
+                cout << "Lấy thành công phần tử khỏi Queue:\n ";
                 InNoiDung_CIT07(temp_book_CIT07);
+                delete temp_book_CIT07; // Giải phóng bộ nhớ
             }
             break;
         }
@@ -280,25 +247,32 @@ void Top_QUEUE_CIT07()
             cout << "Nhập sai, vui lòng nhập '1' hoặc '2' ! \n";
         }
         }
-        cout << "\n_____________________________________\n";
     }
 }
 
-// 4. In QUEUE ngược
-void Inds_QUEUE_CIT07()
+// 13. In QUEUE [FIFO]
+void Inds_QUEUE_CIT07(Queue_CIT07 &queue)
 {
-    if (KiemTraRong_CIT07())
+    if (KiemTraRong_CIT07(queue))
     {
-        cout << "\nDANH SÁCH CÁC PHẦN TỬ TRONG QUEUE:";
+        cout << "\nHàng đợi CÁC PHẦN TỬ TRONG QUEUE:";
         cout << "  QUEUE RỖNG !\n";
     }
     else
     {
         cout << "\n_____________________________________\n";
-        cout << "\nDANH SÁCH CÁC PHẦN TỬ TRONG QUEUE:\n";
-        for (Node_CIT07 *i = FRONT_CIT07; i != nullptr; i = i->next_CIT07) // Duyệt ngược để in ra danh sách
+        cout << "\nHàng đợi CÁC PHẦN TỬ TRONG QUEUE:\n";
+        BKPHMC_CIT07* current = queue.front;
+        int i = 1;
+        while (current != nullptr)
         {
-            InNoiDung_CIT07(i->data_CIT07);
+            cout << "Phần tử " << i++ << ":\n";
+            cout << "Mã sách: " << current->Ma_Sach_CIT07 << "\n";
+            cout << "Tên sách: " << current->Ten_Sach_CIT07 << "\n";
+            cout << "Loại sách: " << current->Loai_Sach_CIT07 << "\n";
+            cout << "Số lần mượn sách: " << current->So_Lan_Muon_Sach_CIT07 << "\n";
+            cout << "\n";
+            current = current->next;
         }
         cout << "\n_____________________________________\n";
     }
@@ -309,13 +283,14 @@ void Inds_QUEUE_CIT07()
 /****************************************************/
 int main()
 {
-    KhoiTao_CIT07(); // Khởi tạo hàng đợi
+    Queue_CIT07 queue;
+    KhoiTao_CIT07(queue); // Khởi tạo hàng đợi
     char luaChon;    // Khai báo biến lựa chọn menu
 
     do
     {
         // Hiển thị menu
-        cout << "CHƯƠNG TRÌNH QUẢN LÝ THƯ VIỆN [DANH SÁCH ĐẶC - QUEUE]\n";
+        cout << "CHƯƠNG TRÌNH QUẢN LÝ THƯ VIỆN [Hàng đợi LIÊN KẾT - QUEUE]\n";
         cout << "1. Nhập nhiều cuốn sách\n";
         cout << "2. Thêm một sách\n";
         cout << "3. Xem sách ở đầu hàng đợi\n";
@@ -328,19 +303,19 @@ int main()
         switch (luaChon)
         {
         case '1':
-            NapNhieuPT_QUEUE_CIT07();
+            NapNhieuPT_QUEUE_CIT07(queue);
             break;
         case '2':
-            Push_QUEUE_CIT07();
+            Push_QUEUE_CIT07(queue);
             break;
         case '3':
-            Top_QUEUE_CIT07();
+            Dequeue_QUEUE_CIT07(queue);
             break;
         case '4':
-            LayNhieuPT_QUEUE_CIT07();
+            LayNhieuPT_QUEUE_CIT07(queue);
             break;
         case '5':
-            Inds_QUEUE_CIT07();
+            Inds_QUEUE_CIT07(queue);
             break;
         case '0':
             cout << "Cảm ơn bạn đã sử dụng chương trình.\n";

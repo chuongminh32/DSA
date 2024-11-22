@@ -45,7 +45,6 @@ bool KiemTraDay_CIT07()
 {
     return (SoPTKhaoSat_CIT07 == PhanTuToiDa_CIT07 - 1);
 }
-
 /*************************************************/
 // CÁC PHÉP THAO TÁC CƠ BẢN TRÊN 1 PHẦN TỬ: ****/
 /***********************************************/
@@ -53,48 +52,38 @@ bool KiemTraDay_CIT07()
 // 4. Thêm phần tử mới vào đỉnh ngăn xếp  (Push)
 bool Push_CIT07(BKPHMC_CIT07 books_STACK_CIT07)
 {
-    if (KiemTraDay_CIT07())
+    if (KiemTraDay_CIT07()) // Kiểm tra ngăn xếp có đầy không
     {
-        cout << "Stack đầy không thể chứa thêm phần tử mới !" << endl;
+        cout << "Stack đầy!" << endl;
         return false;
     }
     else
     {
-        BOOKS_STACK_CIT07[++SoPTKhaoSat_CIT07] = books_STACK_CIT07;
+        SoPTKhaoSat_CIT07++; // Tăng số lượng phần tử trong stack
+        BOOKS_STACK_CIT07[SoPTKhaoSat_CIT07] = books_STACK_CIT07; // Thêm phần tử vào stack
         return true;
     }
 }
 
-// 5. Xóa phần tử ở đỉnh ngăn xếp sách (Pop)
-bool Pop_CIT07()
+
+// 5 lấy ra phần tử và xóa nó 
+BKPHMC_CIT07 Pop_CIT07()
 {
-    if (KiemTraRong_CIT07())
+    BKPHMC_CIT07 temp_book;
+    if (KiemTraRong_CIT07()) // Kiểm tra ngăn xếp có rỗng không
     {
-        cout << "Stack rỗng không thể xóa !" << endl;
-        return false;
+        cout << "Stack rỗng!" << endl;
+        temp_book.Ma_Sach_CIT07 = "-1"; // Trả về mã sách "-1" để kiểm tra
+        return temp_book;
     }
     else
     {
-        SoPTKhaoSat_CIT07--;
-        return true;
+        temp_book = BOOKS_STACK_CIT07[SoPTKhaoSat_CIT07]; // Lấy phần tử ở đỉnh
+        SoPTKhaoSat_CIT07--; // Giảm số lượng phần tử trong stack
+        return temp_book;
     }
 }
 
-// 6. Lấy một phần tử ở đầu ngăn xếp (Top)
-BKPHMC_CIT07 Top_CIT07()
-{
-    if (KiemTraRong_CIT07()) // Kiểm tra xem ngăn xếp có rỗng không
-    {
-        cout << "Danh sách rỗng !" << endl;
-        BKPHMC_CIT07 PT_Rong;
-        PT_Rong.Ma_Sach_CIT07 = "-1"; // Đánh dấu phần tử rỗng
-        return PT_Rong;
-    }
-    else
-    {
-        return BOOKS_STACK_CIT07[SoPTKhaoSat_CIT07]; // Trả về phần tử ở đỉnh mà không xóa
-    }
-}
 
 /****************************************************************************/
 // CÁC HÀM THỰC NGHIỆM CÁC PHÉP THAO TÁC (TOÁN) XỬ LÝ TRÊN STACK DANH SÁCH ĐẶC: Sách
@@ -111,50 +100,41 @@ void InNoiDung_CIT07(BKPHMC_CIT07 book_CIT07)
 }
 
 // 1. Nhập nội dung 1 phần tử
-void NhapNoiDungPT_CIT07(BKPHMC_CIT07 &books_STACK_CIT07) // Sử dụng tham chiếu để thay đổi biến bên ngoài
+void NhapNoiDungPT_CIT07(BKPHMC_CIT07 &book_CIT07)
 {
     cout << "Nhập mã sách: ";
-    cin >> books_STACK_CIT07.Ma_Sach_CIT07;
-    cin.ignore(); // Loại bỏ ký tự newline sau khi nhập mã sách
-
+    cin >> book_CIT07.Ma_Sach_CIT07;
     cout << "Nhập tên sách: ";
-    getline(cin, books_STACK_CIT07.Ten_Sach_CIT07); // Nhập cả dòng
-
+    cin.ignore(); // Xóa bộ nhớ đệm
+    getline(cin, book_CIT07.Ten_Sach_CIT07);
     cout << "Nhập loại sách: ";
-    getline(cin, books_STACK_CIT07.Loai_Sach_CIT07); // Nhập cả dòng
-
+    getline(cin, book_CIT07.Loai_Sach_CIT07);
     cout << "Nhập số lần mượn sách: ";
-    cin >> books_STACK_CIT07.So_Lan_Muon_Sach_CIT07;
-    cout << endl;
-    cin.ignore(); // Loại bỏ ký tự newline sau khi nhập số lần mượn sách
+    cin >> book_CIT07.So_Lan_Muon_Sach_CIT07;
 }
 
 // 2. Nạp nhiều phần tử vào Stack
 void NapNhieuPT_Stack_CIT07()
 {
-    int nPhanTu_CIT07;
-    cout << "Nhập số lượng phần tử cần nạp vào Stack: ";
-    cin >> nPhanTu_CIT07;
+    int cnt_CIT07;
+    cout << "Bạn muốn nhập bao nhiêu phần tử vào Stack? : ";
+    cin >> cnt_CIT07;
 
-    for (int i = 0; i < nPhanTu_CIT07; i++)
+    cout << "Nhập thông tin cho các phần tử" << endl;
+    for (int i = 0; i < cnt_CIT07; i++)
     {
-        BKPHMC_CIT07 books_STACK_CIT07; // Khai báo biến mới cho mỗi phần tử
-        cout << "Nhập phần tử thứ " << i + 1 << ":" << endl;
-        NhapNoiDungPT_CIT07(books_STACK_CIT07);
-        if (!Push_CIT07(books_STACK_CIT07)) // Gọi Push sau khi đã nhập dữ liệu
-        {
-            cout << "Không thể thêm phần tử vào Stack! Stack đã đầy.\n";
-            break;
-        }
+        BKPHMC_CIT07 newBook_CIT07;
+        cout << "Phần tử " << i + 1 << ":\n";
+        NhapNoiDungPT_CIT07(newBook_CIT07);
+        Push_CIT07(newBook_CIT07);
     }
-
-    cout << "Tổng số phần tử trong danh sách: " << SoPTKhaoSat_CIT07 + 1 << " \n"; // Thêm 1 vì SoPTKhaoSat_CIT07 bắt đầu từ -1
 }
 
-// 2.2 Nạp thêm 1 phần tử vào Stack
+// 2.2 Nạp 1 phần tử vào Stack
 void Push_Stack_CIT07()
 {
     BKPHMC_CIT07 newBook_CIT07;
+    cout << "Nhập thông tin cho phần tử" << endl;
     NhapNoiDungPT_CIT07(newBook_CIT07);
     Push_CIT07(newBook_CIT07);
 }
@@ -166,28 +146,26 @@ void LayNhieuPT_Stack_CIT07()
     cout << "Bạn muốn lấy bao nhiêu phần tử ra khỏi Stack? : ";
     cin >> cnt_CIT07;
 
-    cout << "Các phần tử lấy được" << endl;
+    cout << "Lấy thông tin cho các phần tử" << endl;
     for (int i = 0; i < cnt_CIT07; i++)
     {
-        BKPHMC_CIT07 temp_book = Top_CIT07(); // Lấy phần tử ở đỉnh
-        if (temp_book.Ma_Sach_CIT07 == "-1")
+        BKPHMC_CIT07 temp_book = Pop_CIT07();
+        if (temp_book.Ma_Sach_CIT07 != "-1")
         {
-            cout << "Không còn phần tử nào để lấy.\n";
-            break;
+            cout << "Lấy thành công phần tử khỏi Stack:\n ";
+            InNoiDung_CIT07(temp_book);
         }
         else
         {
-            cout << "Phần tử " << i + 1 << ":\n";
-            InNoiDung_CIT07(temp_book);
-            Pop_CIT07(); // Xóa phần tử đã lấy ra khỏi Stack
+            cout << "Không có phần tử nào ở đỉnh Stack để lấy.\n";
         }
     }
 }
 
 // 3. Lấy một phần tử khỏi Stack
-void Top_Stack_CIT07()
+void Pop_07()
 {
-    BKPHMC_CIT07 temp_book = Top_CIT07();
+    BKPHMC_CIT07 temp_book = Pop_CIT07();
     if (temp_book.Ma_Sach_CIT07 != "-1")
     {
         cout << "Lấy thành công phần tử khỏi Stack:\n ";
@@ -199,27 +177,16 @@ void Top_Stack_CIT07()
     }
 }
 
-// 4. In Stack ngược
+// 4. In Stack ngược từ đỉnh đến đáy
 void Inds_Stack_CIT07()
 {
-    if (KiemTraRong_CIT07())
+    cout << "Danh sách các phần tử trong Stack:\n";
+    for (int i = SoPTKhaoSat_CIT07; i >= 0; i--)
     {
-        cout << "\nDANH SÁCH CÁC PHẦN TỬ TRONG STACK:";
-        cout << "  STACK RỖNG !\n";
-    }
-    else
-    {
-        cout << "\n_____________________________________\n";
-        cout << "\nDANH SÁCH CÁC PHẦN TỬ TRONG STACK:\n";
-        for (int i = SoPTKhaoSat_CIT07; i >= 0; i--) // Duyệt ngược để in ra danh sách
-        {
-            cout << "Phần tử " << i + 1 << ":\n";
-            InNoiDung_CIT07(BOOKS_STACK_CIT07[i]);
-        }
-        cout << "\n_____________________________________\n";
+        cout << "Phần tử " << i + 1 << ":\n";
+        InNoiDung_CIT07(BOOKS_STACK_CIT07[i]);
     }
 }
-
 /****************************************************/
 /** CHƯƠNG TRÌNH CHÍNH (MAIN) ***/
 /****************************************************/
@@ -234,7 +201,7 @@ int main()
         cout << "CHƯƠNG TRÌNH QUẢN LÝ THƯ VIỆN [DANH SÁCH ĐẶC - STACK]\n";
         cout << "1. Nhập nhiều cuốn sách\n";
         cout << "2. Thêm một sách\n";
-        cout << "3. Xem sách ở đầu ngăn xếp\n";
+        cout << "3. Xem sách ở đầu ngăn xếp và xóa\n";
         cout << "4. Lấy nhiều cuốn sách ra khỏi ngăn xếp\n";
         cout << "5. In toàn bộ sách có trong ngăn xếp\n";
         cout << "0. Thoát\n";
@@ -250,7 +217,7 @@ int main()
             Push_Stack_CIT07();
             break;
         case '3':
-            Top_Stack_CIT07();
+            Pop_07();
             break;
         case '4':
             LayNhieuPT_Stack_CIT07();

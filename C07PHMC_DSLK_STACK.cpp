@@ -64,7 +64,7 @@ void Push_CIT07(BKPHMC_CIT07 Newbook_CIT07)
     TOP_CIT07 = newBook;                                 // Đặt top trỏ đến phần tử mới, tức là cập nhật đỉnh của ngăn xếp
 }
 
-// 4. Xóa phần tử ở đỉnh ngăn xếp sách (Pop)
+// 4.Lấy phần tử ở đỉnh STack và xóa nó (Pop)
 bool Pop_CIT07()
 {
     if (KiemTraRong_CIT07())

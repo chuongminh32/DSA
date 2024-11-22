@@ -8,7 +8,6 @@ using namespace std;
 /****************************/
 /** KHAI BAO DANH SACH DAC **/
 /****************************/
-
 struct BKPHMC_CIT07 // cấu trúc 1 quyển sách trong danh sách thư viện
 {
 	string Ten_Sach_CIT07;		// tên sách
@@ -21,9 +20,9 @@ const int PhanTuToiDa_CIT07 = 100;			 // số lượng phần tử tối đa tro
 BKPHMC_CIT07 BOOKS_CIT07[PhanTuToiDa_CIT07]; // DANH SÁCH CÁC PHẦN TỬ (DS ĐẶC)
 int TongSoPhanTuKhaoSat_CIT07;				 // số lượng phần tử (thực có) trong mảng [n <= max]
 
-/**************************************************************/
-/** CÁC PHÉP THAO TÁC (TOÁN) CƠ BẢN TRÊN DANH SÁCH ĐẶC: SÁCH **/
-/**************************************************************/
+/*************************************************/
+/* CÁC PHÉP TOÁN XỬ LÝ TRÊN DANH SÁCH ĐẶC: SÁCH */
+/***********************************************/
 
 // 1. Khởi tạo
 void KhoiTao_CIT07()
@@ -31,29 +30,7 @@ void KhoiTao_CIT07()
 	TongSoPhanTuKhaoSat_CIT07 = 0;
 }
 
-// 2. Xác định độ dài
-int DoDaiDS_CIT07()
-{
-	return TongSoPhanTuKhaoSat_CIT07;
-}
-
-// 3. Kiểm tra rỗng
-bool KiemTraRong_CIT07()
-{
-	return (TongSoPhanTuKhaoSat_CIT07 == 0);
-}
-
-// 4. Kiểm tra đầy
-bool KiemTraDay_CIT07()
-{
-	return (TongSoPhanTuKhaoSat_CIT07 == PhanTuToiDa_CIT07);
-}
-
-/*************************************************/
-/* CÁC PHÉP TOÁN XỬ LÝ TRÊN DANH SÁCH ĐẶC: SÁCH */
-/***********************************************/
-
-// 5. Nhập danh sách sách
+// 2. Nhập danh sách sách
 void Nhapds_CIT07()
 {
 	cout << "Nhập số phần tử trong danh sách: ";
@@ -79,7 +56,7 @@ void Nhapds_CIT07()
 	}
 }
 
-// 6. In thông tin sách
+// 3. In thông tin sách
 void InPT_CIT07(BKPHMC_CIT07 sach_CIT07, int vitri_CIT07)
 {
 	    cout << "\nTHÔNG TIN SÁCH TÌM ĐƯỢC:\n";
@@ -91,7 +68,7 @@ void InPT_CIT07(BKPHMC_CIT07 sach_CIT07, int vitri_CIT07)
 		cout << "\n";
 }
 
-// 6.2 in danh sách phần tử 
+// 4 in danh sách phần tử 
 void Inds_CIT07()
 {
 	cout << "\n_____________________________________\n";
@@ -108,7 +85,7 @@ void Inds_CIT07()
 	cout << "Danh sách có " << TongSoPhanTuKhaoSat_CIT07 << " phần tử \n";
 }
 
-// 7. Hàm hoán đổi nội dung hai phần tử
+// 5. Hàm hoán đổi nội dung hai phần tử
 void HoanDoi_CIT07(BKPHMC_CIT07 &a, BKPHMC_CIT07 &b)
 {
 	BKPHMC_CIT07 temp = a;
@@ -117,6 +94,22 @@ void HoanDoi_CIT07(BKPHMC_CIT07 &a, BKPHMC_CIT07 &b)
 }
 
 // CÁC GIẢI THUẬT TÌM KIẾM TRÊN DANH SÁCH ĐẶC: SÁCH - TÌM KIẾM THEO MÃ SÁCH
+
+// [0] Sắp xếp danh sách sách theo mã sách (để thực hiện thuật toán tìm kiếm yêu cầu dữ liệu đã sắp xếp)
+void SapXep_CIT07()
+{
+	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07 - 1; i++)
+	{
+		for (int j = i + 1; j < TongSoPhanTuKhaoSat_CIT07; j++)
+		{
+			if (BOOKS_CIT07[i].Ma_Sach_CIT07 > BOOKS_CIT07[j].Ma_Sach_CIT07)
+			{
+				HoanDoi_CIT07(BOOKS_CIT07[i], BOOKS_CIT07[j]);
+			}
+		}
+	}
+}
+
 // [1] Tìm kiếm tuyến tính (Linear Search)
 int TimKiemTuyenTinh_CIT07(string x)
 {
@@ -157,26 +150,39 @@ int TimKiemNhiPhan_CIT07(string x)
 // [3] Tìm kiếm nội suy (Interpolation Search)
 int TimKiemNoiSuy_CIT07(string x)
 {
-	int left = 0;							   // vị trí bắt đầu của dãy con cần xét
-	int right = TongSoPhanTuKhaoSat_CIT07 - 1; // vị trí cuối của dãy con cần xét
-	while (left <= right)
-	{
-		int mid = left + (right - left) * (stoi(x) - stoi(BOOKS_CIT07[left].Ma_Sach_CIT07)) / (stoi(BOOKS_CIT07[right].Ma_Sach_CIT07) - stoi(BOOKS_CIT07[left].Ma_Sach_CIT07)); // vị trí giữa của dãy con cần xét
-		if (x == BOOKS_CIT07[mid].Ma_Sach_CIT07)
-		{
-			return mid; // tìm thấy x tại vị trí mid
-		}
-		else if (x < BOOKS_CIT07[mid].Ma_Sach_CIT07)
-		{
-			right = mid - 1; // dịch chuyển vị trí cuối của dãy con cần xét
-		}
-		else
-		{
-			left = mid + 1; // dịch chuyển vị trí bắt đầu của dãy con cần xét
-		}
-	}
-	return -1; // không tìm thấy x trong danh sách
+    int left = 0;  // Vị trí bắt đầu của dãy con cần xét
+    int right = TongSoPhanTuKhaoSat_CIT07 - 1; // Vị trí cuối của dãy con cần xét
+
+    while (left <= right)
+    {
+        // Tính toán vị trí giữa (mid) bằng cách sử dụng công thức nội suy
+        // Sử dụng phép so sánh chuỗi thay vì chuyển chuỗi thành số
+        int mid = left + (right - left) * (x.compare(BOOKS_CIT07[left].Ma_Sach_CIT07)) 
+                  / (BOOKS_CIT07[right].Ma_Sach_CIT07.compare(BOOKS_CIT07[left].Ma_Sach_CIT07));
+
+        // Kiểm tra nếu mid nằm trong phạm vi hợp lệ
+        if (mid < left || mid > right)
+        {
+            return -1; // Không tìm thấy
+        }
+
+        // So sánh chuỗi tại vị trí mid
+        if (x == BOOKS_CIT07[mid].Ma_Sach_CIT07)
+        {
+            return mid; // Tìm thấy x tại vị trí mid
+        }
+        else if (x < BOOKS_CIT07[mid].Ma_Sach_CIT07)
+        {
+            right = mid - 1; // Dịch chuyển vị trí cuối của dãy con cần xét
+        }
+        else
+        {
+            left = mid + 1; // Dịch chuyển vị trí bắt đầu của dãy con cần xét
+        }
+    }
+    return -1; // Không tìm thấy x trong danh sách
 }
+
 
 // [4] Jump Search
 int TimKiemNhay_CIT07(string x)
@@ -277,6 +283,7 @@ int main()
 	{
 		KhoiTao_CIT07();
 		Nhapds_CIT07();
+		SapXep_CIT07();
 		Inds_CIT07();
 	}
 	else
@@ -296,6 +303,7 @@ int main()
 			sampleBooks[i].So_Lan_Muon_Sach_CIT07 = Count[i];
 			BOOKS_CIT07[TongSoPhanTuKhaoSat_CIT07++] = sampleBooks[i]; // Thêm vào danh sách toàn cục
 		}
+		SapXep_CIT07();
 		Inds_CIT07();
 	}
 
@@ -323,6 +331,7 @@ int main()
 		switch (LuaChon)
 		{
 		case '1':
+		
 			cout << "Nhập mã sách cần tìm: ";
 			cin >> x;
 			result = TimKiemTuyenTinh_CIT07(x);

@@ -174,7 +174,66 @@ void StraightInsertionSort_CIT07()
 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp StraightInsertinSort:";
 }
 
+
 // [5] Binary Insertion Sort
+// [5, 2, 8, 1, 3].
+// Vòng lặp ngoài i = 1:
+// x = BOOKS_CIT07[1] (2)
+// left = 0, right = 0
+
+// Tìm vị trí chèn cho 2:
+// mid = (0 + 0) / 2 = 0
+// 2 < 5 → right = mid - 1 = -1
+// Chèn 2 vào vị trí left = 0:
+// Dịch chuyển 5 về sau: [5, 5, 8, 1, 3]
+// Chèn 2 vào vị trí 0: [2, 5, 8, 1, 3]
+
+// Vòng lặp ngoài i = 2:
+// x = BOOKS_CIT07[2] (8)
+// left = 0, right = 1
+// Tìm vị trí chèn cho 8:
+// mid = (0 + 1) / 2 = 0
+// 8 > 2 → left = mid + 1 = 1
+// mid = (1 + 1) / 2 = 1
+// 8 > 5 → left = mid + 1 = 2
+// Chèn 8 vào vị trí left = 2:
+// Không cần di chuyển: [2, 5, 8, 1, 3]
+
+
+// Vòng lặp ngoài i = 3:
+// x = BOOKS_CIT07[3] (1)
+// left = 0, right = 2
+// Tìm vị trí chèn cho 1:
+// mid = (0 + 2) / 2 = 1
+// 1 < 5 → right = mid - 1 = 0
+// mid = (0 + 0) / 2 = 0
+// 1 < 2 → right = mid - 1 = -1
+
+// Chèn 1 vào vị trí left = 0:
+// Dịch chuyển 8, 5, 2 về sau
+// [2, 5, 8, 8, 3]
+// [2, 5, 5, 8, 3]
+// [2, 2, 5, 8, 3]
+
+// Chèn 1 vào vị trí 0
+// [1, 2, 5, 8, 3]
+
+// Vòng lặp ngoài i = 4:
+// x = BOOKS_CIT07[4] (3)
+// left = 0, right = 3
+// Tìm vị trí chèn cho 3:
+// mid = (0 + 3) / 2 = 1
+// 3 > 2 → left = mid + 1 = 2
+// mid = (2 + 3) / 2 = 2
+// 3 < 5 → right = mid - 1 = 1
+// Chèn 3 vào vị trí left = 2:
+// Dịch chuyển 8, 5 về sau
+// [1, 2, 5, 8, 8]
+// [1, 2, 5, 5, 8]
+
+// Chèn 3 vào vị trí 2: [1, 2, 3, 5, 8]
+// Kết quả cuối cùng: [1, 2, 3, 5, 8]
+
 void BinaryInsertionSort_CIT07()
 {
 	for (int i = 1; i < TongSoPhanTuKhaoSat_CIT07; i++)
@@ -318,6 +377,126 @@ void BubbleSortWithFlag_CIT07()
 // }
 
 // [7] Quik Sort
+// Bước 1: giả sử arr là mảng lưu số lần mượn sách các phần tử arr = [-4, 1, -9, 22, 3, 14, 8, -2, 4, 99]
+// Bước 2: Chạy thuật toán Quick Sort
+// Gọi hàm QuikSort_CIT07(arr, 0, n-1)
+// Lần gọi đầu tiên: QuikSort_CIT07(arr, 0, 9)
+// left = 0, right = 9
+// pivot = arr[(0 + 9) / 2] = arr[4] = 3
+// Khởi tạo i = 0, j = 9
+// Phân hoạch mảng:
+
+// arr[i] = -4 < pivot → tăng i → i = 1
+// arr[j] = 99 > pivot → giảm j → j = 8
+// arr[i] = 1 < pivot → tăng i → i = 2
+// arr[j] = 4 > pivot → giảm j → j = 7
+// arr[i] = -9 < pivot → tăng i → i = 3
+// arr[j] = -2 < pivot → giảm j → j = 6
+// arr[i] = 22 > pivot → i không tăng
+// arr[j] = 8 > pivot → giảm j → j = 5
+// arr[i] = 22 > pivot → i không tăng
+// arr[j] = 14 > pivot → giảm j → j = 4
+// Hoán đổi arr[i] và arr[j] → arr = [-4, 1, -9, -2, 3, 14, 8, 22, 4, 99]
+// Tăng i → i = 4, giảm j → j = 3
+// Kết thúc phân hoạch:
+
+// i = 4, j = 3
+// Gọi đệ quy QuikSort_CIT07(arr, 0, 3) và QuikSort_CIT07(arr, 4, 9)
+// Lần gọi thứ hai: QuikSort_CIT07(arr, 0, 3)
+// left = 0, right = 3
+// pivot = arr[(0 + 3) / 2] = arr[1] = 1
+// Khởi tạo i = 0, j = 3
+// Phân hoạch mảng:
+
+// arr[i] = -4 < pivot → tăng i → i = 1
+// arr[j] = -2 < pivot → giảm j → j = 2
+// arr[i] = 1 = pivot → tăng i → i = 2
+// arr[j] = -9 < pivot → giảm j → j = 1
+// Hoán đổi arr[i] và arr[j] → arr = [-4, -9, 1, -2, 3, 14, 8, 22, 4, 99]
+// Tăng i → i = 3, giảm j → j = 0
+// Kết thúc phân hoạch:
+
+// i = 3, j = 0
+// Gọi đệ quy QuikSort_CIT07(arr, 0, 0) và QuikSort_CIT07(arr, 2, 3)
+// Lần gọi thứ ba: QuikSort_CIT07(arr, 2, 3)
+// left = 2, right = 3
+// pivot = arr[(2 + 3) / 2] = arr[2] = 1
+// Khởi tạo i = 2, j = 3
+// Phân hoạch mảng:
+
+// arr[i] = 1 = pivot → tăng i → i = 3
+// arr[j] = -2 < pivot → giảm j → j = 2
+// Hoán đổi arr[i] và arr[j] → arr = [-4, -9, -2, 1, 3, 14, 8, 22, 4, 99]
+// Tăng i → i = 4, giảm j → j = 1
+// Kết thúc phân hoạch:
+
+// i = 4, j = 1
+// Gọi đệ quy QuikSort_CIT07(arr, 2, 1) và QuikSort_CIT07(arr, 3, 3)
+// Lần gọi thứ tư: QuikSort_CIT07(arr, 4, 9)
+// left = 4, right = 9
+// pivot = arr[(4 + 9) / 2] = arr[6] = 8
+// Khởi tạo i = 4, j = 9
+// Phân hoạch mảng:
+
+// arr[i] = 3 < pivot → tăng i → i = 5
+// arr[j] = 99 > pivot → giảm j → j = 8
+// arr[i] = 14 > pivot → i không tăng
+// arr[j] = 4 < pivot → giảm j → j = 7
+// arr[i] = 14 > pivot → i không tăng
+// arr[j] = 22 > pivot → giảm j → j = 6
+// Hoán đổi arr[i] và arr[j] → arr = [-4, -9, -2, 1, 3, 4, 8, 22, 14, 99]
+// Tăng i → i = 6, giảm j → j = 5
+// Kết thúc phân hoạch:
+
+// i = 6, j = 5
+// Gọi đệ quy QuikSort_CIT07(arr, 4, 5) và QuikSort_CIT07(arr, 7, 9)
+// Lần gọi thứ năm: QuikSort_CIT07(arr, 4, 5)
+// left = 4, right = 5
+// pivot = arr[(4 + 5) / 2] = arr[4] = 3
+// Khởi tạo i = 4, j = 5
+// Phân hoạch mảng:
+
+// arr[i] = 3 = pivot → tăng i → i = 5
+// arr[j] = 4 > pivot → giảm j → j = 4
+// Hoán đổi arr[i] và arr[j] → arr = [-4, -9, -2, 1, 3, 4, 8, 22, 14, 99]
+// Tăng i → i = 6, giảm j → j = 3
+// Kết thúc phân hoạch:
+
+// i = 6, j = 3
+// Gọi đệ quy QuikSort_CIT07(arr, 4, 3) và QuikSort_CIT07(arr, 5, 5)
+// Lần gọi thứ sáu: QuikSort_CIT07(arr, 7, 9)
+// left = 7, right = 9
+// pivot = arr[(7 + 9) / 2] = arr[8] = 14
+// Khởi tạo i = 7, j = 9
+// Phân hoạch mảng:
+
+// arr[i] = 22 > pivot → i không tăng
+// arr[j] = 99 > pivot → giảm j → j = 8
+// arr[i] = 22 > pivot → i không tăng
+// arr[j] = 14 = pivot → giảm j → j = 7
+// Hoán đổi arr[i] và arr[j] → arr = [-4, -9, -2, 1, 3, 4, 8, 14, 22, 99]
+// Tăng i → i = 8, giảm j → j = 6
+// Kết thúc phân hoạch:
+
+// i = 8, j = 6
+// Gọi đệ quy QuikSort_CIT07(arr, 7, 6) và QuikSort_CIT07(arr, 8, 9)
+// Lần gọi thứ bảy: QuikSort_CIT07(arr, 8, 9)
+// left = 8, right = 9
+// pivot = arr[(8 + 9) / 2] = arr[8] = 22
+// Khởi tạo i = 8, j = 9
+// Phân hoạch mảng:
+
+// arr[i] = 22 = pivot → tăng i → i = 9
+// arr[j] = 99 > pivot → giảm j → j = 8
+// Hoán đổi arr[i] và arr[j] → arr = [-4, -9, -2, 1, 3, 4, 8, 14, 22, 99]
+// Tăng i → i = 10, giảm j → j = 7
+// Kết thúc phân hoạch:
+
+// i = 10, j = 7
+// Gọi đệ quy QuikSort_CIT07(arr, 8, 7) và QuikSort_CIT07(arr, 9, 9)
+// Kết quả cuối cùng: Mang da sap xep: -9 -4 -2 1 3 4 8 14 22 99
+
+
 void QuikSort_CIT07(BKPHMC_CIT07 a[], int left, int right)
 {
 	int i = left, j = right;								  // khởi tạo i, j
@@ -416,6 +595,37 @@ void StraightMergeSort_CIT07(BKPHMC_CIT07 a[], int left, int right)
 // }
 
 // [9] Counting Sort
+// Bước 1: Khởi tạo: giả sử ta có số lần mượn sách được cho vào 1 mảng arr =[2, 5, 3, 0, 2, 3, 0, 3].
+// Bước 2: Tìm phần tử lớn nhất
+// max = 5
+// Bước 3: Khởi tạo mảng đếm
+// count = [0, 0, 0, 0, 0, 0] (kích thước max + 1)
+// Bước 4: Đếm số lần xuất hiện của mỗi phần tử
+// count[2]++ → count = [0, 0, 1, 0, 0, 0]
+// count[5]++ → count = [0, 0, 1, 0, 0, 1]
+// count[3]++ → count = [0, 0, 1, 1, 0, 1]
+// count[0]++ → count = [1, 0, 1, 1, 0, 1]
+// count[2]++ → count = [1, 0, 2, 1, 0, 1]
+// count[3]++ → count = [1, 0, 2, 2, 0, 1]
+// count[0]++ → count = [2, 0, 2, 2, 0, 1]
+// count[3]++ → count = [2, 0, 2, 3, 0, 1]
+// Bước 5: Cập nhật mảng đếm
+// count[1] += count[0] → count = [2, 2, 2, 3, 0, 1]
+// count[2] += count[1] → count = [2, 2, 4, 3, 0, 1]
+// count[3] += count[2] → count = [2, 2, 4, 7, 0, 1]
+// count[4] += count[3] → count = [2, 2, 4, 7, 7, 1]
+// count[5] += count[4] → count = [2, 2, 4, 7, 7, 8]
+// Bước 6: Xếp phần tử vào mảng kết quả
+// output[count[3] - 1] = 3 → output = [0, 0, 0, 0, 0, 0, 3, 0] → count = [2, 2, 4, 6, 7, 8]
+// output[count[0] - 1] = 0 → output = [0, 0, 0, 0, 0, 0, 3, 0] → count = [1, 2, 4, 6, 7, 8]
+// output[count[3] - 1] = 3 → output = [0, 0, 0, 0, 0, 3, 3, 0] → count = [1, 2, 4, 5, 7, 8]
+// output[count[2] - 1] = 2 → output = [0, 0, 0, 2, 0, 3, 3, 0] → count = [1, 2, 3, 5, 7, 8]
+// output[count[0] - 1] = 0 → output = [0, 0, 0, 2, 0, 3, 3, 0] → count = [0, 2, 3, 5, 7, 8]
+// output[count[3] - 1] = 3 → output = [0, 0, 0, 2, 3, 3, 3, 0] → count = [0, 2, 3, 4, 7, 8]
+// output[count[5] - 1] = 5 → output = [0, 0, 0, 2, 3, 3, 3, 5] → count = [0, 2, 3, 4, 7, 7]
+// output[count[2] - 1] = 2 → output = [0, 0, 2, 2, 3, 3, 3, 5] → count = [0, 2, 2, 4, 7, 7]
+// Bước 7: Sao chép mảng kết quả vào mảng chính
+// arr = [0, 0, 2, 2, 3, 3, 3, 5]
 void CountingSort_CIT07()
 {
 	int max = BOOKS_CIT07[0].So_Lan_Muon_Sach_CIT07;

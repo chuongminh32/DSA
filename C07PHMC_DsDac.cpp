@@ -60,38 +60,31 @@ bool KiemTraDay_CIT07()
 // CÁC PHÉP TOÁN XỬ LÝ TRÊN DANH SÁCH ĐẶC: SÁCH //
 /***********************************************/
 
-// 5. Thêm phần tử mới vào cuối danh sách  (Create)
-bool ThemPhanTuVaoCuoi_CIT07(BKPHMC_CIT07 books_CIT07)
+// 5. Thêm phần tử mới vào cuối danh sách
+bool ThemPhanTuVaoCuoi_CIT07(BKPHMC_CIT07 v07)
 {
-	if (!KiemTraDay_CIT07())
-	{
-		BOOKS_CIT07[TongSoPhanTuKhaoSat_CIT07] = books_CIT07;
-		TongSoPhanTuKhaoSat_CIT07++;
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	if (KiemTraDay_CIT07())
+		return false; // Nếu danh sách đầy thì không thêm được
+
+	BOOKS_CIT07[TongSoPhanTuKhaoSat_CIT07++] = v07; // Thêm vào cuối danh sách
+	return true;
 }
 
-// 6. Xóa một phần tử tại vị trí location (Delete)
+// 6. Xóa một phần tử tại vị trí chỉ định
 bool XoaMotPhanTu_CIT07(int ViTri_CIT07)
 {
-	// Kiểm tra điều kiện hợp lệ của chỉ số
-	if (ViTri_CIT07 < 0 || ViTri_CIT07 >= TongSoPhanTuKhaoSat_CIT07 || KiemTraRong_CIT07())
+	if (ViTri_CIT07 < 0 || ViTri_CIT07 >= TongSoPhanTuKhaoSat_CIT07 || KiemTraRong_CIT07()) // Kiểm tra chỉ số hợp lệ và danh sách rỗng
 		return false;
 
-	// Di chuyển các phần tử sau ViTri_CIT07 lên một vị trí
+	// Di chuyển các phần tử từ vị trí ViTri_CIT07 trở đi một bước về phía trước
 	for (int i = ViTri_CIT07; i < TongSoPhanTuKhaoSat_CIT07 - 1; i++)
 	{
 		BOOKS_CIT07[i] = BOOKS_CIT07[i + 1];
 	}
-
-	// Giảm số lượng phần tử sau khi di chuyển xong
-	TongSoPhanTuKhaoSat_CIT07--;
+	TongSoPhanTuKhaoSat_CIT07--; // Giảm số lượng phần tử
 	return true;
 }
+
 
 // 7. Thêm một phần tử vào vị trí i của danh sách  (Add)
 bool ThemPhanTu_CIT07(BKPHMC_CIT07 v07, int ViTri_CIT07)
@@ -127,7 +120,7 @@ void CapNhatThuocTinh_CIT07(string &code_book)
 	{
 		if (BOOKS_CIT07[i].Ma_Sach_CIT07 == code_book)
 		{ // Use the correct variable name
-			tempBook = &BOOKS_CIT07[i];
+			tempBook = &BOOKS_CIT07[i]; // Use the address of the element
 			found = true;
 			break;
 		}
@@ -447,6 +440,7 @@ int main()
 		cout << "8. Tìm sách theo tên sách\n";
 		cout << "9. In danh sách cùng loại\n";
 		cout << "0. Cập nhật thuộc tính cho sách\n";
+		cout << "a. Thêm vào cuối\n";
 		cout << "q. Thoát\n";
 		cout << "Nhập lựa chọn của bạn: ";
 		cin >> LuaChon;
@@ -491,6 +485,8 @@ int main()
 			CapNhat_CIT07();
 			break;
 		}
+	
+		    
 		case 'q':
 			cout << "Thoát khỏi chương trình.\n";
 			return 0;
