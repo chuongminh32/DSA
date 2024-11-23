@@ -147,7 +147,7 @@ Cây nhị phân tìm kiếm sau khi thêm các phần tử:
  */
 
 
-Node_CIT07 *ThemPhanTu_CIT07(Node_CIT07 *node, BKPHMC_CIT07 books_CIT07)
+Node_CIT07 *ThemPhanTu_CIT07(Node_CIT07 *node, const BKPHMC_CIT07 &books_CIT07)
 {
     // Nếu cây rỗng thì tạo nút mới và trả về
     if (node == nullptr)
@@ -171,7 +171,7 @@ Node_CIT07 *ThemPhanTu_CIT07(Node_CIT07 *node, BKPHMC_CIT07 books_CIT07)
 }
 
 // [3] Thêm một phần tử vào cây
-void ThemPhanTuVaoCay_CIT07(BKPHMC_CIT07 books_CIT07)
+void ThemPhanTuVaoCay_CIT07(BKPHMC_CIT07 &books_CIT07)
 {
     root_CIT07 = ThemPhanTu_CIT07(root_CIT07, books_CIT07);
 }
@@ -239,6 +239,23 @@ Node_CIT07 *TimNodeMin(Node_CIT07 *node)
  * @param node Con trỏ đến nút gốc của cây nhị phân tìm kiếm.
  * @param maSach Mã sách của phần tử cần xóa.
  * @return Node_CIT07* Con trỏ đến nút gốc của cây nhị phân tìm kiếm sau khi xóa phần tử.
+ * 
+ * ví dụ:  xóa node có mã sách là 10 (gốc)
+ *      10
+       /  \
+      5    15
+     / \   /  \
+    3   7 14   22
+
+ * -> tìm node min của cây con phải của node gốc (node 10): là node 14
+ * -> sau đó copy dữ liệu từ node min sang node gốc (node 10)
+ * -> xóa node 14 (node min)
+        14
+       /  \
+      5    15
+     / \      \
+    3   7      22
+
  */
 Node_CIT07 *XoaNodeTheoMaSach_CIT07(Node_CIT07 *node07, const string &maSach)
 {
@@ -275,12 +292,12 @@ Node_CIT07 *XoaNodeTheoMaSach_CIT07(Node_CIT07 *node07, const string &maSach)
             soPhanTu_CIT07--; // Giảm số phần tử trong cây
             return temp;
         }
-
-        // node07 có hai con, lấy node07 nhỏ nhất từ cây con phải
+        
+        // đi tìm node min của cây con phải
         Node_CIT07 *temp = TimNodeMin(node07->right_CIT07);
-        // Copy dữ liệu từ node07 nhỏ nhất sang node07 cần xóa
-        node07->data_CIT07 = temp->data_CIT07;
-        // Xóa node07 nhỏ nhất
+        // Copy dữ liệu từ node min sang node07(node thay the cho node xóa: node tem thay thế node bị xóa node07)
+        node07->data_CIT07 = temp->data_CIT07; 
+        // đi qua cây con phải và tiếp tục đi tìm node min bên cây con phải để thay thế (dịch node min lên)
         node07->right_CIT07 = XoaNodeTheoMaSach_CIT07(node07->right_CIT07, temp->data_CIT07.Ma_Sach_CIT07);
     }
 
@@ -536,8 +553,8 @@ void inThongTinSach_07(Node_CIT07 *node_07)
        /    \
       5      15
      / \    /  \
-    3   7  20   22
-10 5 3 7 15 20 22
+    3   7  14   22
+10 5 3 7 15 14 22
 Quá trình duyệt cây theo thứ tự NLR không đệ quy
 Bắt đầu tại gốc cây (10):
 Đẩy 10 vào stack.
@@ -565,20 +582,20 @@ Output07: 10 5 3 7
 Duyệt cây con phải của 10 (15):
 Lấy 15 ra khỏi stack và in thông tin.
 Đẩy 22 vào stack.
-Đẩy 20 vào stack.
-Stack: [22, 20]
+Đẩy 14 vào stack.
+Stack: [22, 14]
 Output07: 10 5 3 7 15
-Duyệt cây con trái của 15 (20):
-Lấy 20 ra khỏi stack và in thông tin.
-20 không có con, tiếp tục.
+Duyệt cây con trái của 15 (14):
+Lấy 14 ra khỏi stack và in thông tin.
+14 không có con, tiếp tục.
 Stack: [22]
-Output07: 10 5 3 7 15 20
+Output07: 10 5 3 7 15 14
 Duyệt cây con phải của 15 (22):
 Lấy 22 ra khỏi stack và in thông tin.
 22 không có con, kết thúc.
 Stack: []
-Output07: 10 5 3 7 15 20 22
-Kết quả cuối cùng:10 5 3 7 15 20 22
+Output07: 10 5 3 7 15 14 22
+Kết quả cuối cùng:10 5 3 7 15 14 22
 */
 void duyetCayNLR(Node_CIT07 *node_07)
 {
@@ -621,8 +638,8 @@ void khuDeQuy_NLR(Node_CIT07 *node_07)
        /    \
       5      15
      / \    /  \
-    3   7  20   22
-10, 15, 22, 20, 5, 7, 3
+    3   7  14   22
+10, 15, 22, 14, 5, 7, 3
 Quá trình duyệt cây theo thứ tự NRL không đệ quy
 Bắt đầu tại gốc cây (10):
 Đẩy 10 vào stack.
@@ -634,42 +651,42 @@ Output: 10
 
 Duyệt cây con phải của 10 (15):
 Lấy 15 ra khỏi stack và in thông tin.
-Đẩy 20 vào stack.
+Đẩy 14 vào stack.
 Đẩy 22 vào stack.
-Stack: [5, 20, 22]
+Stack: [5, 14, 22]
 Output: 10 15
 
 Duyệt cây con phải của 15 (22):
 Lấy 22 ra khỏi stack và in thông tin.
 22 không có con, tiếp tục.
-Stack: [5, 20]
+Stack: [5, 14]
 Output: 10 15 22
 
-Duyệt cây con trái của 15 (20):
-Lấy 20 ra khỏi stack và in thông tin.
-20 không có con, tiếp tục.
+Duyệt cây con trái của 15 (14):
+Lấy 14 ra khỏi stack và in thông tin.
+14 không có con, tiếp tục.
 Stack: [5]
-Output: 10 15 22 20
+Output: 10 15 22 14
 
 Duyệt cây con trái của 10 (5):
 Lấy 5 ra khỏi stack và in thông tin.
 Đẩy 3 vào stack.
 Đẩy 7 vào stack.
 Stack: [3, 7]
-Output: 10 15 22 20 5
+Output: 10 15 22 14 5
 
 Duyệt cây con phải của 5 (7):
 Lấy 7 ra khỏi stack và in thông tin.
 7 không có con, tiếp tục.
 Stack: [3]
-Output: 10 15 22 20 5 7
+Output: 10 15 22 14 5 7
 
 Duyệt cây con trái của 5 (3):
 Lấy 3 ra khỏi stack và in thông tin.
 3 không có con, kết thúc.
 Stack: []
-Output: 10 15 22 20 5 7 3
-Kết quả cuối cùng:10 15 22 20 5 7 3
+Output: 10 15 22 14 5 7 3
+Kết quả cuối cùng:10 15 22 14 5 7 3
 
 */
 void duyetCayNRL(Node_CIT07 *node_07) 
@@ -713,9 +730,9 @@ void khuDeQuy_NRL(Node_CIT07 *node_07)
        /    \
       5      15
      / \    /  \
-    3   7  20   22
+    3   7  14   22
 
-22 15 20 10 7 5 3
+22 15 14 10 7 5 3
 Quá trình duyệt cây theo thứ tự RNL không đệ quy
 Bắt đầu tại gốc cây (10):
 Đẩy 10 vào stack.
@@ -735,21 +752,21 @@ Output07: 22
 Current: nullptr
 Trở lại nút 15:
 Lấy 15 ra khỏi stack và in thông tin.
-Di chuyển đến cây con trái của 15 (20).
+Di chuyển đến cây con trái của 15 (14).
 Stack: [10]
 Output07: 22 15
-Current: 20
-Duyệt cây con trái của 15 (20):
-Đẩy 20 vào stack.
-20 không có con phải, lấy 20 ra khỏi stack và in thông tin.
+Current: 14
+Duyệt cây con trái của 15 (14):
+Đẩy 14 vào stack.
+14 không có con phải, lấy 14 ra khỏi stack và in thông tin.
 Stack: [10]
-Output07: 22 15 20
+Output07: 22 15 14
 Current: nullptr
 Trở lại nút 10:
 Lấy 10 ra khỏi stack và in thông tin.
 Di chuyển đến cây con trái của 10 (5).
 Stack: []
-Output07: 22 15 20 10
+Output07: 22 15 14 10
 Current: 5
 Duyệt cây con trái của 10 (5):
 Đẩy 5 vào stack.
@@ -760,21 +777,21 @@ Duyệt cây con phải của 5 (7):
 Đẩy 7 vào stack.
 7 không có con phải, lấy 7 ra khỏi stack và in thông tin.
 Stack: [5]
-Output07: 22 15 20 10 7
+Output07: 22 15 14 10 7
 Current: nullptr
 Trở lại nút 5:
 Lấy 5 ra khỏi stack và in thông tin.
 Di chuyển đến cây con trái của 5 (3).
 Stack: []
-Output07: 22 15 20 10 7 5
+Output07: 22 15 14 10 7 5
 Current: 3
 Duyệt cây con trái của 5 (3):
 Đẩy 3 vào stack.
 3 không có con phải, lấy 3 ra khỏi stack và in thông tin.
 Stack: []
-Output07: 22 15 20 10 7 5 3
+Output07: 22 15 14 10 7 5 3
 Current: nullptr
-Kết quả cuối cùng: 22 15 20 10 7 5 3
+Kết quả cuối cùng: 22 15 14 10 7 5 3
 */
 void duyetCayRNL(Node_CIT07 *node_07)
 {
@@ -817,9 +834,9 @@ void khuDeQuy_RNL(Node_CIT07 *node_07)
        /    \
       5      15
      / \    /  \
-    3   7  20   22
+    3   7  14   22
 
-22 20 15 7 3 5 10
+22 14 15 7 3 5 10
 Quá trình duyệt cây theo thứ tự RLN không đệ quy
 - Bắt đầu tại gốc cây (10):
 Đẩy 10 vào stackNode07.StackNode07: [10]
@@ -850,23 +867,23 @@ Output07: [10, 5, 3, 7]
 
 Lấy 15 ra khỏi stackNode07 và đẩy vào output07:
 Đẩy 22 vào stackNode07.
-Đẩy 20 vào stackNode07.
-StackNode07: [22, 20]
+Đẩy 14 vào stackNode07.
+StackNode07: [22, 14]
 Output07: [10, 5, 3, 7, 15]
 
-Lấy 20 ra khỏi stackNode07 và đẩy vào output07:
-20 không có con, tiếp tục.
+Lấy 14 ra khỏi stackNode07 và đẩy vào output07:
+14 không có con, tiếp tục.
 StackNode07: [22]
-Output07: [10, 5, 3, 7, 15, 20]
+Output07: [10, 5, 3, 7, 15, 14]
 
 Lấy 22 ra khỏi stackNode07 và đẩy vào output07:
 22 không có con, tiếp tục.
 StackNode07: []
-Output07: [10, 5, 3, 7, 15, 20, 22]
+Output07: [10, 5, 3, 7, 15, 14, 22]
 
 Duyệt ngăn xếp output07 để in theo thứ tự RLN:
 Lấy 22 ra khỏi output07 và in thông tin.
-Lấy 20 ra khỏi output07 và in thông tin.
+Lấy 14 ra khỏi output07 và in thông tin.
 Lấy 15 ra khỏi output07 và in thông tin.
 Lấy 7 ra khỏi output07 và in thông tin.
 Lấy 3 ra khỏi output07 và in thông tin.
@@ -891,20 +908,20 @@ Lấy 7 ra khỏi stackNode07 và đẩy vào output07:
 7 không có con, tiếp tục.
 Lấy 15 ra khỏi stackNode07 và đẩy vào output07:
 Đẩy 22 vào stackNode07.
-Đẩy 20 vào stackNode07.
-Lấy 20 ra khỏi stackNode07 và đẩy vào output07:
-20 không có con, tiếp tục.
+Đẩy 14 vào stackNode07.
+Lấy 14 ra khỏi stackNode07 và đẩy vào output07:
+14 không có con, tiếp tục.
 Lấy 22 ra khỏi stackNode07 và đẩy vào output07:
 22 không có con, tiếp tục.
 Duyệt ngăn xếp output07 để in theo thứ tự RLN:
 Lấy 22 ra khỏi output07 và in thông tin.
-Lấy 20 ra khỏi output07 và in thông tin.
+Lấy 14 ra khỏi output07 và in thông tin.
 Lấy 15 ra khỏi output07 và in thông tin.
 Lấy 7 ra khỏi output07 và in thông tin.
 Lấy 3 ra khỏi output07 và in thông tin.
 Lấy 5 ra khỏi output07 và in thông tin.
 Lấy 10 ra khỏi output07 và in thông tin.
-Kết quả cuối cùng: 22 20 15 7 3 5 10
+Kết quả cuối cùng: 22 14 15 7 3 5 10
 */
 void duyetCayRLN(Node_CIT07* node_07) {
     if (node_07 == nullptr)
@@ -963,7 +980,7 @@ void khuDeQuy_RLN(Node_CIT07 *node_07)
        /    \
       5      15
      / \    /  \
-    3   7  20   22
+    3   7  14   22
 Quá trình duyệt cây theo thứ tự LNR không đệ quy
 Bắt đầu tại gốc cây (10):
 Đẩy 10 vào stack.
@@ -1007,31 +1024,31 @@ Current: 15
 
 Duyệt cây con phải của 10 (15):
 Đẩy 15 vào stack.
-Di chuyển đến cây con trái của 15 (20).
+Di chuyển đến cây con trái của 15 (14).
 Stack: [15]
-Current: 20
+Current: 14
 
-Duyệt cây con trái của 15 (20):
-Đẩy 20 vào stack.
-20 không có con trái, lấy 20 ra khỏi stack và in thông tin.
+Duyệt cây con trái của 15 (14):
+Đẩy 14 vào stack.
+14 không có con trái, lấy 14 ra khỏi stack và in thông tin.
 Stack: [15]
-Output: 3 5 7 10 20
+Output: 3 5 7 10 14
 Current: nullptr
 
 Trở lại nút 15:
 Lấy 15 ra khỏi stack và in thông tin.
 Di chuyển đến cây con phải của 15 (22).
 Stack: []
-Output: 3 5 7 10 20 15
+Output: 3 5 7 10 14 15
 Current: 22
 
 Duyệt cây con phải của 15 (22):
 Đẩy 22 vào stack.
 22 không có con trái, lấy 22 ra khỏi stack và in thông tin.
 Stack: []
-Output: 3 5 7 10 20 15 22
+Output: 3 5 7 10 14 15 22
 Current: nullptr
-Kết quả cuối cùng là: 3 5 7 10 20 15 22
+Kết quả cuối cùng là: 3 5 7 10 14 15 22
 */
 void duyetCayLNR(Node_CIT07 *node_07)
 {
@@ -1072,9 +1089,9 @@ void khuDeQuy_LNR(Node_CIT07 *root)
        /    \
       5      15
      / \    /  \
-    3   7  20   22
+    3   7  14   22
 
-3, 7, 5, 20, 22, 15, 10
+3, 7, 5, 14, 22, 15, 10
 Quá trình duyệt cây theo thứ tự LRN không đệ quy
 Bắt đầu tại gốc cây (10):
 Đẩy 10 vào stackNode07.
@@ -1088,45 +1105,45 @@ StackNode07: [5, 15]
 Output07: [10]
 
 Lấy 15 ra khỏi stackNode07 và đẩy vào output07:
-Đẩy 20 vào stackNode07.
+Đẩy 14 vào stackNode07.
 Đẩy 22 vào stackNode07.
-StackNode07: [5, 20, 22]
+StackNode07: [5, 14, 22]
 Output07: [10, 15]
 
 Lấy 22 ra khỏi stackNode07 và đẩy vào output07:
 22 không có con, tiếp tục.
-StackNode07: [5, 20]
+StackNode07: [5, 14]
 Output07: [10, 15, 22]
 
-Lấy 20 ra khỏi stackNode07 và đẩy vào output07:
-20 không có con, tiếp tục.
+Lấy 14 ra khỏi stackNode07 và đẩy vào output07:
+14 không có con, tiếp tục.
 StackNode07: [5]
-Output07: [10, 15, 22, 20]
+Output07: [10, 15, 22, 14]
 
 Lấy 5 ra khỏi stackNode07 và đẩy vào output07:
 Đẩy 3 vào stackNode07.
 Đẩy 7 vào stackNode07.
 StackNode07: [3, 7]
-Output07: [10, 15, 22, 20, 5]
+Output07: [10, 15, 22, 14, 5]
 
 Lấy 7 ra khỏi stackNode07 và đẩy vào output07:
 7 không có con, tiếp tục.
 StackNode07: [3]
-Output07: [10, 15, 22, 20, 5, 7]
+Output07: [10, 15, 22, 14, 5, 7]
 
 Lấy 3 ra khỏi stackNode07 và đẩy vào output07:
 3 không có con, tiếp tục.
 StackNode07: []
-Output07: [10, 15, 22, 20, 5, 7, 3]
+Output07: [10, 15, 22, 14, 5, 7, 3]
 Duyệt ngăn xếp output07 để in theo thứ tự LRN:
 Lấy 3 ra khỏi output07 và in thông tin.
 Lấy 7 ra khỏi output07 và in thông tin.
 Lấy 5 ra khỏi output07 và in thông tin.
-Lấy 20 ra khỏi output07 và in thông tin.
+Lấy 14 ra khỏi output07 và in thông tin.
 Lấy 22 ra khỏi output07 và in thông tin.
 Lấy 15 ra khỏi output07 và in thông tin.
 Lấy 10 ra khỏi output07 và in thông tin
-Kết quả cuối cùng: 3 7 5 20 22 15 10
+Kết quả cuối cùng: 3 7 5 14 22 15 10
 
 */
 void duyetCayLRN(Node_CIT07 *node_07)
@@ -1222,19 +1239,28 @@ void XuatSach_07()
        /    \
       5      15
      / \    /  \
-    3   7  22   20
+    3   7  14   22
 */
 
-void ThemDuLieuMau_07()
+void ThemDuLieuMau_CIT07()
 {
-    root_CIT07 = new Node_CIT07({"CTDL & GT", "10", "Engineer", 10});
-    root_CIT07->left_CIT07 = new Node_CIT07({"OOP", "5", "Tech", 5});
-    root_CIT07->right_CIT07 = new Node_CIT07({"Python", "15", "IT", 7});
-    root_CIT07->left_CIT07->left_CIT07 = new Node_CIT07({"Computer Architecture", "3", "IT", 3});
-    root_CIT07->left_CIT07->right_CIT07 = new Node_CIT07({"Basic Network", "7", "Net", 12});
-    root_CIT07->right_CIT07->left_CIT07 = new Node_CIT07({"CA", "20", "WW", 32});
-    root_CIT07->right_CIT07->right_CIT07 = new Node_CIT07({"DSA", "22", "WW", 82});
-    soPhanTu_CIT07 = 7;
+    // Tạo mảng dữ liệu mẫu
+    BKPHMC_CIT07 books[] = {
+        {"CTDL & GT", "10", "Engineer", 10},
+        {"OOP", "05", "Tech", 5},
+        {"Python", "15", "IT", 7},
+        {"Computer Architecture", "03", "IT", 3},
+        {"Basic Network", "07", "Net", 12},
+        {"CA", "14", "WW", 32},
+        {"DSA", "22", "WW", 82}
+    };
+
+    // Duyệt mảng và thêm vào cây
+    for (const auto &book : books)
+    {
+        root_CIT07 = ThemPhanTu_CIT07(root_CIT07, book);  // Sử dụng hàm insert07 để thêm sách vào cây
+    }
+    soPhanTu_CIT07 = 7;  // Cập nhật số lượng phần tử trong cây
     cout << "Đã thêm dữ liệu mẫu thành công!\n";
 }
 
@@ -1288,7 +1314,7 @@ int main()
             DanhSachCungLoai_07();
             break;
         case '7':
-            ThemDuLieuMau_07();
+            ThemDuLieuMau_CIT07();
             break;
         case '8':
             cout << "Số sách hiện có: " << soPhanTu_CIT07 << endl;

@@ -1,447 +1,407 @@
-
-// // #include <iostream>
-// // #include <queue>
-// // #include <stack>
-
-// // using namespace std;
-
-// // struct BKPHMC_CIT07 {
-// //     string Ten_Sach_CIT07;
-// //     string Ma_Sach_CIT07;
-// //     string Loai_Sach_CIT07;
-// //     int So_Lan_Muon_Sach_CIT07;
-// // };
-
-// // struct Node_CIT07 {
-// //     BKPHMC_CIT07 data_CIT07;
-// //     Node_CIT07 *left_CIT07;
-// //     Node_CIT07 *right_CIT07;
-
-// //     Node_CIT07(BKPHMC_CIT07 newData_CIT07) {
-// //         data_CIT07 = newData_CIT07;
-// //         left_CIT07 = nullptr;
-// //         right_CIT07 = nullptr;
-// //     }
-// // };
-
-// // Node_CIT07* root_CIT07 = nullptr;
-
-// // // Hàm chung để in thông tin sách
-// // void inThongTinSach(Node_CIT07* node) {
-// //     if (node == nullptr) return;
-// //     cout << "Mã sách: " << node->data_CIT07.Ma_Sach_CIT07 << "\n";
-// //     cout << "Tên sách: " << node->data_CIT07.Ten_Sach_CIT07 << "\n";
-// //     cout << "Loại sách: " << node->data_CIT07.Loai_Sach_CIT07 << "\n";
-// //     cout << "Số lần mượn sách: " << node->data_CIT07.So_Lan_Muon_Sach_CIT07 << "\n\n";
-// // }
-
-// // // Duyệt theo thứ tự trung vị (In-order traversal)
-// // void DuyetCayLNR(Node_CIT07* node) {
-// //     if (node == nullptr) return;
-// //     DuyetCayLNR(node->left_CIT07);
-// //     inThongTinSach(node);
-// //     DuyetCayLNR(node->right_CIT07);
-// // }
-
-// // // Duyệt theo tiền vị (Pre-order traversal)
-// // void DuyetCayPR(Node_CIT07* node) {
-// //     if (node == nullptr) return;
-// //     inThongTinSach(node);
-// //     DuyetCayPR(node->left_CIT07);
-// //     DuyetCayPR(node->right_CIT07);
-// // }
-
-// // // Duyệt theo hậu vị (Post-order traversal)
-// // void DuyetCayLR(Node_CIT07* node) {
-// //     if (node == nullptr) return;
-// //     DuyetCayLR(node->left_CIT07);
-// //     DuyetCayLR(node->right_CIT07);
-// //     inThongTinSach(node);
-// // }
-
-// // // Duyệt theo cấp độ (Level-order traversal) - sử dụng hàng đợi
-// // void DuyetCayLevelOrder(Node_CIT07* root) {
-// //     if (root == nullptr) return;
-
-// //     queue<Node_CIT07*> q;
-// //     q.push(root);
-
-// //     while (!q.empty()) {
-// //         Node_CIT07* node = q.front();
-// //         q.pop();
-
-// //         inThongTinSach(node);
-
-// //         if (node->left_CIT07 != nullptr) q.push(node->left_CIT07);
-// //         if (node->right_CIT07 != nullptr) q.push(node->right_CIT07);
-// //     }
-// // }
-
-// // // Duyệt trung vị không đệ quy (In-order, non-recursive)
-// // void DuyetCayLNRNonRecursive(Node_CIT07* root) {
-// //     stack<Node_CIT07*> s;
-// //     Node_CIT07* current = root;
-
-// //     while (current != nullptr || !s.empty()) {
-// //         while (current != nullptr) {
-// //             s.push(current);
-// //             current = current->left_CIT07;
-// //         }
-
-// //         current = s.top();
-// //         s.pop();
-
-// //         inThongTinSach(current);
-
-// //         current = current->right_CIT07;
-// //     }
-// // }
-
-// // // Duyệt tiền vị không đệ quy (Pre-order, non-recursive)
-// // void DuyetCayPRNonRecursive(Node_CIT07* root) {
-// //     if (root == nullptr) return;
-
-// //     stack<Node_CIT07*> s;
-// //     s.push(root);
-
-// //     while (!s.empty()) {
-// //         Node_CIT07* node = s.top();
-// //         s.pop();
-
-// //         inThongTinSach(node);
-
-// //         if (node->right_CIT07 != nullptr) s.push(node->right_CIT07);
-// //         if (node->left_CIT07 != nullptr) s.push(node->left_CIT07);
-// //     }
-// // }
-
-// // int main() {
-// //     // Ví dụ tạo cây nhị phân
-// //     Node_CIT07* root = new Node_CIT07({"Book1", "001", "Fiction", 10});
-// //     root->left_CIT07 = new Node_CIT07({"Book2", "002", "Non-fiction", 5});
-// //     root->right_CIT07 = new Node_CIT07({"Book3", "003", "Science", 7});
-// //     root->left_CIT07->left_CIT07 = new Node_CIT07({"Book4", "004", "History", 3});
-// //     root->left_CIT07->right_CIT07 = new Node_CIT07({"Book5", "005", "Literature", 12});
-
-// //     cout << "Duyệt theo thứ tự trung vị (In-order): \n";
-// //     DuyetCayLNR(root);
-// //     cout << "--------------------------------------\n";
-
-// //     cout << "Duyệt theo thứ tự tiền vị (Pre-order): \n";
-// //     DuyetCayPR(root);
-// //     cout << "--------------------------------------\n";
-
-// //     cout << "Duyệt theo thứ tự hậu vị (Post-order): \n";
-// //     DuyetCayLR(root);
-// //     cout << "--------------------------------------\n";
-
-// //     cout << "Duyệt theo cấp độ (Level-order): \n";
-// //     DuyetCayLevelOrder(root);
-// //     cout << "--------------------------------------\n";
-
-// //     cout << "Duyệt trung vị không đệ quy (In-order, non-recursive): \n";
-// //     DuyetCayLNRNonRecursive(root);
-// //     cout << "--------------------------------------\n";
-
-// //     cout << "Duyệt tiền vị không đệ quy (Pre-order, non-recursive): \n";
-// //     DuyetCayPRNonRecursive(root);
-// //     cout << "--------------------------------------\n";
-
-// //     return 0;
-// // }
-
-// ////////////////////////
-// // KHAI BAO CAC THU VIEN SD
-// //////////////////////
-// using namespace std;
-// #include <stdio.h>  // thu vien xuat nhap chuan (standard input/output)
-// #include <conio.h>  // thu vien giao tiep man hinh/ban phim (console input/output)
-// #include <iostream> // thu vien objects (input/output stream)
-// #include <string>   // thu vien thao tác trên chuoi ký tu
-// #include <ctype.h>  // thu vien thao tác trên ký tu: character type
-
-// ////////////////////////
-// // KHAI BAO CAU TRUC DL BST BINARY SEARCH TREE = CAY NHI PHAN TIM KIEM
-// //////////////////////
-
-// struct phim // Cấu trúc một phần tử 
-// {
-//     string name;    // tên phim
-//     int doanhthu;   // doanh thu
-//     string daodien; // đạo diễn
-//     int view;       // số lượt xem
-//     struct phim *left, *right; // con trỏ đến nhánh trái và phải của nút
-// };
-
-// struct phim *root; // Nút gốc của cây nhị phân tìm kiếm (BST)
-
-// ////////////////////////
-// // CAC PHEP TOAN (THAO TAC) TRÊN CÂY NHỊ PHÂN TÌM KIẾM
-// //////////////////////
-
-// // 1. Khởi tạo BST
-// void Init()
-// {
-//     root = NULL;
-// } // Chưa có nút nào, nên nút gốc trỏ vào NULL
-
-// // 2. Kiểm tra rỗng
-// int Empty() // int = true [rỗng] / false [không rỗng = có Node]
-// {
-//     return (root == NULL);
-// }
-
-// // 3. Thêm nút vào cây nhị phân tìm kiếm (BST)
-// void InsertNodeBST(struct phim *x, struct phim *&r)
-// {
-//     if (r == NULL)
-//     {
-//         r = x;
-//     }
-//     else if (x->name > r->name)
-//         InsertNodeBST(x, r->right);
-//     else
-//         InsertNodeBST(x, r->left);
-// }
-
-// // 4. Duyệt cây nhị phân tìm kiếm (BST)
-// void NLR(struct phim *r) // Duyệt Node-Left-Right
-// {
-//     if (r != NULL)
-//     {
-//         cout << "Phim: " << r->name << ", Doanh thu: " << r->doanhthu << ", Dao dien: " << r->daodien << ", Luot xem: " << r->view << endl;
-//         NLR(r->left);
-//         NLR(r->right);
-//     }
-// }
-
-// void NRL(struct phim *r) // Duyệt Node-Right-Left
-// {
-//     if (r != NULL)
-//     {
-//         cout << "Phim: " << r->name << ", Doanh thu: " << r->doanhthu << ", Dao dien: " << r->daodien << ", Luot xem: " << r->view << endl;
-//         NRL(r->right);
-//         NRL(r->left);
-//     }
-// }
-
-// void LNR(struct phim *r) // Duyệt Left-Node-Right
-// {
-//     if (r != NULL)
-//     {
-//         LNR(r->left);
-//         cout << "Phim: " << r->name << ", Doanh thu: " << r->doanhthu << ", Dao dien: " << r->daodien << ", Luot xem: " << r->view << endl;
-//         LNR(r->right);
-//     }
-// }
-
-// void LRN(struct phim *r) // Duyệt Left-Right-Node
-// {
-//     if (r != NULL)
-//     {
-//         LRN(r->left);
-//         LRN(r->right);
-//         cout << "Phim: " << r->name << ", Doanh thu: " << r->doanhthu << ", Dao dien: " << r->daodien << ", Luot xem: " << r->view << endl;
-//     }
-// }
-
-// void RNL(struct phim *r) // Duyệt Right-Node-Left
-// {
-//     if (r != NULL)
-//     {
-//         RNL(r->right);
-//         cout << "Phim: " << r->name << ", Doanh thu: " << r->doanhthu << ", Dao dien: " << r->daodien << ", Luot xem: " << r->view << endl;
-//         RNL(r->left);
-//     }
-// }
-
-// void RLN(struct phim *r) // Duyệt Right-Left-Node
-// {
-//     if (r != NULL)
-
-// {
-//         RLN(r->right);
-//         RLN(r->left);
-//         cout << "Phim: " << r->name << ", Doanh thu: " << r->doanhthu << ", Dao dien: " << r->daodien << ", Luot xem: " << r->view << endl;
-//     }
-// }
-
-// //////////////////////////////////////////////////////
-// // III. CÁC THỦ TỤC SỬ DỤNG CÁC PHÉP TOÁN CƠ BẢN
-// /////////////////////////////////////////////////////
-
-// // 0. Nhập thông tin cho 1 phim thứ i để chuẩn bị thêm vào cây (chưa thêm)
-// void nhap_phim(int i, struct phim *&x)
-// {
-//     x = new phim;
-//     cout << "Nhap ten phim thu " << i << " = ";
-//     cin.ignore(); // Clear buffer
-//     getline(cin, x->name);
-//     cout << "Nhap doanh thu: ";
-//     cin >> x->doanhthu;
-//     cout << "Nhap dao dien: ";
-//     cin.ignore(); // Clear buffer again
-//     getline(cin, x->daodien);
-//     cout << "Nhap so luot xem: ";
-//     cin >> x->view;
-//     x->left = NULL;
-//     x->right = NULL;
-// }
-
-// // 1. Nhập cây nhị phân tìm kiếm: BST
-// void nhap_cay()
-// {
-//     int m; // Số lượng phim thực tế nhập vào cây
-//     cout << "Nhap so luong phim can them vao CAY = ";
-//     cin >> m;
-
-//     struct phim *x;
-
-//     Init(); // Khởi tạo cây
-//     for (int i = 0; i < m; i++)
-//     {
-//         nhap_phim(i + 1, x);
-//         InsertNodeBST(x, root);
-//     }
-//     cout << "DA NHAP phim vao CAY voi so luong phim = " << m << " " << endl;
-// }
-
-// // 2. Duyệt cây theo NLR
-// void duyet_NLR()
-// {
-//     cout << "\n\nCAC PHIM TREN CAY hien tai theo NODE-LEFT-RIGHT: \n";
-//     NLR(root);
-//     cout << endl;
-// }
-
-// // 3. Duyệt cây theo NRL
-// void duyet_NRL()
-// {
-//     cout << "\n\nCAC PHIM TREN CAY hien tai theo NODE-RIGHT-LEFT: \n";
-//     NRL(root);
-//     cout << endl;
-// }
-
-// // 4. Duyệt cây theo LNR
-// void duyet_LNR()
-// {
-//     cout << "\n\nCAC PHIM TREN CAY hien tai theo LEFT-NODE-RIGHT: \n";
-//     LNR(root);
-//     cout << endl;
-// }
-
-// // 5. Duyệt cây theo LRN
-// void duyet_LRN()
-// {
-//     cout << "\n\nCAC PHIM TREN CAY hien tai theo LEFT-RIGHT-NODE: \n";
-//     LRN(root);
-//     cout << endl;
-// }
-
-// // 6. Duyệt cây theo RNL
-// void duyet_RNL()
-// {
-//     cout << "\n\nCAC PHIM TREN CAY hien tai theo RIGHT-NODE-LEFT: \n";
-//     RNL(root);
-//     cout << endl;
-// }
-
-// // 7. Duyệt cây theo RLN
-// void duyet_RLN()
-// {
-//     cout << "\n\nCAC PHIM TREN CAY hien tai theo RIGHT-LEFT-NODE: \n";
-//     RLN(root);
-//     cout << endl;
-// }
-
-// //////////////////////////////////////////////////////
-// // IV. MAIN
-// /////////////////////////////////////////////////////
-// int main()
-// {
-//     nhap_cay();
-
-//     cout << "Nhan phim bat ky de tiep tuc ";
-//     getch();
-
-//     char chon;
-
-//     while (1)
-//     {
-//         cout << "\nCAY NHI PHAN TIM KIEM = BINARY SEARCH TREE = BST\n";
-//         cout << "\n 1. Duyet cay NLR ";
-//         cout << "\n 2. Duyet cay NRL ";
-//         cout << "\n 3. Duyet cay LNR ";
-//         cout << "\n 4. Duyet cay LRN ";
-//         cout << "\n 5. Duyet cay RNL ";
-//         cout << "\n 6. Duyet cay RLN ";
-//         cout << "\n 7. Them MOT phim moi vao BST";
-//         cout << "\n 8. Them NHIEU phim moi vao BST";
-//         cout << "\n 9. Tim phim co ten x tren CAY";
-//         cout << "\n a. Xoa phim co ten x tren CAY";
-//         cout << "\n b. Thay doi gia tri cua phim tren CAY";
-//         cout << "\n c. So phim tren CAY";
-//         cout << "\n d. Kiem tra CAY rong";
-//         cout << "\n z. Thoat\n";
-
-//         chon = getch();
-//         chon = toupper(chon);
-//         if (chon == 'Z')
-//             break;
-
-//         switch (chon)
-//         {
-//         case '1':
-//             duyet_NLR();
-//             break;
-//         case '2':
-//             duyet_NRL();
-//             break;
-//         case '3':
-//             duyet_LNR();
-//             break;
-//         case '4':
-//             duyet_LRN();
-//             break;
-//         case '5':
-//             duyet_RNL();
-//             break;
-//         case '6':
-//             duyet_RLN();
-//             break;
-//         case '7':
-//             // Code để thêm một phim mới vào BST
-//             break;
-//         case '8':
-//             nhap_cay();
-//             break;
-//         case 'D':
-//             if (Empty())
-//                 cout << "CAY DANG RONG ! \n";
-//             else
-//                 cout << "CAY DANG CO NUT \n";
-//             break;
-//         default:
-//             cout << "CHON SAI, DE NGHI CHON LAI !\n";
-//             break;
-//         }
-//         cout << "Nhan phim bat ky de tiep tuc ";
-//         getch();
-//     }
-// }
-
-cout<<"\nCAY NHI PHAN TIM KIEM = BINARY SEARCH TREE = BST\n";
-	cout<<"\n 1. Duyet cay NLR ";
-	cout<<"\n 2. Duyet cay NRL ";
-	cout<<"\n 3. Duyet cay LNR ";
-    cout<<"\n 4. Duyet cay LRN ";
-	cout<<"\n 5. Duyet cay RNL ";
-	cout<<"\n 6. Duyet cay RLN ";
-	cout<<"\n 7. Them MOT NUT moi vao BST";
-	cout<<"\n 8. Them NHIEU NUT moi vao BST";
-	cout<<"\n 9. Tim NUT co gia tri x tren CAY";
-	cout<<"\n a. Xoa NUT co gia tri x tren CAY";
-	cout<<"\n b. Thay doi gia tri cua NUT tren CAY";
-	cout<<"\n c  So NUT tren CAY";
-	cout<<"\n d. Kiem tra CAY rong";
-	cout<<"\n z. Thoat\n";
+/*******************************/
+/** KHAI BÁO THƯ VIỆN SỬ DỤNG **/
+/*******************************/
+using namespace std;
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <queue>
+#include <stack>
+
+/*********************************/
+/** KHAI BÁO CÂY CÂN BẰNG [AVL] **/
+/*********************************/
+
+// Cấu trúc 1 quyển sách
+struct BKPHMC_CIT07
+{
+    string Ten_Sach_CIT07;
+    string Ma_Sach_CIT07;
+    string Loai_Sach_CIT07;
+    int So_Lan_Muon_Sach_CIT07;
+};
+
+// Cấu trúc 1 nút
+struct Node_CIT07
+{
+    BKPHMC_CIT07 data_CIT07; // Dữ liệu của nút
+    Node_CIT07 *left_CIT07;
+    Node_CIT07 *right_CIT07;
+    int height_CIT07; // Chiều cao của nút
+
+    // Constructor khởi tạo dữ liệu mới
+    Node_CIT07(BKPHMC_CIT07 newData_CIT07)
+    {
+        data_CIT07 = newData_CIT07;
+        left_CIT07 = nullptr;
+        right_CIT07 = nullptr;
+        height_CIT07 = 0;
+    }
+};
+
+Node_CIT07 *root_CIT07 = nullptr; // Gốc của cây
+int soPhanTu_CIT07 = 0;           // Số phần tử trong cây
+
+/*****************************************/
+/** CÁC PHÉP THAO TÁC TRÊN CÂY CÂN BẰNG **/
+/*****************************************/
+
+// 1. Khởi tạo cây
+void KhoiTao_CIT07()
+{
+    root_CIT07 = nullptr;
+    soPhanTu_CIT07 = 0; // Khởi tạo số phần tử trong cây là 0
+}
+
+// 2. Kiểm tra cây rỗng
+bool KiemTraCayRong_CIT07()
+{
+    return (root_CIT07 == nullptr);
+}
+
+// 3. Tính chiều cao của nút
+int height_CIT07(Node_CIT07 *node07)
+{
+    if (node07 == nullptr)
+        return 0;
+    return 1 + max(height_CIT07(node07->left_CIT07), height_CIT07(node07->right_CIT07));
+}
+
+int max(int a, int b)
+{
+    return (a > b) ? a : b;
+}
+
+// 4. Tính độ cân bằng
+int getBalance07(Node_CIT07 *N)
+{
+    if (N == nullptr)
+        return 0;
+    return height_CIT07(N->left_CIT07) - height_CIT07(N->right_CIT07);
+}
+
+// 5. Xoay cây sang phải
+Node_CIT07 *rightRotate(Node_CIT07 *root07)
+{
+    Node_CIT07 *nleft07 = root07->left_CIT07;
+    Node_CIT07 *nright07 = nleft07->right_CIT07;
+
+    nleft07->right_CIT07 = root07;
+    root07->left_CIT07 = nright07;
+
+    return nleft07;
+}
+
+// 6. Xoay cây sang trái
+Node_CIT07 *leftRotate(Node_CIT07 *root07)
+{
+    Node_CIT07 *nright07 = root07->right_CIT07;
+    Node_CIT07 *nleft07 = nright07->left_CIT07;
+
+    nright07->left_CIT07 = root07;
+    root07->right_CIT07 = nleft07;
+
+    return nright07;
+}
+
+// 7. Tìm nút có giá trị nhỏ nhất
+Node_CIT07 *minValueNode(Node_CIT07 *node)
+{
+    Node_CIT07 *current = node;
+    while (current->left_CIT07 != nullptr)
+        current = current->left_CIT07;
+    return current;
+}
+
+/*****************************************/
+/** CÁC PHÉP TOÁN TRÊN CÂY CÂN BẰNG **/
+/*****************************************/
+
+// 8. Thao tác cân bằng cây 
+void balance07(Node_CIT07 *&node)
+{
+    int b = getBalance07(node);
+    if (b > 1)
+    {
+        if (getBalance07(node->left_CIT07) < 0)
+        {
+            node->left_CIT07 = leftRotate(node->left_CIT07);
+        }
+        node = rightRotate(node);
+    }
+    else if (b < -1)
+    {
+        if (getBalance07(node->right_CIT07) > 0)
+        {
+            node->right_CIT07 = rightRotate(node->right_CIT07);
+        }
+        node = leftRotate(node);
+    }
+}
+
+// 9. Thêm một nút mới
+Node_CIT07 *insert07(Node_CIT07 *node, const BKPHMC_CIT07 &key07)
+{
+    // THÊM NODE
+    if (node == nullptr)
+    {
+        soPhanTu_CIT07++; // Tăng số phần tử trong cây
+        return new Node_CIT07(key07);
+    }
+    else if (key07.Ma_Sach_CIT07 < node->data_CIT07.Ma_Sach_CIT07)
+    {
+        node->left_CIT07 = insert07(node->left_CIT07, key07);
+    }
+    else
+    {
+        node->right_CIT07 = insert07(node->right_CIT07, key07);
+    }
+
+      // Cập nhật chiều cao của nút hiện tại
+    node->height_CIT07 = 1 + max(height_CIT07(node->left_CIT07), height_CIT07(node->right_CIT07));
+
+    // CÂN BẰNG CÂY
+    balance07(node);
+    
+    return node;
+}
+
+// 10. Xóa một nút
+// AVL
+//     10
+//    /  \
+//   5    20
+//  / \   / \
+// 3   7 15  22
+// 10 5 3 7 20 15 22 - NLR
+
+// sau khi xóa node 20 
+// AVL
+//     10
+//    /  \
+//   5    22
+//  / \   / \
+// 3   7 15  null
+// 10 5 3 7 22 15 - NLR
+
+Node_CIT07 *deleteNode07(Node_CIT07 *root, string Ma_Sach_CIT07)
+{
+    if (root == nullptr)
+        return root;
+
+    // Tìm nút cần xóa
+    if (Ma_Sach_CIT07 < root->data_CIT07.Ma_Sach_CIT07)
+        root->left_CIT07 = deleteNode07(root->left_CIT07, Ma_Sach_CIT07);
+    else if (Ma_Sach_CIT07 > root->data_CIT07.Ma_Sach_CIT07)
+        root->right_CIT07 = deleteNode07(root->right_CIT07, Ma_Sach_CIT07);
+    else
+    {
+        if ((root->left_CIT07 == nullptr) || (root->right_CIT07 == nullptr))
+        {
+            Node_CIT07 *temp = root->left_CIT07 ? root->left_CIT07 : root->right_CIT07;
+            delete root;
+            return temp;
+        }
+
+        Node_CIT07 *temp = minValueNode(root->right_CIT07);
+        root->data_CIT07 = temp->data_CIT07;
+        root->right_CIT07 = deleteNode07(root->right_CIT07, temp->data_CIT07.Ma_Sach_CIT07);
+    }
+
+    root->height_CIT07 = 1 + max(height_CIT07(root->left_CIT07), height_CIT07(root->right_CIT07));
+    
+    // CÂN BẰNG CÂY
+    balance07(root);
+
+    return root;
+}
+
+// 11. Xoá tất cả các node trên cây
+void DeleteAllAVLNodes07(Node_CIT07 *root)
+{
+    if (root)
+    {
+        DeleteAllAVLNodes07(root->left_CIT07);
+        DeleteAllAVLNodes07(root->right_CIT07);
+        delete root;
+    }
+}
+
+// 12. Hàm in thông tin sách
+void inThongTinSach07(Node_CIT07 *node07)
+{
+    cout <<"___________________________________________________\n";
+    cout << "Mã sách: " << node07->data_CIT07.Ma_Sach_CIT07 << endl;
+    cout << "Tên sách: " << node07->data_CIT07.Ten_Sach_CIT07 << endl;
+    cout << "Loại sách: " << node07->data_CIT07.Loai_Sach_CIT07 << endl;
+    cout << "Số lần mượn sách: " << node07->data_CIT07.So_Lan_Muon_Sach_CIT07 << endl;
+    cout << "Chiều cao: " << node07->height_CIT07 << endl;
+    cout <<"___________________________________________________\n";
+}
+
+// Duyệt cây theo thứ tự : 10 5 15 3 7 20 22
+// BST
+//     10
+//    /  \
+//   5    15
+//  / \   / \
+// 3   7     20
+//             \ 
+//              22  
+// AVL
+//     10
+//    /  \
+//   5    20
+//  / \   / \
+// 3   7 15  22
+// 10 5 3 7 20 15 22 - NLR
+void inThongTinSach_07(Node_CIT07 *root07)
+{
+   if (root07 == nullptr)
+        return;
+
+    // Sử dụng stack để duyệt cây theo NLR
+    stack<Node_CIT07 *> s;
+    s.push(root07);
+
+    while (!s.empty())
+    {
+        Node_CIT07 *node = s.top(); // Lấy node đầu tiên trong stack
+        s.pop();
+
+        inThongTinSach07(node); // In thông tin node
+
+        // Thêm node con phải vào stack trước để duyệt sau
+        if (node->right_CIT07 != nullptr)
+            s.push(node->right_CIT07);
+
+        // Thêm node con trái vào stack sau để duyệt trước
+        if (node->left_CIT07 != nullptr) 
+            s.push(node->left_CIT07);
+    }
+}
+
+// Nhập nội dung phần tử
+void NhapNoiDungPhanTu_CIT07(BKPHMC_CIT07 &books_CIT07)
+{
+    cout << "Nhập mã sách: ";
+    cin >> books_CIT07.Ma_Sach_CIT07;
+    cin.ignore();
+
+    cout << "Nhập tên sách: ";
+    getline(cin, books_CIT07.Ten_Sach_CIT07);
+
+    cout << "Nhập loại sách: ";
+    getline(cin, books_CIT07.Loai_Sach_CIT07);
+
+    cout << "Nhập số lần mượn sách: ";
+    cin >> books_CIT07.So_Lan_Muon_Sach_CIT07;
+}
+
+
+/***************************************************/
+// CÁC HÀM THỰC NGHIỆM TRÊN CÂY CÂN BẰNG [AVL]: SÁCH
+/***************************************************/
+
+// Thêm sách vào cây
+void ThemSach_CIT07()
+{
+    BKPHMC_CIT07 books_CIT07;
+    NhapNoiDungPhanTu_CIT07(books_CIT07);
+    root_CIT07 = insert07(root_CIT07, books_CIT07);
+}
+
+// In danh sách sách theo thứ tự NLR
+void XuatDS_CIT07()
+{
+    if (root_CIT07 == nullptr)
+    {
+        cout << "Cây rỗng!" << endl;
+        return;
+    }
+    inThongTinSach_07(root_CIT07);
+}
+
+void ThemDuLieuMau_CIT07()
+{
+    // Tạo mảng dữ liệu mẫu
+    BKPHMC_CIT07 books[] = {
+        {"CTDL & GT", "10", "Engineer", 10},
+        {"OOP", "05", "Tech", 5},
+        {"Python", "15", "IT", 7},
+        {"Computer Architecture", "03", "IT", 3},
+        {"Basic Network", "07", "Net", 12},
+        {"CA", "20", "WW", 32},
+        {"DSA", "22", "WW", 82}
+    };
+
+    // Duyệt mảng và thêm vào cây
+    for (const auto &book : books)
+    {
+        root_CIT07 = insert07(root_CIT07, book);  // Sử dụng hàm insert07 để thêm sách vào cây
+    }
+    soPhanTu_CIT07 = 7;  // Cập nhật số lượng phần tử trong cây
+    cout << "Đã thêm dữ liệu mẫu thành công!\n";
+}
+
+// Xóa phần tử theo mã sách
+void XoaPhanTu_CIT07()
+{
+    string maSach;
+    cout << "Nhập mã sách cần xóa: ";
+    cin >> maSach;
+    root_CIT07 = deleteNode07(root_CIT07, maSach);
+    cout << "Đã xóa sách thành công!\n";
+}
+
+/*********************/
+/** CHỨC NĂNG MENU **/
+/*********************/
+
+void menu_CIT07()
+{
+    cout << "\nQUẢN LÝ THƯ VIỆN" << endl;
+    cout << "0. Thêm dữ liệu mẫu" << endl;
+    cout << "1. Thêm sách" << endl;
+    cout << "2. Xóa sách" << endl;
+    cout << "3. Xuất danh sách sách" << endl;
+    cout << "4. Thoát" << endl;
+}
+
+int main()
+{
+    KhoiTao_CIT07();
+    char choice;
+    do
+    {
+        menu_CIT07();
+        cout << "Chọn chức năng: ";
+        cin >> choice;
+
+        switch (choice)
+        {
+        case '0':
+            ThemDuLieuMau_CIT07();
+            break;
+        case '1':
+            ThemSach_CIT07();
+            break;
+        case '2':
+            XoaPhanTu_CIT07();
+            break;
+        case '3':
+            XuatDS_CIT07();
+            break;
+        case '4':
+            cout << "Thoát chương trình." << endl;
+            break;
+        default:
+            cout << "Lựa chọn không hợp lệ!" << endl;
+            break;
+        }
+    } while (choice != '4');
+
+    DeleteAllAVLNodes07(root_CIT07); // Giải phóng bộ nhớ khi kết thúc chương trình
+    return 0;
+}
