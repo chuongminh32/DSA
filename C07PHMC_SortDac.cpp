@@ -104,7 +104,27 @@ void HoanDoi_CIT07(BKPHMC_CIT07 &a, BKPHMC_CIT07 &b)
 }
 
 // CÁC GIẢI THUẬT SẮP XẾP TRÊN DANH SÁCH ĐẶC: SÁCH  - SẮP XẾP THEO SỐ LẦN MƯỢN SÁCH
-// [1] Interchange Sort
+/* [1] Interchange Sort
+Bước 1: Khởi tạo mảng dữ liệu ban đầu là [5, 2, 8, 1, 3]: số lần mượn sách
+Bước 2: Chạy thuật toán Interchange Sort
+Vòng lặp ngoài i = 0:
+So sánh arr[0] (5) với arr[1] (2) → Hoán đổi
+So sánh arr[0] (2) với arr[2] (8) → Không đổi
+So sánh arr[0] (2) với arr[3] (1) → Hoán đổi
+So sánh arr[0] (1) với arr[4] (3) → Không đổi
+Vòng lặp ngoài i = 1:
+So sánh arr[1] (5) với arr[2] (8) → Không đổi
+So sánh arr[1] (5) với arr[3] (2) → Hoán đổi
+So sánh arr[1] (2) với arr[4] (3) → Không đổi
+Vòng lặp ngoài i = 2:
+So sánh arr[2] (8) với arr[3] (5) → Hoán đổi
+So sánh arr[2] (5) với arr[4] (3) → Hoán đổi
+Vòng lặp ngoài i = 3:
+So sánh arr[3] (8) với arr[4] (5) → Hoán đổi
+Vòng lặp ngoài i = 4:
+Không cần so sánh.
+Kết quả cuối cùng: [1, 2, 3, 5, 8]
+*/
 void InterchangeSort_CIT07()
 {
 	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07 - 1; i++)
@@ -137,6 +157,27 @@ void BubleSort_CIT07()
 }
 
 // [3] Straight Selection Sort
+/*
+Vòng lặp ngoài i = 0:
+Tìm phần tử nhỏ nhất từ arr[0] đến arr[4]
+min_idx = 3 (giá trị 1)
+Hoán đổi arr[0] với arr[3]
+Vòng lặp ngoài i = 1:
+Tìm phần tử nhỏ nhất từ arr[1] đến arr[4]
+min_idx = 1 (giá trị 2)
+Hoán đổi arr[1] với arr[1] (không đổi)
+Vòng lặp ngoài i = 2:
+Tìm phần tử nhỏ nhất từ arr[2] đến arr[4]
+min_idx = 4 (giá trị 3)
+Hoán đổi arr[2] với arr[4]
+Vòng lặp ngoài i = 3:
+Tìm phần tử nhỏ nhất từ arr[3] đến arr[4]
+min_idx = 3 (giá trị 5)
+Hoán đổi arr[3] với arr[3] (không đổi)
+Vòng lặp ngoài i = 4:
+Không cần so sánh.
+Kết quả cuối cùng: [1, 2, 3, 5, 8]
+*/
 void StraightSlectionSort_CIT07()
 {
 	for (int i = 0; i < TongSoPhanTuKhaoSat_CIT07 - 1; i++)
@@ -158,6 +199,29 @@ void StraightSlectionSort_CIT07()
 }
 
 // [4] Straight Insertion Sort
+/*
+
+Vòng lặp ngoài i = 1:
+x = BOOKS_CIT07[1] (2)
+So sánh 5 với 2 → Di chuyển 5 về sau
+Chèn 2 vào vị trí đúng
+Vòng lặp ngoài i = 2:
+x = BOOKS_CIT07[2] (8)
+So sánh 5 với 8 → Không đổi
+Vòng lặp ngoài i = 3:
+x = BOOKS_CIT07[3] (1)
+So sánh 8 với 1 → Di chuyển 8 về sau
+So sánh 5 với 1 → Di chuyển 5 về sau
+So sánh 2 với 1 → Di chuyển 2 về sau
+Chèn 1 vào vị trí đúng
+Vòng lặp ngoài i = 4:
+x = BOOKS_CIT07[4] (3)
+So sánh 8 với 3 → Di chuyển 8 về sau
+So sánh 5 với 3 → Di chuyển 5 về sau
+So sánh 2 với 3 → Không đổi
+Chèn 3 vào vị trí đúng
+Kết quả cuối cùng: [1, 2, 3, 5, 8]
+*/
 void StraightInsertionSort_CIT07()
 {
 	for (int i = 1; i < TongSoPhanTuKhaoSat_CIT07; i++)
@@ -176,63 +240,64 @@ void StraightInsertionSort_CIT07()
 
 
 // [5] Binary Insertion Sort
-// [5, 2, 8, 1, 3].
-// Vòng lặp ngoài i = 1:
-// x = BOOKS_CIT07[1] (2)
-// left = 0, right = 0
+/*[5, 2, 8, 1, 3].
+Vòng lặp ngoài i = 1:
+x = BOOKS_CIT07[1] (2)
+left = 0, right = 0
 
-// Tìm vị trí chèn cho 2:
-// mid = (0 + 0) / 2 = 0
-// 2 < 5 → right = mid - 1 = -1
-// Chèn 2 vào vị trí left = 0:
-// Dịch chuyển 5 về sau: [5, 5, 8, 1, 3]
-// Chèn 2 vào vị trí 0: [2, 5, 8, 1, 3]
+Tìm vị trí chèn cho 2:
+mid = (0 + 0) / 2 = 0
+2 < 5 → right = mid - 1 = -1
+Chèn 2 vào vị trí left = 0:
+Dịch chuyển 5 về sau: [5, 5, 8, 1, 3]
+Chèn 2 vào vị trí 0: [2, 5, 8, 1, 3]
 
-// Vòng lặp ngoài i = 2:
-// x = BOOKS_CIT07[2] (8)
-// left = 0, right = 1
-// Tìm vị trí chèn cho 8:
-// mid = (0 + 1) / 2 = 0
-// 8 > 2 → left = mid + 1 = 1
-// mid = (1 + 1) / 2 = 1
-// 8 > 5 → left = mid + 1 = 2
-// Chèn 8 vào vị trí left = 2:
-// Không cần di chuyển: [2, 5, 8, 1, 3]
+Vòng lặp ngoài i = 2:
+x = BOOKS_CIT07[2] (8)
+left = 0, right = 1
+Tìm vị trí chèn cho 8:
+mid = (0 + 1) / 2 = 0
+8 > 2 → left = mid + 1 = 1
+mid = (1 + 1) / 2 = 1
+8 > 5 → left = mid + 1 = 2
+Chèn 8 vào vị trí left = 2:
+Không cần di chuyển: [2, 5, 8, 1, 3]
 
 
-// Vòng lặp ngoài i = 3:
-// x = BOOKS_CIT07[3] (1)
-// left = 0, right = 2
-// Tìm vị trí chèn cho 1:
-// mid = (0 + 2) / 2 = 1
-// 1 < 5 → right = mid - 1 = 0
-// mid = (0 + 0) / 2 = 0
-// 1 < 2 → right = mid - 1 = -1
+Vòng lặp ngoài i = 3:
+x = BOOKS_CIT07[3] (1)
+left = 0, right = 2
+Tìm vị trí chèn cho 1:
+mid = (0 + 2) / 2 = 1
+1 < 5 → right = mid - 1 = 0
+mid = (0 + 0) / 2 = 0
+1 < 2 → right = mid - 1 = -1
 
-// Chèn 1 vào vị trí left = 0:
-// Dịch chuyển 8, 5, 2 về sau
-// [2, 5, 8, 8, 3]
-// [2, 5, 5, 8, 3]
-// [2, 2, 5, 8, 3]
+Chèn 1 vào vị trí left = 0:
+Dịch chuyển 8, 5, 2 về sau
+[2, 5, 8, 8, 3]
+[2, 5, 5, 8, 3]
+[2, 2, 5, 8, 3]
 
-// Chèn 1 vào vị trí 0
-// [1, 2, 5, 8, 3]
+Chèn 1 vào vị trí 0
+[1, 2, 5, 8, 3]
 
-// Vòng lặp ngoài i = 4:
-// x = BOOKS_CIT07[4] (3)
-// left = 0, right = 3
-// Tìm vị trí chèn cho 3:
-// mid = (0 + 3) / 2 = 1
-// 3 > 2 → left = mid + 1 = 2
-// mid = (2 + 3) / 2 = 2
-// 3 < 5 → right = mid - 1 = 1
-// Chèn 3 vào vị trí left = 2:
-// Dịch chuyển 8, 5 về sau
-// [1, 2, 5, 8, 8]
-// [1, 2, 5, 5, 8]
+Vòng lặp ngoài i = 4:
+x = BOOKS_CIT07[4] (3)
+left = 0, right = 3
+Tìm vị trí chèn cho 3:
+mid = (0 + 3) / 2 = 1
+3 > 2 → left = mid + 1 = 2
+mid = (2 + 3) / 2 = 2
+3 < 5 → right = mid - 1 = 1
+Chèn 3 vào vị trí left = 2:
+Dịch chuyển 8, 5 về sau
+[1, 2, 5, 8, 8]
+[1, 2, 5, 5, 8]
 
-// Chèn 3 vào vị trí 2: [1, 2, 3, 5, 8]
-// Kết quả cuối cùng: [1, 2, 3, 5, 8]
+Chèn 3 vào vị trí 2: [1, 2, 3, 5, 8]
+Kết quả cuối cùng: [1, 2, 3, 5, 8]
+*/
 
 void BinaryInsertionSort_CIT07()
 {
@@ -569,30 +634,30 @@ void StraightMergeSort_CIT07(BKPHMC_CIT07 a[], int left, int right)
 	}
 }
 
-// // [12] Natural Merge Sort
-// void NaturalMergeSort_CIT07()
-// {
-// 	int left = 0; // vị trí bắt đầu của mảng con
-// 	int right = 0; // vị trí cuối của mảng con
-// 	int mid = 0; // vị trí giữa của mảng con
-// 	int i = 0; // vị trí hiện tại của mảng con
-// 	while (i < TongSoPhanTuKhaoSat_CIT07 - 1)
-// 	{
-// 		left = i; // vị trí bắt đầu của mảng con
-// 		while (i < TongSoPhanTuKhaoSat_CIT07 - 1 && BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07 <= BOOKS_CIT07[i + 1].So_Lan_Muon_Sach_CIT07)
-// 		{
-// 			i++; // tìm vị trí cuối của mảng con
-// 		}
-// 		mid = i; // vị trí giữa của mảng con
-// 		while (i < TongSoPhanTuKhaoSat_CIT07 - 1 && BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07 >= BOOKS_CIT07[i + 1].So_Lan_Muon_Sach_CIT07)
-// 		{
-// 			i++; // tìm vị trí cuối của mảng con
-// 		}
-// 		right = i; // vị trí cuối của mảng con
-// 		StraightMergeSort_CIT07(BOOKS_CIT07, left, right); // sắp xếp mảng con
-// 	}
-// 	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp NaturalMergeSor:";
-// }
+// [12] Natural Merge Sort
+void NaturalMergeSort_CIT07()
+{
+	int left = 0; // vị trí bắt đầu của mảng con
+	int right = 0; // vị trí cuối của mảng con
+	int mid = 0; // vị trí giữa của mảng con
+	int i = 0; // vị trí hiện tại của mảng con
+	while (i < TongSoPhanTuKhaoSat_CIT07 - 1)
+	{
+		left = i; // vị trí bắt đầu của mảng con
+		while (i < TongSoPhanTuKhaoSat_CIT07 - 1 && BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07 <= BOOKS_CIT07[i + 1].So_Lan_Muon_Sach_CIT07)
+		{
+			i++; // tìm vị trí cuối của mảng con
+		}
+		mid = i; // vị trí giữa của mảng con
+		while (i < TongSoPhanTuKhaoSat_CIT07 - 1 && BOOKS_CIT07[i].So_Lan_Muon_Sach_CIT07 >= BOOKS_CIT07[i + 1].So_Lan_Muon_Sach_CIT07)
+		{
+			i++; // tìm vị trí cuối của mảng con
+		}
+		right = i; // vị trí cuối của mảng con
+		StraightMergeSort_CIT07(BOOKS_CIT07, left, right); // sắp xếp mảng con
+	}
+	cout << "\n Danh sách đã được sắp xếp theo số lần mượn sách bằng pp NaturalMergeSor:";
+}
 
 // [9] Counting Sort
 // Bước 1: Khởi tạo: giả sử ta có số lần mượn sách được cho vào 1 mảng arr =[2, 5, 3, 0, 2, 3, 0, 3].

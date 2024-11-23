@@ -538,6 +538,47 @@ void inThongTinSach_07(Node_CIT07 *node_07)
      / \    /  \
     3   7  20   22
 10 5 3 7 15 20 22
+Quá trình duyệt cây theo thứ tự NLR không đệ quy
+Bắt đầu tại gốc cây (10):
+Đẩy 10 vào stack.
+Lấy 10 ra khỏi stack và in thông tin.
+Đẩy 15 vào stack.
+Đẩy 5 vào stack.
+Stack: [15, 5]
+Output07: 10
+Duyệt cây con trái của 10 (5):
+Lấy 5 ra khỏi stack và in thông tin.
+Đẩy 7 vào stack.
+Đẩy 3 vào stack.
+Stack: [15, 7, 3]
+Output07: 10 5
+Duyệt cây con trái của 5 (3):
+Lấy 3 ra khỏi stack và in thông tin.
+3 không có con, tiếp tục.
+Stack: [15, 7]
+Output07: 10 5 3
+Duyệt cây con phải của 5 (7):
+Lấy 7 ra khỏi stack và in thông tin.
+7 không có con, tiếp tục.
+Stack: [15]
+Output07: 10 5 3 7
+Duyệt cây con phải của 10 (15):
+Lấy 15 ra khỏi stack và in thông tin.
+Đẩy 22 vào stack.
+Đẩy 20 vào stack.
+Stack: [22, 20]
+Output07: 10 5 3 7 15
+Duyệt cây con trái của 15 (20):
+Lấy 20 ra khỏi stack và in thông tin.
+20 không có con, tiếp tục.
+Stack: [22]
+Output07: 10 5 3 7 15 20
+Duyệt cây con phải của 15 (22):
+Lấy 22 ra khỏi stack và in thông tin.
+22 không có con, kết thúc.
+Stack: []
+Output07: 10 5 3 7 15 20 22
+Kết quả cuối cùng:10 5 3 7 15 20 22
 */
 void duyetCayNLR(Node_CIT07 *node_07)
 {
@@ -545,7 +586,7 @@ void duyetCayNLR(Node_CIT07 *node_07)
         return;
     inThongTinSach_07(node_07);
     duyetCayNLR(node_07->left_CIT07);
-    duyetCayNLR(node_07->right_CIT07);
+    duyetCayNLR(node_07->right_CIT07); 
 }
 void khuDeQuy_NLR(Node_CIT07 *node_07) 
 {
@@ -582,6 +623,53 @@ void khuDeQuy_NLR(Node_CIT07 *node_07)
      / \    /  \
     3   7  20   22
 10, 15, 22, 20, 5, 7, 3
+Quá trình duyệt cây theo thứ tự NRL không đệ quy
+Bắt đầu tại gốc cây (10):
+Đẩy 10 vào stack.
+Lấy 10 ra khỏi stack và in thông tin.
+Đẩy 5 vào stack.
+Đẩy 15 vào stack.
+Stack: [5, 15]
+Output: 10
+
+Duyệt cây con phải của 10 (15):
+Lấy 15 ra khỏi stack và in thông tin.
+Đẩy 20 vào stack.
+Đẩy 22 vào stack.
+Stack: [5, 20, 22]
+Output: 10 15
+
+Duyệt cây con phải của 15 (22):
+Lấy 22 ra khỏi stack và in thông tin.
+22 không có con, tiếp tục.
+Stack: [5, 20]
+Output: 10 15 22
+
+Duyệt cây con trái của 15 (20):
+Lấy 20 ra khỏi stack và in thông tin.
+20 không có con, tiếp tục.
+Stack: [5]
+Output: 10 15 22 20
+
+Duyệt cây con trái của 10 (5):
+Lấy 5 ra khỏi stack và in thông tin.
+Đẩy 3 vào stack.
+Đẩy 7 vào stack.
+Stack: [3, 7]
+Output: 10 15 22 20 5
+
+Duyệt cây con phải của 5 (7):
+Lấy 7 ra khỏi stack và in thông tin.
+7 không có con, tiếp tục.
+Stack: [3]
+Output: 10 15 22 20 5 7
+
+Duyệt cây con trái của 5 (3):
+Lấy 3 ra khỏi stack và in thông tin.
+3 không có con, kết thúc.
+Stack: []
+Output: 10 15 22 20 5 7 3
+Kết quả cuối cùng:10 15 22 20 5 7 3
 
 */
 void duyetCayNRL(Node_CIT07 *node_07) 
@@ -628,6 +716,65 @@ void khuDeQuy_NRL(Node_CIT07 *node_07)
     3   7  20   22
 
 22 15 20 10 7 5 3
+Quá trình duyệt cây theo thứ tự RNL không đệ quy
+Bắt đầu tại gốc cây (10):
+Đẩy 10 vào stack.
+Di chuyển đến cây con phải của 10 (15).
+Stack: [10]
+Current: 15
+Duyệt cây con phải của 10 (15):
+Đẩy 15 vào stack.
+Di chuyển đến cây con phải của 15 (22).
+Stack: [10, 15]
+Current: 22
+Duyệt cây con phải của 15 (22):
+Đẩy 22 vào stack.
+22 không có con phải, lấy 22 ra khỏi stack và in thông tin.
+Stack: [10, 15]
+Output07: 22
+Current: nullptr
+Trở lại nút 15:
+Lấy 15 ra khỏi stack và in thông tin.
+Di chuyển đến cây con trái của 15 (20).
+Stack: [10]
+Output07: 22 15
+Current: 20
+Duyệt cây con trái của 15 (20):
+Đẩy 20 vào stack.
+20 không có con phải, lấy 20 ra khỏi stack và in thông tin.
+Stack: [10]
+Output07: 22 15 20
+Current: nullptr
+Trở lại nút 10:
+Lấy 10 ra khỏi stack và in thông tin.
+Di chuyển đến cây con trái của 10 (5).
+Stack: []
+Output07: 22 15 20 10
+Current: 5
+Duyệt cây con trái của 10 (5):
+Đẩy 5 vào stack.
+Di chuyển đến cây con phải của 5 (7).
+Stack: [5]
+Current: 7
+Duyệt cây con phải của 5 (7):
+Đẩy 7 vào stack.
+7 không có con phải, lấy 7 ra khỏi stack và in thông tin.
+Stack: [5]
+Output07: 22 15 20 10 7
+Current: nullptr
+Trở lại nút 5:
+Lấy 5 ra khỏi stack và in thông tin.
+Di chuyển đến cây con trái của 5 (3).
+Stack: []
+Output07: 22 15 20 10 7 5
+Current: 3
+Duyệt cây con trái của 5 (3):
+Đẩy 3 vào stack.
+3 không có con phải, lấy 3 ra khỏi stack và in thông tin.
+Stack: []
+Output07: 22 15 20 10 7 5 3
+Current: nullptr
+Kết quả cuối cùng: 22 15 20 10 7 5 3
 */
 void duyetCayRNL(Node_CIT07 *node_07)
 {
@@ -673,95 +820,218 @@ void khuDeQuy_RNL(Node_CIT07 *node_07)
     3   7  20   22
 
 22 20 15 7 3 5 10
+Quá trình duyệt cây theo thứ tự RLN không đệ quy
+- Bắt đầu tại gốc cây (10):
+Đẩy 10 vào stackNode07.StackNode07: [10]
+Output07: []
+StackNode07: [10]
+
+Lấy 10 ra khỏi stackNode07 và đẩy vào output07:
+Đẩy 15 vào stackNode07.
+Đẩy 5 vào stackNode07.
+StackNode07: [15, 5]
+Output07: [10]
+
+Lấy 5 ra khỏi stackNode07 và đẩy vào output07:
+Đẩy 7 vào stackNode07.
+Đẩy 3 vào stackNode07.
+StackNode07: [15, 7, 3]
+Output07: [10, 5]
+ 
+Lấy 3 ra khỏi stackNode07 và đẩy vào output07:
+3 không có con, tiếp tục.
+StackNode07: [15, 7]
+Output07: [10, 5, 3]
+
+Lấy 7 ra khỏi stackNode07 và đẩy vào output07:
+7 không có con, tiếp tục.
+StackNode07: [15]
+Output07: [10, 5, 3, 7]
+
+Lấy 15 ra khỏi stackNode07 và đẩy vào output07:
+Đẩy 22 vào stackNode07.
+Đẩy 20 vào stackNode07.
+StackNode07: [22, 20]
+Output07: [10, 5, 3, 7, 15]
+
+Lấy 20 ra khỏi stackNode07 và đẩy vào output07:
+20 không có con, tiếp tục.
+StackNode07: [22]
+Output07: [10, 5, 3, 7, 15, 20]
+
+Lấy 22 ra khỏi stackNode07 và đẩy vào output07:
+22 không có con, tiếp tục.
+StackNode07: []
+Output07: [10, 5, 3, 7, 15, 20, 22]
+
+Duyệt ngăn xếp output07 để in theo thứ tự RLN:
+Lấy 22 ra khỏi output07 và in thông tin.
+Lấy 20 ra khỏi output07 và in thông tin.
+Lấy 15 ra khỏi output07 và in thông tin.
+Lấy 7 ra khỏi output07 và in thông tin.
+Lấy 3 ra khỏi output07 và in thông tin.
+Lấy 5 ra khỏi output07 và in thông tin.
+Lấy 10 ra khỏi output07 và in thông tin.
+GitHub Copilot
+Chắc chắn rồi! Dưới đây là ví dụ minh họa từng bước của hàm khuDeQuy_RLN để duyệt cây theo thứ tự RLN (Right-Left-Node, hậu tố) không đệ quy cho cây nhị phân sau:
+
+Mã nguồn hàm khuDeQuy_RLN
+Quá trình duyệt cây theo thứ tự RLN không đệ quy
+Bắt đầu tại gốc cây (10):
+Đẩy 10 vào stackNode07.
+Lấy 10 ra khỏi stackNode07 và đẩy vào output07:
+Đẩy 15 vào stackNode07.
+Đẩy 5 vào stackNode07.
+Lấy 5 ra khỏi stackNode07 và đẩy vào output07:
+Đẩy 7 vào stackNode07.
+Đẩy 3 vào stackNode07.
+Lấy 3 ra khỏi stackNode07 và đẩy vào output07:
+3 không có con, tiếp tục.
+Lấy 7 ra khỏi stackNode07 và đẩy vào output07:
+7 không có con, tiếp tục.
+Lấy 15 ra khỏi stackNode07 và đẩy vào output07:
+Đẩy 22 vào stackNode07.
+Đẩy 20 vào stackNode07.
+Lấy 20 ra khỏi stackNode07 và đẩy vào output07:
+20 không có con, tiếp tục.
+Lấy 22 ra khỏi stackNode07 và đẩy vào output07:
+22 không có con, tiếp tục.
+Duyệt ngăn xếp output07 để in theo thứ tự RLN:
+Lấy 22 ra khỏi output07 và in thông tin.
+Lấy 20 ra khỏi output07 và in thông tin.
+Lấy 15 ra khỏi output07 và in thông tin.
+Lấy 7 ra khỏi output07 và in thông tin.
+Lấy 3 ra khỏi output07 và in thông tin.
+Lấy 5 ra khỏi output07 và in thông tin.
+Lấy 10 ra khỏi output07 và in thông tin.
+Kết quả cuối cùng: 22 20 15 7 3 5 10
 */
-void duyetCayRLN(Node_CIT07 *node_07)
-{
+void duyetCayRLN(Node_CIT07* node_07) {
     if (node_07 == nullptr)
         return;
+
+    // Duyệt cây con bên phải
     duyetCayRLN(node_07->right_CIT07);
+
+    // Duyệt cây con bên trái
     duyetCayRLN(node_07->left_CIT07);
+
+    // Xử lý thông tin của node hiện tại
     inThongTinSach_07(node_07);
 }
 void khuDeQuy_RLN(Node_CIT07 *node_07)
 {
-    if (node_07==nullptr) return;
-    stack<Node_CIT07*> st;
-    st.push(node_07);
+     if (node_07 == nullptr)
+        return;
 
-    while(!st.empty())
-    {
-        Node_CIT07* current_07 = st.top();
-        st.pop();
+    stack<Node_CIT07*> stackNode07; // Ngăn xếp để lưu các node
+    stack<Node_CIT07*> output07;   // Ngăn xếp trung gian để đảm bảo thứ tự RLN
 
-        inThongTinSach_07(current_07);
+    // Đẩy root vào ngăn xếp đầu tiên
+    stackNode07.push(node_07);
 
-        if (current_07 -> left_CIT07 != nullptr){
-            st.push(current_07 -> left_CIT07);
-        }
+    while (!stackNode07.empty()) {
+        // Lấy phần tử trên cùng của ngăn xếp
+        Node_CIT07* current = stackNode07.top();
+        stackNode07.pop();
 
-        if (current_07 -> right_CIT07 != nullptr){
-            st.push(current_07 -> right_CIT07);
-        }
+        // Đưa node hiện tại vào ngăn xếp output07
+        output07.push(current);
+
+        // Đẩy vào sau -> duyệt trước
+        if (current->right_CIT07 != nullptr)
+            stackNode07.push(current->right_CIT07);
+
+        // Đẩy các node con vào ngăn xếp để duyệt
+        if (current->left_CIT07 != nullptr)
+            stackNode07.push(current->left_CIT07);  
+        
+    }
+
+    // Duyệt ngăn xếp output07 để in theo thứ tự RLN
+    while (!output07.empty()) {
+        inThongTinSach_07(output07.top());
+        output07.pop();
     }
     
 }
 
 
 /*
-6.4 Duyệt cây theo thứ tự LNR (trung tố) không đệ quy
+6.5 Duyệt cây theo thứ tự LNR (trung tố) không đệ quy
          10
        /    \
       5      15
      / \    /  \
     3   7  20   22
-Bước 1: Khởi tạo:
+Quá trình duyệt cây theo thứ tự LNR không đệ quy
+Bắt đầu tại gốc cây (10):
+Đẩy 10 vào stack.
+Di chuyển đến cây con trái của 10 (5).
+Stack: [10]
+Current: 5
 
-current = root (nút gốc: 10).
-Stack ban đầu rỗng.
-Bước 2: Đi xuống nhánh trái:
+Duyệt cây con trái của 10 (5):
+Đẩy 5 vào stack.
+Di chuyển đến cây con trái của 5 (3).
+Stack: [10, 5]
+Current: 3
 
-Push 10 vào stack, di chuyển đến con trái: current = 5.
-Push 5 vào stack, di chuyển đến con trái: current = 3.
-Push 3 vào stack, current = nullptr (không còn con trái).
-Stack hiện tại: [10, 5, 3]
+Duyệt cây con trái của 5 (3):
+Đẩy 3 vào stack.
+3 không có con trái, lấy 3 ra khỏi stack và in thông tin.
+Stack: [10, 5]
+Output: 3
+Current: nullptr
 
-Bước 3: Xử lý nút trên cùng của stack:
+Trở lại nút 5:
+Lấy 5 ra khỏi stack và in thông tin.
+Di chuyển đến cây con phải của 5 (7).
+Stack: [10]
+Output: 3 5
+Current: 7
 
-Pop 3 khỏi stack, xử lý 3 (inThongTinSach_07(3)), di chuyển đến con phải: current = nullptr.
-Stack hiện tại: [10, 5]
+Duyệt cây con phải của 5 (7):
+Đẩy 7 vào stack.
+7 không có con trái, lấy 7 ra khỏi stack và in thông tin.
+Stack: [10]
+Output: 3 5 7
+Current: nullptr
 
-Bước 4: Tiếp tục xử lý:
+Trở lại nút 10:
+Lấy 10 ra khỏi stack và in thông tin.
+Di chuyển đến cây con phải của 10 (15).
+Stack: []
+Output: 3 5 7 10
+Current: 15
 
-Pop 5 khỏi stack, xử lý 5 (inThongTinSach_07(5)), di chuyển đến con phải: current = 7.
-Push 7 vào stack, current = nullptr (không còn con trái).
-Stack hiện tại: [10, 7]
+Duyệt cây con phải của 10 (15):
+Đẩy 15 vào stack.
+Di chuyển đến cây con trái của 15 (20).
+Stack: [15]
+Current: 20
 
-Bước 5: Tiếp tục:
+Duyệt cây con trái của 15 (20):
+Đẩy 20 vào stack.
+20 không có con trái, lấy 20 ra khỏi stack và in thông tin.
+Stack: [15]
+Output: 3 5 7 10 20
+Current: nullptr
 
-Pop 7 khỏi stack, xử lý 7 (inThongTinSach_07(7)), di chuyển đến con phải: current = nullptr.
-Stack hiện tại: [10]
+Trở lại nút 15:
+Lấy 15 ra khỏi stack và in thông tin.
+Di chuyển đến cây con phải của 15 (22).
+Stack: []
+Output: 3 5 7 10 20 15
+Current: 22
 
-Bước 6: Quay lại nút gốc:
-
-Pop 10 khỏi stack, xử lý 10 (inThongTinSach_07(10)), di chuyển đến con phải: current = 15.
-Push 15 vào stack, di chuyển đến con trái: current = 20.
-Push 20 vào stack, current = nullptr.
-Stack hiện tại: [15, 20]
-
-Bước 7: Xử lý các nút còn lại:
-
-Pop 20 khỏi stack, xử lý 20 (inThongTinSach_07(22)), di chuyển đến con phải: current = nullptr.
-Stack hiện tại: [15]
-
-Pop 15 khỏi stack, xử lý 15 (inThongTinSach_07(15)), di chuyển đến con phải: current = 22.
-Push 22 vào stack, current = nullptr.
-Stack hiện tại: [22]
-
-Bước 8: Kết thúc:
-
-Pop 22 khỏi stack, xử lý 22 (inThongTinSach_07(22)).
-Stack hiện tại: [] (rỗng)
-3, 5, 7, 10, 20, 15, 22
+Duyệt cây con phải của 15 (22):
+Đẩy 22 vào stack.
+22 không có con trái, lấy 22 ra khỏi stack và in thông tin.
+Stack: []
+Output: 3 5 7 10 20 15 22
+Current: nullptr
+Kết quả cuối cùng là: 3 5 7 10 20 15 22
 */
 void duyetCayLNR(Node_CIT07 *node_07)
 {
@@ -797,7 +1067,7 @@ void khuDeQuy_LNR(Node_CIT07 *root)
 
 
 /*
-6.5 Left - Right - Node (LRN) (hậu tố)
+6.6 Left - Right - Node (LRN) (hậu tố)
          10
        /    \
       5      15
@@ -805,6 +1075,58 @@ void khuDeQuy_LNR(Node_CIT07 *root)
     3   7  20   22
 
 3, 7, 5, 20, 22, 15, 10
+Quá trình duyệt cây theo thứ tự LRN không đệ quy
+Bắt đầu tại gốc cây (10):
+Đẩy 10 vào stackNode07.
+StackNode07: [10]
+Output07: []
+
+Lấy 10 ra khỏi stackNode07 và đẩy vào output07:
+Đẩy 5 vào stackNode07.
+Đẩy 15 vào stackNode07.
+StackNode07: [5, 15]
+Output07: [10]
+
+Lấy 15 ra khỏi stackNode07 và đẩy vào output07:
+Đẩy 20 vào stackNode07.
+Đẩy 22 vào stackNode07.
+StackNode07: [5, 20, 22]
+Output07: [10, 15]
+
+Lấy 22 ra khỏi stackNode07 và đẩy vào output07:
+22 không có con, tiếp tục.
+StackNode07: [5, 20]
+Output07: [10, 15, 22]
+
+Lấy 20 ra khỏi stackNode07 và đẩy vào output07:
+20 không có con, tiếp tục.
+StackNode07: [5]
+Output07: [10, 15, 22, 20]
+
+Lấy 5 ra khỏi stackNode07 và đẩy vào output07:
+Đẩy 3 vào stackNode07.
+Đẩy 7 vào stackNode07.
+StackNode07: [3, 7]
+Output07: [10, 15, 22, 20, 5]
+
+Lấy 7 ra khỏi stackNode07 và đẩy vào output07:
+7 không có con, tiếp tục.
+StackNode07: [3]
+Output07: [10, 15, 22, 20, 5, 7]
+
+Lấy 3 ra khỏi stackNode07 và đẩy vào output07:
+3 không có con, tiếp tục.
+StackNode07: []
+Output07: [10, 15, 22, 20, 5, 7, 3]
+Duyệt ngăn xếp output07 để in theo thứ tự LRN:
+Lấy 3 ra khỏi output07 và in thông tin.
+Lấy 7 ra khỏi output07 và in thông tin.
+Lấy 5 ra khỏi output07 và in thông tin.
+Lấy 20 ra khỏi output07 và in thông tin.
+Lấy 22 ra khỏi output07 và in thông tin.
+Lấy 15 ra khỏi output07 và in thông tin.
+Lấy 10 ra khỏi output07 và in thông tin
+Kết quả cuối cùng: 3 7 5 20 22 15 10
 
 */
 void duyetCayLRN(Node_CIT07 *node_07)
@@ -819,23 +1141,36 @@ void duyetCayLRN(Node_CIT07 *node_07)
 }
 void khuDeQuy_LRN(Node_CIT07 *node_07)
 {
-    stack<Node_CIT07 *> s;
-    Node_CIT07 *current = node_07;
+     if (node_07 == nullptr)
+        return;
 
-    while (current != nullptr || !s.empty())
-    {
-        while (current != nullptr)
-        {
-            s.push(current);
-            current = current->left_CIT07;
-        }
+    stack<Node_CIT07*> stackNode07; // Ngăn xếp để lưu các node
+    stack<Node_CIT07*> output07;   // Ngăn xếp trung gian để đảm bảo thứ tự RLN
 
-        current = s.top();
-        s.pop();
+    // Đẩy root vào ngăn xếp đầu tiên
+    stackNode07.push(node_07);
 
-        inThongTinSach_07(current);
+    while (!stackNode07.empty()) {
+        // Lấy phần tử trên cùng của ngăn xếp
+        Node_CIT07* current = stackNode07.top();
+        stackNode07.pop();
 
-        current = current->right_CIT07;
+        // Đưa node hiện tại vào ngăn xếp output07
+        output07.push(current);
+
+        // Đẩy các node con vào ngăn xếp để duyệt
+        if (current->left_CIT07 != nullptr)
+            stackNode07.push(current->left_CIT07);
+            
+        // Đẩy vào sau -> duyệt trước
+        if (current->right_CIT07 != nullptr)
+            stackNode07.push(current->right_CIT07);
+    }
+
+    // Duyệt ngăn xếp output07 để in theo thứ tự RLN
+    while (!output07.empty()) {
+        inThongTinSach_07(output07.top());
+        output07.pop();
     }
 }
 
