@@ -1,6 +1,6 @@
-/******************************/
+/*****************************/
 /**KHAI BAO THU VIEN SU DUNG */
-/******************************/
+/*****************************/
 using namespace std;
 #include <iostream> // Thư viện cho các luồng vào/ra
 
@@ -284,7 +284,7 @@ x = BOOKS_CIT07[4] (3)
 left = 0, right = 3
 Tìm vị trí chèn cho 3:
 mid = (0 + 3) / 2 = 1
-3 > 2 → left = mid + 1 = 2
+3 > 2 → left = mid + 1 = 2	
 mid = (2 + 3) / 2 = 2
 3 < 5 → right = mid - 1 = 1
 Chèn 3 vào vị trí left = 2:
@@ -295,7 +295,8 @@ Dịch chuyển 8, 5 về sau
 Chèn 3 vào vị trí 2: [1, 2, 3, 5, 8]
 Kết quả cuối cùng: [1, 2, 3, 5, 8]
 */
-
+// Thuật toán Binary Insertion Sort là một cải tiến của thuật toán Insertion Sort truyền thống, sử dụng tìm kiếm nhị phân (binary search)
+//  để xác định vị trí chính xác mà phần tử cần chèn vào trong dãy đã được sắp xếp, thay vì duyệt qua từng phần tử để tìm vị trí chèn
 void BinaryInsertionSort_CIT07()
 {
 	for (int i = 1; i < TongSoPhanTuKhaoSat_CIT07; i++)
