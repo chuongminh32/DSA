@@ -380,35 +380,44 @@ Phần mảng con để tìm kiếm nhị phân là ["A005", "A006", "A007", "A0
 Tìm kiếm nhị phân tìm thấy "A007" tại chỉ số 6.
 Vì vậy, hàm TimKiemExponential_CIT07("A007") sẽ trả về 6.
 */
-int TimKiemNhiPhan_CIT07(int l07, int r07, string x) {
-    while (l07 <= r07) {
-        int mid = l07 + (r07 - l07) / 2; // Tính vị trí giữa của đoạn cần xét
-        if (BOOKS_CIT07[mid].Ma_Sach_CIT07 == x) {
-            return mid; // Tìm thấy x tại vị trí mid
-        }
-        if (BOOKS_CIT07[mid].Ma_Sach_CIT07 > x) {
-            r07 = mid - 1; // Giới hạn tìm kiếm ở nửa trái
-        } else {
-            l07 = mid + 1; // Giới hạn tìm kiếm ở nửa phải
-        }
-    }
-    return -1; // Không tìm thấy x trong danh sách
+int TimKiemNhiPhan_CIT07(int l07, int r07, string x)
+{
+	while (l07 <= r07)
+	{
+		int mid = l07 + (r07 - l07) / 2; // Tính vị trí giữa của đoạn cần xét
+		if (BOOKS_CIT07[mid].Ma_Sach_CIT07 == x)
+		{
+			return mid; // Tìm thấy x tại vị trí mid
+		}
+		if (BOOKS_CIT07[mid].Ma_Sach_CIT07 > x)
+		{
+			r07 = mid - 1; // Giới hạn tìm kiếm ở nửa trái
+		}
+		else
+		{
+			l07 = mid + 1; // Giới hạn tìm kiếm ở nửa phải
+		}
+	}
+	return -1; // Không tìm thấy x trong danh sách
 }
 
-int TimKiemExponential_CIT07(string x) {
-    if (BOOKS_CIT07[0].Ma_Sach_CIT07 == x) {
-        return 0; // Tìm thấy x tại vị trí đầu tiên
-    }
+int TimKiemExponential_CIT07(string x)
+{
+	if (BOOKS_CIT07[0].Ma_Sach_CIT07 == x)
+	{
+		return 0; // Tìm thấy x tại vị trí đầu tiên
+	}
 
-    int i = 1; // Bắt đầu từ phần tử thứ 2
-    // Mở rộng phạm vi theo lũy thừa 2, đảm bảo không vượt quá số phần tử
-    while (i < TongSoPhanTuKhaoSat_CIT07 && BOOKS_CIT07[i].Ma_Sach_CIT07 < x) {
-        i *= 2;
-    }
+	int i = 1; // Bắt đầu từ phần tử thứ 2
+	// Mở rộng phạm vi theo lũy thừa 2, đảm bảo không vượt quá số phần tử
+	while (i < TongSoPhanTuKhaoSat_CIT07 && BOOKS_CIT07[i].Ma_Sach_CIT07 < x)
+	{
+		i *= 2;
+	}
 
-    // Tìm đoạn cần xét, giới hạn vị trí tối đa là cuối danh sách
-    int right07 = min(i, TongSoPhanTuKhaoSat_CIT07 - 1);
-    return TimKiemNhiPhan_CIT07(i / 2, right07, x); // Tìm kiếm nhị phân trong đoạn xác định
+	// Tìm đoạn cần xét, giới hạn vị trí tối đa là cuối danh sách
+	int right07 = min(i, TongSoPhanTuKhaoSat_CIT07 - 1);
+	return TimKiemNhiPhan_CIT07(i / 2, right07, x); // Tìm kiếm nhị phân trong đoạn xác định
 }
 
 /************************/
@@ -457,12 +466,14 @@ int main()
 	while (true)
 	{
 		cout << "CÁC GIẢI THUẬT TÌM KIẾM TRÊN DANH SÁCH SÁCH [ĐẶC]\n";
+		cout << "___________________________________________\n";
 		cout << "1. Tìm kiếm tuyến tính [Linear Search]\n";
 		cout << "2. Tìm kiếm nhị phân [Binary Search]\n";
 		cout << "3. Tìm kiếm nội suy [Interpolation Search]\n";
 		cout << "4. Tìm kiếm nhảy [Jump Search]\n";
 		cout << "5. Tìm kiếm lũy tiến [Exponential Search]\n";
 		cout << "q. Thoát\n";
+		cout << "___________________________________________\n";
 		cout << "Nhập lựa chọn của bạn: ";
 		cin >> LuaChon;
 

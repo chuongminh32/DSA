@@ -634,12 +634,14 @@ void CapNhatThuocTinh_CIT07()
 void menu_CIT07()
 {
     cout << "\nQUẢN LÝ THƯ VIỆN" << endl;
+    cout << "__________________________________\n";
     cout << "0. Thêm dữ liệu mẫu" << endl;
     cout << "1. Thêm sách" << endl;
     cout << "2. Xóa sách" << endl;
     cout << "3. Xuất danh sách sách" << endl;
     cout << "4. Cập nhật thông tin sách" << endl;
     cout << "5. Thoát" << endl;
+    cout << "__________________________________\n";
 }
 
 int main()
